@@ -30,6 +30,9 @@ export const VisuallyHidden = () => (
           <polygon id="Line" fill="#EEE5B5" fill-rule="nonzero" points="10 -1.11910481e-13 14 -1.11910481e-13 14 21 10 21" />
         </g>
       </symbol>
+      <symbol id="play-s" viewBox="0 0 19 19" width="19" height="19" fill="none">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0L19 9.5L0 19V0Z" fill="#EEE5B5" />
+      </symbol>
     </svg>
     {/* <!-- endinject --> */}
   </div>
