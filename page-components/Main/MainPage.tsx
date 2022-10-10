@@ -1,5 +1,5 @@
-import MovieCard from '../../components/Movie-Card/Movie-Card';
-import { moviesTitlesMock } from '../../const';
+import MovieList from '../../components/Move-List/Movie-List';
+import { moviesTitlesMock } from '../../mocks/mocks';
 
 
 const MainPage: React.FC = () => {
@@ -102,14 +102,11 @@ const MainPage: React.FC = () => {
             </li>
           </ul>
 
-          <div className="catalog__movies-list">
-            {moviesTitlesMock.map((movie, i) =>
-              <MovieCard
-                key={movie + i}
-                img_title={movie}
-                onTitleClick={onTitleClick}
-              />)}
-          </div>
+          <MovieList
+            movies={moviesTitlesMock}
+            onTitleClick={onTitleClick}
+          />
+
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>

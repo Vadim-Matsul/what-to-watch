@@ -18,6 +18,5 @@ export const moviesTitlesMock = [
   `Dardjeeling Limited`,
   `Orlando`,
   `Mindhunter`,
-  `Midnight Special`
 ];
 

@@ -2,12 +2,15 @@ import { getStringForImg } from '../../helpers/helpers'
 import { MovieCardProps } from './Movie-Card.props'
 import React from 'react';
 
-const MovieCard: React.FC<MovieCardProps> = ({ img_title, onTitleClick }) => {
+const MovieCard: React.FC<MovieCardProps> = ({ img_title, onTitleClick, onCardHover }) => {
 
   const img_url = getStringForImg(img_title);
 
   return (
-    <article className="small-movie-card catalog__movies-card">
+    <article
+      className="small-movie-card catalog__movies-card"
+      onMouseOver={() => onCardHover(img_title)}
+    >
       <div className="small-movie-card__image">
         <img src={`img/${img_url}.jpg`} alt={img_title} width="280" height="175" />
       </div>
@@ -20,5 +23,6 @@ const MovieCard: React.FC<MovieCardProps> = ({ img_title, onTitleClick }) => {
     </article>
   );
 };
+
 
 export default MovieCard;
