@@ -1,4 +1,4 @@
-import { getStringForImg } from './helpers';
+import { getStringForImg } from './utils';
 
 describe('Fn getStringForImg', () => {
 

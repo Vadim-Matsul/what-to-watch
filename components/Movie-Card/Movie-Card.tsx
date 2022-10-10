@@ -1,4 +1,4 @@
-import { getStringForImg } from '../../helpers/helpers'
+import { getStringForImg } from '../../helpers/utils/utils'
 import { MovieCardProps } from './Movie-Card.props'
 import React from 'react';
 
