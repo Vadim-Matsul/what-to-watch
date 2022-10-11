@@ -1,12 +1,15 @@
 import MovieList from '../../components/Move-List/Movie-List';
 import { moviesTitlesMock } from '../../mocks/mocks';
-
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
 
 const MainPage: React.FC = () => {
 
   const onTitleClick = (evt) => {
     evt.preventDefault();
   }
+
+  const movies = useSelector<RootState>((state) => state.data.basic.movies)
 
   return (
     <>
