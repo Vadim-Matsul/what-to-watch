@@ -1,7 +1,7 @@
 import MovieList from '../../components/Move-List/Movie-List';
 import { moviesTitlesMock } from '../../mocks/mocks';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
+import { getMovies } from '../../store/reducers/data-reducer/basic-slice/basic-slice-selectors';
 
 const MainPage: React.FC = () => {
 
@@ -9,7 +9,6 @@ const MainPage: React.FC = () => {
     evt.preventDefault();
   }
 
-  const movies = useSelector<RootState>((state) => state.data.basic.movies)
 
   return (
     <>

@@ -1,31 +1,19 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { rootReducer, State_for_Config } from './reducers/root-reducer';
-import type { ThunkDispatch, ThunkAction } from 'redux-thunk';
-import type { AxiosInstance } from 'axios';
-import { RootActions } from './labouring/actions/actions';
-import { createWrapper, HYDRATE } from 'next-redux-wrapper';
-import thunk from 'redux-thunk';
+import { rootReducer } from './reducers/root-reducer';
 import { createAxiosInstance } from '../services/api';
+import { createWrapper } from 'next-redux-wrapper';
 
 const api = createAxiosInstance();
 
-export const makeStore = () => configureStore<State_for_Config>({
+export const makeStore = () => configureStore({
   reducer: rootReducer,
-  middleware: [thunk.withExtraArgument(api)]
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      thunk: {
+        extraArgument: api,
+      }
+    }),
 });
 
 export const store = makeStore();
-
-type RootStore = typeof store;
-
-export type RootState = ReturnType<RootStore['getState']>;
-
-export type ThunkActionResult = ThunkAction<void, RootState, AxiosInstance, RootActions>
-
-export type ThunkDispatchResult = ThunkDispatch<RootState, AxiosInstance, RootActions>
-
-
-
-  export type HYDRATE_ACTION = { type: typeof HYDRATE, payload: RootState };
-
-export const wrapper_Server_Client = createWrapper<RootStore>(makeStore);
+export const wrapper_Server_Client = createWrapper<typeof store>(makeStore);

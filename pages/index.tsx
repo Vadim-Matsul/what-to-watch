@@ -1,7 +1,7 @@
 import { GetStaticProps } from 'next'
 import MainPage from '../page-components/Main/MainPage'
 import { API_ACTIONS } from '../store/labouring/api-actions/api-actions'
-import { ThunkDispatchResult, wrapper_Server_Client } from '../store/store'
+import { wrapper_Server_Client } from '../store/store'
 
 const Main = () => {
   return (

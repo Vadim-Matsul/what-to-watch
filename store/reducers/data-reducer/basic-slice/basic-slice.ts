@@ -23,7 +23,7 @@ export const basicSlice = createSlice({
       return {
         ...action.payload.data.basic
       }
-    }
+    },
   }
 });
 
