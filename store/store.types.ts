@@ -11,4 +11,10 @@ export type ThunkActionResult = ThunkAction<void, RootState, AxiosInstance, Root
 
 export type ThunkDispatchResult = ThunkDispatch<RootState, AxiosInstance, RootActions>
 
+export type Selector<R = any, S = RootState> = (state: S) => R
 
+export type AsyncThunkResult = {
+  dispatch: ThunkDispatchResult,
+  state: RootState,
+  extra: AxiosInstance,
+}
