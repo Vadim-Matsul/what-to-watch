@@ -1,7 +1,5 @@
 import React from 'react';
+import { Movies } from '../../types/movies';
 
-export interface MovieListProps {
-  movies: string[],
-  onTitleClick: (evt: React.MouseEvent<HTMLHeadingElement>) => void,
-}
+export interface MovieListProps { }
 

@@ -1,16 +1,7 @@
 import MovieList from '../../components/Move-List/Movie-List';
-import { moviesTitlesMock } from '../../mocks/mocks';
-import { useSelector } from 'react-redux';
-import { getMovies } from '../../store/reducers/data-reducer/basic-slice/basic-slice-selectors';
 import { GenresCatalog } from '../../components/Genres-Catalog/Genres-Catalog';
 
 const MainPage: React.FC = () => {
-
-
-  
-  const onTitleClick = (evt) => {
-    evt.preventDefault();
-  }
 
 
   return (
@@ -76,15 +67,8 @@ const MainPage: React.FC = () => {
 
           <GenresCatalog />
 
-          <MovieList
-            movies={moviesTitlesMock}
-            onTitleClick={onTitleClick}
-          />
+          <MovieList />
 
-
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
         </section>
 
         <footer className="page-footer">

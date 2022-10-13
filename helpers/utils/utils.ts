@@ -1,7 +1,7 @@
 import { AnyAction } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
 import { HYDRATE_ACTION_TYPE } from '../../store/store.types';
-import { Movies } from '../../types/movies';
+import { Movie, Movies } from '../../types/movies';
 import { ALL_GENRES } from '../const/const';
 
 export const constrictType = <T extends string>(type: T) => type;
@@ -18,5 +18,16 @@ export const getMoviesGenres = (movies: Movies): string[] => {
   return allGenres;
 }
 
+export const getMoviesList = (movies: Movies): Record<string, Movie[]> => {
+  const moviesList = { [ALL_GENRES]: movies };
+
+  movies.forEach(movie => {
+    movie.genre in moviesList
+      ? moviesList[movie.genre].push(movie)
+      : moviesList[movie.genre] = [movie]
+  });
+
+  return moviesList;
+};
 
 export const isHydrateAction = (action: AnyAction): action is HYDRATE_ACTION_TYPE => action.type === HYDRATE ? true : false;
