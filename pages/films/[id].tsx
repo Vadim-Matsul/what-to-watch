@@ -1,3 +1,4 @@
+import { AnyAction } from '@reduxjs/toolkit';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { HTTP } from '../../helpers/const/const';
 import CurrentMovie from '../../page-components/CurrentMovie/CurrentMovie';
@@ -28,7 +29,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = wrapper_Server_Client.getStaticProps(({ dispatch }) => async ({ params: { id } }) => {
-  await dispatch(API_ACTIONS.fetchCurrentMovie(id as string));
+  await dispatch(API_ACTIONS.fetchCurrentMovie(id as string) as unknown as AnyAction);
+  await dispatch(API_ACTIONS.fetchMovies() as unknown as AnyAction);
 
   return { props: {} }
 });

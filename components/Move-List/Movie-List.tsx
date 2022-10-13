@@ -1,38 +1,43 @@
 import { MovieListProps } from './Movie-List.props';
 import MovieCard from '../Movie-Card/Movie-Card';
 import { useSelector } from 'react-redux';
-import { getMovies } from '../../store/reducers/data-reducer/basic-slice/basic-slice-selectors';
-import { getMoviesList } from '../../helpers/utils/utils';
+import { getSortedMovies } from '../../store/reducers/data-reducer/basic-slice/basic-slice-selectors';
 import { getActiveGenre } from '../../store/reducers/app-reducer/app-slice-selectors';
-import { useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { ALL_GENRES } from '../../helpers/const/const';
 
 
 const MovieList: React.FC<MovieListProps> = () => {
 
-  const [ind, setInd] = useState<number>(4)
+  const [ind, setInd] = useState<number>(4);
 
-  const movies = useSelector(getMovies);
   const active_genre = useSelector(getActiveGenre);
-  const moviesList = useMemo(() => getMoviesList(movies), [movies])
-  const sortedMovies = moviesList[active_genre]
+  const moviesList = useSelector(getSortedMovies);
+  const sortedMovies = moviesList[active_genre];
 
   const onTitleClick = (evt) => {
     evt.preventDefault();
   }
 
-  if (typeof window !== 'undefined') {
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
 
-    const observer = new IntersectionObserver((entries, observer) => {
-      if (entries[0].isIntersecting) {
-        setInd(prev => prev += 4);
-        observer.unobserve(entries[0].target);
-      }
-    }, { root: null, rootMargin: '100px' });
+      const observer = new IntersectionObserver((entries, observer) => {
+        console.log('observer');
 
-    ind >= movies.length
-      ? observer.disconnect()
-      : observer.observe(document.getElementById('showMore'));
-  }
+        if (entries[0].isIntersecting) {
+          setInd(prev => prev += 4);
+          observer.unobserve(entries[0].target);
+        }
+      }, { root: null, rootMargin: '100px' });
+
+      ind >= moviesList[ALL_GENRES].length
+        ? observer.disconnect()
+        : observer.observe(document.getElementById('showMore'));
+    }
+  }, [ind])
+
+
 
 
   return (
@@ -44,6 +49,7 @@ const MovieList: React.FC<MovieListProps> = () => {
             imgTitle={movie.name}
             previewImage={movie.previewImage}
             onTitleClick={onTitleClick}
+            id={movie.id}
             onCardHover={() => { }}
           />)}
       </div>

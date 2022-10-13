@@ -1,8 +1,9 @@
-import { getStringForImg } from '../../helpers/utils/utils'
 import { MovieCardProps } from './Movie-Card.props'
+import Image from 'next/image';
 import React from 'react';
+import Link from 'next/link';
 
-const MovieCard: React.FC<MovieCardProps> = ({ imgTitle, previewImage, onTitleClick, onCardHover }) => {
+const MovieCard: React.FC<MovieCardProps> = ({ imgTitle, previewImage, id, onTitleClick, onCardHover }) => {
 
 
   return (
@@ -10,13 +11,22 @@ const MovieCard: React.FC<MovieCardProps> = ({ imgTitle, previewImage, onTitleCl
       className="small-movie-card catalog__movies-card"
     >
       <div className="small-movie-card__image">
-        <img src={previewImage} alt={imgTitle} width="280" height="175" />
+        <Image
+          src={previewImage}
+          alt={imgTitle}
+          width={280}
+          height={175}
+          blurDataURL={previewImage}
+          placeholder='blur'
+        />
       </div>
       <h3
         className="small-movie-card__title"
         onClick={onTitleClick}
       >
-        <a className="small-movie-card__link" href="movie-page.html">{imgTitle}</a>
+        <Link href={`films/${id}`}>
+          <a className="small-movie-card__link" >{imgTitle}</a>
+        </Link>
       </h3>
     </article>
   );

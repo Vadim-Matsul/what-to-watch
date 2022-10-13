@@ -1,10 +1,7 @@
-import { AnyAction, AsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { basicInitialState } from './basic-state';
 import { PayloadAction } from '@reduxjs/toolkit'
 import { Movie, Movies } from '../../../../types/movies';
-import { HYDRATE } from 'next-redux-wrapper';
-import { API_ACTIONS } from '../../../labouring/api-actions/api-actions';
-import { HYDRATE_ACTION_TYPE } from '../../../store.types';
 import { isHydrateAction } from '../../../../helpers/utils/utils';
 
 
@@ -31,6 +28,4 @@ export const basicSlice = createSlice({
   }
 });
 
-
-
-export const { setFavoritesMovies, setMovieCover, setMovies } = basicSlice.actions
+export const { setFavoritesMovies, setMovieCover, setMovies } = basicSlice.actions;

@@ -1,15 +1,19 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { rootReducer, test_state } from './reducers/root-reducer';
+import { AnyAction, AsyncThunkAction, configureStore } from '@reduxjs/toolkit';
+import { rootReducer, ConfigState } from './reducers/root-reducer';
 import { createAxiosInstance } from '../services/api';
 import { createWrapper } from 'next-redux-wrapper';
 import { HYDRATE } from 'next-redux-wrapper'
 import { constrictType } from '../helpers/utils/utils';
-import thunk from 'redux-thunk';
-import { RootActions } from './labouring/actions/actions';
+import thunk, { ThunkMiddleware } from 'redux-thunk';
+import { AxiosInstance } from 'axios';
 
 export const api = createAxiosInstance();
 
-export const makeStore = () => configureStore<test_state, RootActions>({
+export const makeStore = () => configureStore<
+  ConfigState,
+  AnyAction,
+  Array<ThunkMiddleware<ConfigState, AnyAction, AxiosInstance>>
+>({
   reducer: rootReducer,
   middleware: [thunk.withExtraArgument(api)]
 });
