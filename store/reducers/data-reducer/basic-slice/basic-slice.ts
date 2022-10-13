@@ -1,8 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { AnyAction, AsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { basicInitialState } from './basic-state';
 import { PayloadAction } from '@reduxjs/toolkit'
-import { Movie, Movies } from '../../../../types/types';
+import { Movie, Movies } from '../../../../types/movies';
 import { HYDRATE } from 'next-redux-wrapper';
+import { API_ACTIONS } from '../../../labouring/api-actions/api-actions';
+import { HYDRATE_ACTION_TYPE } from '../../../store.types';
+import { isHydrateAction } from '../../../../helpers/utils/utils';
+
 
 export const basicSlice = createSlice({
   name: 'basic',
@@ -18,13 +22,15 @@ export const basicSlice = createSlice({
       state.favorites_movies = action.payload
     }
   },
-  extraReducers: {
-    [HYDRATE]: (state, action) => {
-      return {
-        ...action.payload.data.basic
-      }
-    },
+  extraReducers: builder => {
+    builder.addMatcher(isHydrateAction, (state, action) => ({
+      ...state,
+      ...action.payload.data.basic
+    })
+    )
   }
 });
+
+
 
 export const { setFavoritesMovies, setMovieCover, setMovies } = basicSlice.actions

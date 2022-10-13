@@ -6,6 +6,7 @@ export const CONFIG = {
 }
 
 export const HTTP = {
-  FILMS: '/films'
+  MOVIES: '/films',
+  CURRENT_MOVIE: 'films/id'
 }
 

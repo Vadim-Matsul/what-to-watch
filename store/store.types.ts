@@ -1,20 +1,19 @@
+import { AnyAction, AsyncThunkAction } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
-import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { ThunkDispatch } from 'redux-thunk';
 import { RootActions } from './labouring/actions/actions';
-import { store } from './store';
+import { HYDRATE_ACTION, store } from './store';
 
 type RootStore = typeof store;
 
 export type RootState = ReturnType<RootStore['getState']>;
 
-export type ThunkActionResult = ThunkAction<void, RootState, AxiosInstance, RootActions>
-
-export type ThunkDispatchResult = ThunkDispatch<RootState, AxiosInstance, RootActions>
-
 export type Selector<R = any, S = RootState> = (state: S) => R
 
+export type HYDRATE_ACTION_TYPE = typeof HYDRATE_ACTION
+
 export type AsyncThunkResult = {
-  dispatch: ThunkDispatchResult,
+  dispatch: ThunkDispatch<RootState, AxiosInstance, RootActions>,
   state: RootState,
   extra: AxiosInstance,
 }

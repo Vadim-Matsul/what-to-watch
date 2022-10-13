@@ -1,4 +1,4 @@
-import { Movies } from '../../../../types/types';
+import { Movies } from '../../../../types/movies';
 import { Selector } from '../../../store.types';
 
 

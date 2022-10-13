@@ -7,4 +7,4 @@ export const rootReducer = combineReducers({
   app: appSlice.reducer
 });
 
-export type State_for_Config = ReturnType< typeof rootReducer >
+export type test_state = ReturnType<typeof rootReducer>
