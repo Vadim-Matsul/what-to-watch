@@ -3,6 +3,7 @@ import { isHydrateAction } from '../../../../helpers/utils/utils';
 import { Movie } from '../../../../types/movies';
 import { Reviews } from '../../../../types/reviews';
 import { currentSliceState } from './current-state';
+import { isCurrentMovie_Fulfilled, isCurrentMovie_Rejected } from './current-types';
 
 
 export const currentSlice = createSlice({
@@ -10,6 +11,8 @@ export const currentSlice = createSlice({
   initialState: currentSliceState,
   reducers: {
     setCurrentMovie: (state, action: PayloadAction<Movie>) => {
+      console.log('отработал setCurrentMovie');
+
       state.current_movie = action.payload
     },
     setCurrentMovieReviews(state, action: PayloadAction<Reviews>) {
@@ -17,11 +20,21 @@ export const currentSlice = createSlice({
     }
   },
   extraReducers: builder => {
+
     builder.addMatcher(isHydrateAction, (state, action) => ({
       ...state,
       ...action.payload.data.current
-    })
-    )
+    }));
+
+    builder.addMatcher(isCurrentMovie_Fulfilled, (state, action) => {
+      state.current_movie = action.payload;
+      state.status = action.meta.requestStatus;
+    });
+
+    builder.addMatcher(isCurrentMovie_Rejected, (state, action) => {
+      state.status = action.meta.requestStatus
+    });
+
   }
 });
 

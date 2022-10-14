@@ -18,16 +18,4 @@ export const getMoviesGenres = (movies: Movies): string[] => {
   return allGenres;
 }
 
-export const getMoviesList = (movies: Movies): Record<string, Movie[]> => {
-  const moviesList = { [ALL_GENRES]: movies };
-
-  movies.forEach(movie => {
-    movie.genre in moviesList
-      ? moviesList[movie.genre].push(movie)
-      : moviesList[movie.genre] = [movie]
-  });
-
-  return moviesList;
-};
-
 export const isHydrateAction = (action: AnyAction): action is HYDRATE_ACTION_TYPE => action.type === HYDRATE ? true : false;

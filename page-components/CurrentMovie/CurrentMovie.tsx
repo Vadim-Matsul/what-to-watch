@@ -1,10 +1,9 @@
 import { useSelector } from 'react-redux';
-import { getCurrentMovie } from '../../store/reducers/data-reducer/current-slice/current-slice-selectors';
-
+import { RootState } from '../../store/store.types';
 
 const CurrentMovie: React.FC = () => {
 
-  const current_movie = useSelector(getCurrentMovie);
+  const status = useSelector<RootState>((state) => state.data.basic.status)
 
   return (
     <>

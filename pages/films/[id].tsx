@@ -24,13 +24,23 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths: potentially_paths,
-    fallback: false
+    fallback: 'blocking'
   }
 }
 
-export const getStaticProps: GetStaticProps = wrapper_Server_Client.getStaticProps(({ dispatch }) => async ({ params: { id } }) => {
+export const getStaticProps: GetStaticProps = wrapper_Server_Client.getStaticProps(({ dispatch, getState }) => async ({ params: { id } }) => {
+
   await dispatch(API_ACTIONS.fetchCurrentMovie(id as string) as unknown as AnyAction);
   await dispatch(API_ACTIONS.fetchMovies() as unknown as AnyAction);
+
+  if (getState().data.current.status === 'rejected') {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: true
+      }
+    }
+  }
 
   return { props: {} }
 });
