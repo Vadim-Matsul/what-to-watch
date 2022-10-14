@@ -19,3 +19,20 @@ export interface Movie {
 }
 
 export type Movies = Movie[]
+
+
+export interface MovieInformation {
+  name: string;
+  description: string;
+  rating: number;
+  scores_count: number;
+  director: string;
+  starring: string[];
+  run_time: number;
+  genre: string;
+  released: number;
+  is_favorite: boolean;
+  video_link: string;
+}
+
+

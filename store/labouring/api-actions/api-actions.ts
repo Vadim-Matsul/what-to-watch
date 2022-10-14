@@ -17,7 +17,7 @@ export const API_ACTIONS = {
     }),
 
 
-  fetchCurrentMovie: createAsyncThunk<Movie, string, AsyncThunkResult>(
+  fetchCurrentMovie: createAsyncThunk<any, string, AsyncThunkResult>(
     API_NAMES.fetchCurrentMovie,
     async (id, { dispatch, extra, rejectWithValue }) => {
       try {

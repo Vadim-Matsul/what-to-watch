@@ -25,7 +25,6 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ previewLink, posterIma
   };
 
   const handleVideoPause = () => {
-    wrapperVideo.current.pause();
     wrapperVideo.current.load();
     clearTimeout(videoTimeout.current);
   }

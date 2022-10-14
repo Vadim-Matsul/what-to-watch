@@ -1,37 +1,23 @@
 import MovieList from '../../components/Move-List/Movie-List';
 import { GenresCatalog } from '../../components/Genres-Catalog/Genres-Catalog';
 import MovieCover from '../../components/MovieCover/MovieCover';
+import { Footer } from '../../components/Footer/Footer';
+import { useSelector } from 'react-redux';
+import { getMovieCover } from '../../store/reducers/data-reducer/basic-slice/basic-slice-selectors';
 
 const MainPage: React.FC = () => {
-
+  const coverMovie = useSelector(getMovieCover);
 
   return (
     <>
-      <MovieCover />
-
+      <MovieCover movie={coverMovie} />
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-
           <GenresCatalog />
-
           <MovieList />
-
         </section>
-
-        <footer className="page-footer">
-          <div className="logo">
-            <a className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </>
   );
