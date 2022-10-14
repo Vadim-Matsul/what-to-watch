@@ -11,8 +11,6 @@ export const currentSlice = createSlice({
   initialState: currentSliceState,
   reducers: {
     setCurrentMovie: (state, action: PayloadAction<Movie>) => {
-      console.log('отработал setCurrentMovie');
-
       state.current_movie = action.payload
     },
     setCurrentMovieReviews(state, action: PayloadAction<Reviews>) {
@@ -26,14 +24,9 @@ export const currentSlice = createSlice({
       ...action.payload.data.current
     }));
 
-    builder.addMatcher(isCurrentMovie_Fulfilled, (state, action) => {
-      state.current_movie = action.payload;
-      state.status = action.meta.requestStatus;
-    });
-
-    builder.addMatcher(isCurrentMovie_Rejected, (state, action) => {
-      state.status = action.meta.requestStatus
-    });
+    builder.addMatcher(isCurrentMovie_Fulfilled, (state, action) => { state.status = action.meta.requestStatus; });
+    
+    builder.addMatcher(isCurrentMovie_Rejected, (state, action) => { state.status = action.meta.requestStatus });
 
   }
 });

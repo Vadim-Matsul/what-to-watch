@@ -7,12 +7,14 @@ type RootStore = typeof store;
 
 export type RootState = ReturnType<RootStore['getState']>;
 
-export type Selector<R = any, S = RootState> = (state: S) => R
+export type Selector<R = any, S = RootState> = (state: S) => R;
 
-export type HYDRATE_ACTION_TYPE = typeof HYDRATE_ACTION
+export type HYDRATE_ACTION_TYPE = typeof HYDRATE_ACTION;
 
 export type AsyncThunkResult = {
   dispatch: ThunkDispatch<RootState, AxiosInstance, AnyAction>,
   state: RootState,
   extra: AxiosInstance,
-}
+};
+
+export type Status = 'fulfilled' | 'rejected' | 'none';

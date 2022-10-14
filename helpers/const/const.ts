@@ -11,3 +11,7 @@ export const HTTP = {
   COVER_MOVIE: 'films/promo'
 }
 
+export const API_NAMES = {
+  fetchCurrentMovie: 'current/fetchCurrentMovie'
+}
+

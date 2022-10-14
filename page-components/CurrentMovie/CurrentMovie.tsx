@@ -3,7 +3,6 @@ import { RootState } from '../../store/store.types';
 
 const CurrentMovie: React.FC = () => {
 
-  const status = useSelector<RootState>((state) => state.data.basic.status)
 
   return (
     <>
