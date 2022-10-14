@@ -23,7 +23,6 @@ const MovieList: React.FC<MovieListProps> = () => {
     if (typeof window !== 'undefined') {
 
       const observer = new IntersectionObserver((entries, observer) => {
-        console.log('observer');
 
         if (entries[0].isIntersecting) {
           setInd(prev => prev += 4);
@@ -47,10 +46,9 @@ const MovieList: React.FC<MovieListProps> = () => {
           <MovieCard
             key={movie.id}
             imgTitle={movie.name}
-            previewImage={movie.previewImage}
-            onTitleClick={onTitleClick}
+            posterImage={movie.previewImage}
+            previewLink={movie.previewVideoLink}
             id={movie.id}
-            onCardHover={() => { }}
           />)}
       </div>
       <div id='showMore' />
