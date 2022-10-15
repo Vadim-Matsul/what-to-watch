@@ -22,4 +22,4 @@ export const getStaticProps: GetStaticProps = wrapper_Server_Client.getStaticPro
 
 });
 
-export default Main
+export default Main;

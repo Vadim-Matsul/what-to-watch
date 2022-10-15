@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { CurrentMovieNavigation } from '../CurrentMovieNavigation/CurrentMovieNavigation';
 import { MovieInformationProps } from './MovieInformation.props'
 import { MovieInformationBlock } from './MovieInformationBlock/MovieInformationBlock';
-
+import Image from 'next/image';
 
 
 export const MovieInformation: React.FC<MovieInformationProps> = (props) => {
@@ -12,7 +12,14 @@ export const MovieInformation: React.FC<MovieInformationProps> = (props) => {
     <div className="movie-card__wrap movie-card__translate-top">
       <div className="movie-card__info">
         <div className="movie-card__poster movie-card__poster--big">
-          <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+          <Image
+            src={movie_infogmation.posterImage}
+            blurDataURL={movie_infogmation.posterImage}
+            width={273}
+            height={410}
+            placeholder='blur'
+            alt={movie_infogmation.name}
+          />
         </div>
 
         <div className="movie-card__desc">

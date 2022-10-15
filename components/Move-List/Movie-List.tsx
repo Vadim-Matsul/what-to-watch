@@ -7,17 +7,9 @@ import { useEffect, useState } from 'react';
 import { ALL_GENRES } from '../../helpers/const/const';
 
 
-const MovieList: React.FC<MovieListProps> = () => {
+const MovieList: React.FC<MovieListProps> = ({ movies }) => {
 
   const [ind, setInd] = useState<number>(4);
-
-  const active_genre = useSelector(getActiveGenre);
-  const moviesList = useSelector(getSortedMovies);
-  const sortedMovies = moviesList[active_genre];
-
-  const onTitleClick = (evt) => {
-    evt.preventDefault();
-  }
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -30,7 +22,7 @@ const MovieList: React.FC<MovieListProps> = () => {
         }
       }, { root: null, rootMargin: '100px' });
 
-      ind >= moviesList[ALL_GENRES].length
+      ind >= movies.length
         ? observer.disconnect()
         : observer.observe(document.getElementById('showMore'));
     }
@@ -42,7 +34,7 @@ const MovieList: React.FC<MovieListProps> = () => {
   return (
     <>
       <div className="catalog__movies-list" >
-        {sortedMovies.slice(0, ind).map(movie =>
+        {movies.slice(0, ind).map(movie =>
           <MovieCard
             key={movie.id}
             imgTitle={movie.name}

@@ -23,6 +23,7 @@ export type Movies = Movie[];
 
 export interface MovieInformation {
   name: string;
+  posterImage: string;
   description: string;
   rating: number;
   scores_count: number;

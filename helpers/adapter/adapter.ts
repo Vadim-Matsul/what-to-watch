@@ -3,6 +3,7 @@ import { convertMinuteToTime } from '../utils/utils';
 
 export const convertInMovieInformation = (movie: Movie): MovieInformation => ({
   name: movie.name,
+  posterImage: movie.posterImage,
   description: movie.description,
   rating: movie.rating,
   scores_count: movie.scoresCount,

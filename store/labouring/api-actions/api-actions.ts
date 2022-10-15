@@ -13,6 +13,8 @@ export const API_ACTIONS = {
     API_NAMES.fetchMovies,
     async (_, { dispatch, extra }) => {
       const { data } = await extra.get<Movies>(HTTP.MOVIES);
+      console.log('fetchMovies', data);
+
       dispatch(ACTIONS.setMovies(data))
       dispatch(setMovieCover(data[data.length - 1]));
     }),
