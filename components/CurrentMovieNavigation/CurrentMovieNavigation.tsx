@@ -3,8 +3,7 @@ import { CurrentMovieNavigationProps } from './CurrentMovieNavigation.props'
 import { CurrentMovieNavigationLi } from './CurrentMovieNavigationLi/CurrentMovieNavigationLi'
 
 
-export const CurrentMovieNavigation: React.FC<CurrentMovieNavigationProps> = (props) => {
-  const { active, changeActiveItem } = props;
+export const CurrentMovieNavigation: React.FC = () => {
 
   return (
     <nav className="movie-nav movie-card__nav">
@@ -12,9 +11,7 @@ export const CurrentMovieNavigation: React.FC<CurrentMovieNavigationProps> = (pr
         {CurrentMovieNav.map(item =>
           <CurrentMovieNavigationLi
             item={item}
-            active={active}
             key={item}
-            changeActiveItem={changeActiveItem}
           />
         )}
       </ul>

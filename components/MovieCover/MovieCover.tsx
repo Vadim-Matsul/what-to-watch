@@ -7,7 +7,7 @@ import { MovieCoverProps } from './MoverCover.props';
 import { MovieInformation } from '../MovieInformation/MovieInformation';
 import { convertInMovieInformation } from '../../helpers/adapter/adapter';
 
-const movie: React.FC<MovieCoverProps> = ({ movie }) => {
+const movie: React.FC<MovieCoverProps> = ({ movie, reviews }) => {
 
   const { pathname } = useRouter();
   const isCurrentMoviePage = pathname === bePagesPaths.currentMovie;
@@ -82,7 +82,7 @@ const movie: React.FC<MovieCoverProps> = ({ movie }) => {
         </div>
       </div>
 
-      {isCurrentMoviePage && <MovieInformation movie_infogmation={movie_information} />}
+      {isCurrentMoviePage && <MovieInformation movie_infogmation={movie_information} reviews={reviews} />}
 
     </section>
   )

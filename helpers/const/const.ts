@@ -1,4 +1,4 @@
-import { optionsMenu } from '../../components/MovieInformation/MovieInformation';
+import { optionsMenu } from '../../types/movies';
 
 export const ALL_GENRES = 'All genres';
 
@@ -10,11 +10,14 @@ export const CONFIG = {
 export const HTTP = {
   MOVIES: 'films',
   CURRENT_MOVIE: 'films/id',
+  CURRENT_REVIEWS_MOVIE: 'comments/id',
   COVER_MOVIE: 'films/promo'
 };
 
 export const API_NAMES = {
-  fetchCurrentMovie: 'current/fetchCurrentMovie'
+  fetchMovies: 'basic/fetchMovies',
+  fetchCurrentMovie: 'current/fetchCurrentMovie',
+  fetchReviewsCurrentMovie: 'current/fetchReviewsCurrentMovie'
 };
 
 export const bePagesPaths = {
@@ -22,3 +25,5 @@ export const bePagesPaths = {
 };
 
 export const CurrentMovieNav = ['Overview', 'Details', 'Reviews'] as optionsMenu[];
+
+export const Months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];

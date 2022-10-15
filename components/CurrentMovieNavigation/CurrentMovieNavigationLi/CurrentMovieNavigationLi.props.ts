@@ -1,7 +1,5 @@
-import { optionsMenu } from '../../MovieInformation/MovieInformation';
+import { optionsMenu } from '../../../types/movies';
 
 export interface CurrentMovieNavigationLiProps {
   item: optionsMenu,
-  active: optionsMenu,
-  changeActiveItem: (item: optionsMenu) => void
 }

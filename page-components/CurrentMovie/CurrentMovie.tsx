@@ -3,12 +3,15 @@ import MovieCover from '../../components/MovieCover/MovieCover';
 import { getCurrentMovie } from '../../store/reducers/data-reducer/current-slice/current-slice-selectors';
 import { CurrentMovieProps } from './CurrentMovie.props';
 
-const CurrentMovie: React.FC<CurrentMovieProps> = ({ currentMovie }) => {
+const CurrentMovie: React.FC<CurrentMovieProps> = ({ currentMovie, currentReviews }) => {
 
 
   return (
     <>
-      <MovieCover movie={currentMovie} />
+      <MovieCover
+        movie={currentMovie}
+        reviews={currentReviews}
+      />
 
       <div className="page-content">
         <section className="catalog catalog--like-this">

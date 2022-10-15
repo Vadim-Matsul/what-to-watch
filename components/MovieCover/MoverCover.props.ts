@@ -1,5 +1,7 @@
 import { Movie } from '../../types/movies';
+import { Reviews } from '../../types/reviews';
 
 export interface MovieCoverProps {
-  movie: Movie
+  movie: Movie,
+  reviews: Reviews
 }

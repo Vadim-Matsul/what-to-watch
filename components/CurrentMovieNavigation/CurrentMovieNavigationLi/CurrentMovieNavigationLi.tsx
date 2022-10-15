@@ -1,20 +1,24 @@
 import { CurrentMovieNavigationLiProps } from './CurrentMovieNavigationLi.props'
 import classNames from 'classnames';
+import { useDispatch, useSelector } from 'react-redux';
+import { ACTIONS } from '../../../store/labouring/actions/actions';
+import { getActiveMovieItem } from '../../../store/reducers/app-reducer/app-slice-selectors';
 
-export const CurrentMovieNavigationLi: React.FC<CurrentMovieNavigationLiProps> = (props) => {
+export const CurrentMovieNavigationLi: React.FC<CurrentMovieNavigationLiProps> = ({ item }) => {
 
-  const { item, active, changeActiveItem } = props;
+  const dispatch = useDispatch();
+  const active = useSelector(getActiveMovieItem);
 
-  const itemClass = classNames('movie-nav__item', {
-    'movie-nav__item--active': item === active
-  });
+  const itemClass = classNames('movie-nav__item', { 'movie-nav__item--active': item === active });
+  const handleChangeActiveItem = () => dispatch(ACTIONS.setActiveMovieItem(item));
+
 
   return (
     <li
       className={itemClass}
-      onClick={() => changeActiveItem(item)}
+      onClick={handleChangeActiveItem}
     >
-      <a href="#" className="movie-nav__link">{item}</a>
+      <span className="movie-nav__link">{item}</span>
     </li>
   )
 }

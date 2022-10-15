@@ -16,9 +16,9 @@ export interface Movie {
   isFavorite: boolean
   videoLink: string
   previewVideoLink: string
-}
+};
 
-export type Movies = Movie[]
+export type Movies = Movie[];
 
 
 export interface MovieInformation {
@@ -33,6 +33,10 @@ export interface MovieInformation {
   released: number;
   is_favorite: boolean;
   video_link: string;
-}
+};
 
+export type strng = string | string[];
+export type IsDetails = Array<{ name: string, value: strng | number }[]>;
+export type isOverview = Array<{ name?: string, value: strng }>;
 
+export type optionsMenu = 'Overview' | 'Details' | 'Reviews';
