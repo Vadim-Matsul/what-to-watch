@@ -1,7 +1,9 @@
-import { AnyAction } from '@reduxjs/toolkit';
+import { AnyAction, AsyncThunkAction } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
+import type { Dispatch } from 'react';
 import { ThunkDispatch } from 'redux-thunk';
 import { HYDRATE_ACTION, store } from './store';
+
 
 type RootStore = typeof store;
 
@@ -16,5 +18,3 @@ export type AsyncThunkResult = {
   state: RootState,
   extra: AxiosInstance,
 };
-
-export type Status = 'fulfilled' | 'rejected' | 'none';

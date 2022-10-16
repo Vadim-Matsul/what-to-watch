@@ -6,6 +6,7 @@ import { AxiosInstance } from 'axios';
 import { API_NAMES, HTTP } from '../../../helpers/const/const';
 import { setMovieCover } from '../../reducers/data-reducer/basic-slice/basic-slice';
 import { Reviews } from '../../../types/reviews';
+import { LoginData, UserData } from '../../../types/user';
 
 export const API_ACTIONS = {
 
@@ -32,6 +33,42 @@ export const API_ACTIONS = {
         return rejectWithValue('')
       }
     }),
+
+  checkAutorization: createAsyncThunk<void, void, AsyncThunkResult>(
+    API_NAMES.checkAuthorization,
+    async (_, { dispatch, extra }) => {
+      try {
+        await extra.get(HTTP.LOGIN);
+        dispatch(ACTIONS.setAuthStatus('AUTH'));
+      } catch (err) {
+        dispatch(ACTIONS.setAuthStatus('NOAUTH'));
+      }
+    }),
+
+  logoutSession: createAsyncThunk<void, void, AsyncThunkResult>(
+    API_NAMES.logoutSession,
+    async (_, { dispatch, extra }) => {
+      try {
+        await extra.delete(HTTP.LOGOUT);
+        dispatch(ACTIONS.setAuthStatus('NOAUTH'));
+      } catch (err) {
+
+      }
+    }),
+
+  sendUserData: createAsyncThunk<void, LoginData, AsyncThunkResult>(
+    API_NAMES.sendUserData,
+    async (userData, { dispatch, extra }) => {
+      try {
+        const { data } = await extra.post<UserData>(HTTP.LOGIN, userData);
+
+        dispatch(ACTIONS.setUser(data));
+        dispatch(ACTIONS.setAuthStatus('AUTH'));
+
+      } catch (err) {
+        dispatch(ACTIONS.setAuthStatus('NOAUTH'));
+      }
+    })
 
 }
 

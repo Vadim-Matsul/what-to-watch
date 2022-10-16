@@ -1,4 +1,4 @@
-import { AnyAction, AsyncThunkAction, configureStore } from '@reduxjs/toolkit';
+import { Action, AnyAction, AsyncThunkAction, configureStore } from '@reduxjs/toolkit';
 import { rootReducer, ConfigState } from './reducers/root-reducer';
 import { createAxiosInstance } from '../services/api';
 import { createWrapper } from 'next-redux-wrapper';
@@ -9,6 +9,7 @@ import { AxiosInstance } from 'axios';
 import { API_ACTIONS } from './labouring/api-actions/api-actions';
 
 export const api = createAxiosInstance();
+
 
 export const makeStore = () => configureStore<
   ConfigState,

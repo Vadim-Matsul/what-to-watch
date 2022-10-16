@@ -12,9 +12,9 @@ const Main = () => {
   )
 }
 
-export const getStaticProps: GetStaticProps = wrapper_Server_Client.getStaticProps(store => async ctx => {
+export const getStaticProps: GetStaticProps = wrapper_Server_Client.getStaticProps(({ dispatch }) => async ctx => {
 
-  await store.dispatch(API_ACTIONS.fetchMovies() as unknown as AnyAction);
+  await dispatch(API_ACTIONS.fetchMovies() as unknown as AnyAction);
 
   return {
     props: {}
