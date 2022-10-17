@@ -7,7 +7,7 @@ export const Login: React.FC = () => {
 
   return (
     <div className="user-page">
-      <Header />
+      <Header shouldShowUser={false} />
       <LoginForm />
       <Footer />
     </div>

@@ -11,19 +11,16 @@ import { FulfilledActionFromAsyncThunk } from '@reduxjs/toolkit/dist/matchers';
 
 export const API_ACTIONS = {
 
-  fetchMovies: createAsyncThunk<Movies, void, AsyncThunkResult>(
+  fetchMovies: createAsyncThunk<void, void, AsyncThunkResult>(
     API_NAMES.fetchMovies,
-    async (_, { dispatch, extra, fulfillWithValue }) => {
+    async (_, { dispatch, extra }) => {
       try {
         const { data } = await extra.get<Movies>(HTTP.MOVIES);
         dispatch(ACTIONS.setMovies(data));
         dispatch(setMovieCover(data[data.length - 1]));
-        return data
       } catch (err) {
 
       }
-
-
     }),
 
 
@@ -42,12 +39,15 @@ export const API_ACTIONS = {
 
   checkAutorization: createAsyncThunk<void, void, AsyncThunkResult>(
     API_NAMES.checkAuthorization,
-    async (_, { dispatch, extra }) => {
+    async (_, { dispatch, extra, rejectWithValue }) => {
       try {
-        await extra.get(HTTP.LOGIN);
+        const { data } = await extra.get<UserData>(HTTP.LOGIN);
+        dispatch(ACTIONS.setUser(data));
         dispatch(ACTIONS.setAuthStatus('AUTH'));
       } catch (err) {
+        console.log('checkAutorization catch');
         dispatch(ACTIONS.setAuthStatus('NOAUTH'));
+        return rejectWithValue('')
       }
     }),
 
@@ -67,10 +67,8 @@ export const API_ACTIONS = {
     async (userData, { dispatch, extra }) => {
       try {
         const { data } = await extra.post<UserData>(HTTP.LOGIN, userData);
-
         dispatch(ACTIONS.setUser(data));
         dispatch(ACTIONS.setAuthStatus('AUTH'));
-
       } catch (err) {
         dispatch(ACTIONS.setAuthStatus('NOAUTH'));
       }

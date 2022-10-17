@@ -7,6 +7,7 @@ import { isAsyncDispatch } from '../store/store.types';
 import { FetchMovies_Fulfilled } from '../store/reducers/data-reducer/basic-slice/basic-types';
 import App from 'next/app'
 import '../public/css/main.min.css';
+import '../public/css/custom.css';
 
 const MyApp: NextPage<AppProps> = ({ Component, ...rest }) => {
 

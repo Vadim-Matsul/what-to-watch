@@ -3,6 +3,7 @@ import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { HTTP } from '../../helpers/const/const';
+import { useAppDispatch } from '../../helpers/Hooks/useAppDispatch';
 import CurrentMovie from '../../page-components/CurrentMovie/CurrentMovie';
 import { API_ACTIONS } from '../../store/labouring/api-actions/api-actions';
 import { api, wrapper_Server_Client } from '../../store/store';
@@ -13,6 +14,8 @@ import { Reviews } from '../../types/reviews';
 type MoviePageProps = { movie: Movie, reviews: Reviews };
 
 const MoviePage: NextPage<MoviePageProps> = ({ movie, reviews }) => {
+  const dispatch = useAppDispatch();
+  dispatch(API_ACTIONS.checkAutorization());
 
   return (
     <CurrentMovie

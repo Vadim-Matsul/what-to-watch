@@ -1,13 +1,13 @@
-import { AnyAction } from '@reduxjs/toolkit';
 import { GetStaticProps, NextPage } from 'next';
-import { useRouter } from 'next/router';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch } from '../helpers/Hooks/useAppDispatch';
 import { Login } from '../page-components/Login/Login';
 import { API_ACTIONS } from '../store/labouring/api-actions/api-actions';
-import { getAuthStatus } from '../store/reducers/user-reducer/user-slice-selectors';
 import { wrapper_Server_Client } from '../store/store';
+import { isAsyncDispatch } from '../store/store.types';
 
 const LoginPage: NextPage = () => {
+  const dispatch = useAppDispatch();
+  dispatch(API_ACTIONS.checkAutorization());
 
   return (
     <Login />
@@ -16,9 +16,8 @@ const LoginPage: NextPage = () => {
 
 export default LoginPage;
 
-export const getStaticProps: GetStaticProps = wrapper_Server_Client.getStaticProps(({ dispatch, getState }) => async ctx => {
-  await dispatch(API_ACTIONS.checkAutorization() as unknown as AnyAction);
-  await dispatch(API_ACTIONS.fetchMovies() as unknown as AnyAction);
+export const getStaticProps: GetStaticProps = wrapper_Server_Client.getStaticProps(({ dispatch, getState }: isAsyncDispatch) => async ctx => {
+  await dispatch(API_ACTIONS.checkAutorization());
 
   if (getState().user.authStatus === 'AUTH') {
     return {
