@@ -1,4 +1,4 @@
-import { UserData } from '../../../types/reviews'
+import { UserData } from '../../../types/user'
 
 export type AuthStatus = 'AUTH' | 'NOAUTH' | 'UNKNOWN'
 

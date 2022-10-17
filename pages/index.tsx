@@ -1,10 +1,15 @@
 import { AnyAction } from '@reduxjs/toolkit'
-import { GetStaticProps } from 'next'
+import axios from 'axios'
+import { GetStaticProps, NextPage } from 'next'
 import MainPage from '../page-components/Main/MainPage'
+import { ACTIONS } from '../store/labouring/actions/actions'
 import { API_ACTIONS } from '../store/labouring/api-actions/api-actions'
+import { setMovieCover } from '../store/reducers/data-reducer/basic-slice/basic-slice'
 import { wrapper_Server_Client } from '../store/store'
+import { Movies } from '../types/movies'
 
-const Main = () => {
+const Main: NextPage = () => {
+
   return (
     <>
       <MainPage />
@@ -12,14 +17,5 @@ const Main = () => {
   )
 }
 
-export const getStaticProps: GetStaticProps = wrapper_Server_Client.getStaticProps(({ dispatch }) => async ctx => {
-
-  await dispatch(API_ACTIONS.fetchMovies() as unknown as AnyAction);
-
-  return {
-    props: {}
-  }
-
-});
 
 export default Main;

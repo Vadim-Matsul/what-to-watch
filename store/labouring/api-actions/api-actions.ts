@@ -7,17 +7,23 @@ import { API_NAMES, HTTP } from '../../../helpers/const/const';
 import { setMovieCover } from '../../reducers/data-reducer/basic-slice/basic-slice';
 import { Reviews } from '../../../types/reviews';
 import { LoginData, UserData } from '../../../types/user';
+import { FulfilledActionFromAsyncThunk } from '@reduxjs/toolkit/dist/matchers';
 
 export const API_ACTIONS = {
 
-  fetchMovies: createAsyncThunk<void, void, AsyncThunkResult>(
+  fetchMovies: createAsyncThunk<Movies, void, AsyncThunkResult>(
     API_NAMES.fetchMovies,
-    async (_, { dispatch, extra }) => {
-      const { data } = await extra.get<Movies>(HTTP.MOVIES);
-      console.log('fetchMovies', data);
+    async (_, { dispatch, extra, fulfillWithValue }) => {
+      try {
+        const { data } = await extra.get<Movies>(HTTP.MOVIES);
+        dispatch(ACTIONS.setMovies(data));
+        dispatch(setMovieCover(data[data.length - 1]));
+        return data
+      } catch (err) {
 
-      dispatch(ACTIONS.setMovies(data))
-      dispatch(setMovieCover(data[data.length - 1]));
+      }
+
+
     }),
 
 

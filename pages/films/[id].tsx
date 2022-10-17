@@ -1,13 +1,16 @@
 import { AnyAction } from '@reduxjs/toolkit';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { HTTP } from '../../helpers/const/const';
 import CurrentMovie from '../../page-components/CurrentMovie/CurrentMovie';
 import { API_ACTIONS } from '../../store/labouring/api-actions/api-actions';
 import { api, wrapper_Server_Client } from '../../store/store';
+import { isAsyncDispatch } from '../../store/store.types';
 import { Movie, Movies } from '../../types/movies';
 import { Reviews } from '../../types/reviews';
 
-interface MoviePageProps { movie: Movie, reviews: Reviews };
+type MoviePageProps = { movie: Movie, reviews: Reviews };
 
 const MoviePage: NextPage<MoviePageProps> = ({ movie, reviews }) => {
 
@@ -19,11 +22,9 @@ const MoviePage: NextPage<MoviePageProps> = ({ movie, reviews }) => {
   );
 };
 
-export default MoviePage;
-
 export const getStaticPaths: GetStaticPaths = async () => {
   const { data: movies } = await api.get<Movies>(HTTP.MOVIES);
-  const potentially_paths = movies.map(movie => ({ params: { id: String(movie.id) } }))
+  const potentially_paths = movies.map(movie => ({ params: { id: String(movie.id) } }));
 
   return {
     paths: potentially_paths,
@@ -31,12 +32,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
+
+
 export const getStaticProps: GetStaticProps<MoviePageProps> = wrapper_Server_Client.getStaticProps(
-  ({ dispatch, getState }) => async ({ params: { id } }) => {
-
-    await dispatch(API_ACTIONS.fetchCurrentMovie(id as string) as unknown as AnyAction);
-    await dispatch(API_ACTIONS.fetchMovies() as unknown as AnyAction);
-
+  ({ dispatch, getState }: isAsyncDispatch) => async (ctx) => {
+    await dispatch(API_ACTIONS.fetchCurrentMovie(ctx.params.id as string));
 
     if (getState().data.current.status === 'rejected') {
       return {
@@ -57,3 +57,5 @@ export const getStaticProps: GetStaticProps<MoviePageProps> = wrapper_Server_Cli
       }
     }
   });
+
+export default MoviePage;

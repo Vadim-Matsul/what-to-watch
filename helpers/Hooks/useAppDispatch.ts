@@ -1,4 +1,4 @@
-import { AsyncThunkAction } from '@reduxjs/toolkit';
+import { AnyAction, AsyncThunkAction } from '@reduxjs/toolkit';
 import { Dispatch } from 'react';
 import { useDispatch } from 'react-redux';
 import { AsyncThunkResult, RootState } from '../../store/store.types';

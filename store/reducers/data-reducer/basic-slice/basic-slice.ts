@@ -20,11 +20,11 @@ export const basicSlice = createSlice({
   },
   extraReducers: builder => {
 
-    builder.addMatcher(isHydrateAction, (state, action) => ({
-      ...state,
-      ...action.payload.data.basic
-    }));
-
+    builder.addMatcher(isHydrateAction, (state, action) => {
+      return !state.movies.length
+        ? { ...action.payload.data.basic }  // HYDRATE ACTION из _app, заменяемый нулевое состояние
+        : { ...state }    // HYDRATE ACTION со страницы, который не должен заменять уже существующие состояние, полученное HYDRATE ACTION из _app
+    });
   }
 });
 
