@@ -23,7 +23,7 @@ export const API_ACTIONS = {
     }),
 
 
-  fetchCurrentMovie: createAsyncThunk<any, string, AsyncThunkResult>(
+  fetchCurrentMovie: createAsyncThunk<[Movie, Reviews], string, AsyncThunkResult>(
     API_NAMES.fetchCurrentMovie,
     async (id, { dispatch, extra, rejectWithValue }) => {
       try {
@@ -31,8 +31,9 @@ export const API_ACTIONS = {
         const { data: reviews } = await extra.get<Reviews>(HTTP.CURRENT_REVIEWS_MOVIE.replace(/id/g, id));
         dispatch(ACTIONS.setCurrentMovieReviews(reviews));
         dispatch(ACTIONS.setCurrentMovie(movie));
+        return [movie, reviews];
       } catch (err) {
-        return rejectWithValue('')
+        return rejectWithValue('');
       }
     }),
 

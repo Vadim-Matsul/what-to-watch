@@ -1,4 +1,5 @@
 export interface HeaderProps {
   shouldShowUser?: boolean,
-  isFavorite?: boolean
+  isFavorite?: boolean,
+  shouldShowBreadcrumbs?: boolean
 }

@@ -3,5 +3,6 @@ import { Reviews } from '../../types/reviews';
 
 export interface MovieCoverProps {
   movie: Movie,
-  reviews?: Reviews
+  reviews?: Reviews,
+  shouldShowBreadcrumbsHeader?: boolean
 }

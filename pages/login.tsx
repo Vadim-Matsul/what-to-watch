@@ -11,7 +11,7 @@ const LoginPage: NextPage = () => {
 
   const authStatus = useSelector(getAuthStatus);
   const isAuth = authStatus === 'AUTH';
-  if (isAuth) { !isServer && withRouter.push(bePagesPaths.main) };
+  if (isAuth && !isServer) { withRouter.push(bePagesPaths.main) };
 
   return (
     <>

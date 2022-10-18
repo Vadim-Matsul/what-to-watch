@@ -9,10 +9,11 @@ import { convertInMovieInformation } from '../../helpers/adapter/adapter';
 import { MovieButtons } from '../MovieButtons/MovieButtons';
 import { useSelector } from 'react-redux';
 import { getFavoritesMovies } from '../../store/reducers/data-reducer/basic-slice/basic-slice-selectors';
-import { useEffect } from 'react';
+import { ReviewForm } from '../ReviewForm/ReviewForm';
+import Link from 'next/link';
 
-const MovieCover: React.FC<MovieCoverProps> = ({ movie, reviews }) => {
-
+const MovieCover: React.FC<MovieCoverProps> = (props) => {
+  const { movie, reviews, shouldShowBreadcrumbsHeader = false } = props;
   const favoritesMovies = useSelector(getFavoritesMovies);
 
   // самовызывающаяся функция вместо useEffect сделана для того,
@@ -28,12 +29,21 @@ const MovieCover: React.FC<MovieCoverProps> = ({ movie, reviews }) => {
 
 
   const { pathname } = useRouter();
-  const isCurrentMoviePage = pathname === bePagesPaths.currentMovie;
 
-  const sectionClass = ClassNames('movie-card', { 'movie-card--full': isCurrentMoviePage });
-  const infoBlockClass = ClassNames({ 'movie-card__info': !isCurrentMoviePage });
-  const cardHeroClass = ClassNames({ 'movie-card__hero': isCurrentMoviePage });
+  const isCurrentMoviePageReview = pathname === bePagesPaths.currentMovieReview;
+  const isCurrentMoviePage = pathname === bePagesPaths.currentMovie;
+  const doubleBundle = isCurrentMoviePage || isCurrentMoviePageReview;
+
+  const imgClass = isCurrentMoviePageReview ? 'header' : 'hero';
+
+  const infoBlockClass = ClassNames({ 'movie-card__info': !doubleBundle });
+  const cardHeroClass = ClassNames({ [`movie-card__${imgClass}`]: doubleBundle });
+  const sectionClass = ClassNames('movie-card', { 'movie-card--full': doubleBundle });
+  const posterClass = ClassNames("movie-card__poster", { ['movie-card__poster--small']: isCurrentMoviePageReview });
+  const wrapClass = ClassNames({ "movie-card__wrap": !isCurrentMoviePageReview });
+
   const movie_information = convertInMovieInformation(movie);
+
 
   return (
     <section
@@ -53,13 +63,13 @@ const MovieCover: React.FC<MovieCoverProps> = ({ movie, reviews }) => {
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <Header />
+        <Header shouldShowBreadcrumbs={shouldShowBreadcrumbsHeader} />
 
-        <div className="movie-card__wrap">
+        <div className={wrapClass}>
           <div className={infoBlockClass}>
 
             {!isCurrentMoviePage &&
-              <div className="movie-card__poster">
+              <div className={posterClass}>
                 <Image
                   src={movie.posterImage}
                   alt={movie.name}
@@ -71,28 +81,32 @@ const MovieCover: React.FC<MovieCoverProps> = ({ movie, reviews }) => {
               </div>
             }
 
-            <div className="movie-card__desc">
-              <h2 className="movie-card__title">{movie.name}</h2>
-              <p className="movie-card__meta">
-                <span className="movie-card__genre">{movie.genre}</span>
-                <span className="movie-card__year">{movie.released}</span>
-              </p>
+            {!isCurrentMoviePageReview &&
+              <div className="movie-card__desc">
+                <h2 className="movie-card__title">{movie.name}</h2>
+                <p className="movie-card__meta">
+                  <span className="movie-card__genre">{movie.genre}</span>
+                  <span className="movie-card__year">{movie.released}</span>
+                </p>
 
-              <div className="movie-card__buttons">
-                <MovieButtons
-                  isFavorite={movie.isFavorite}
-                  movieId={movie.id}
-                />
-                {isCurrentMoviePage && <a href="add-review.html" className="btn movie-card__button">Add review</a>}
-              </div>
-            </div>
+                <div className="movie-card__buttons">
+                  <MovieButtons
+                    isFavorite={movie.isFavorite}
+                    movieId={movie.id}
+                  />
+                  {isCurrentMoviePage && <Link href={bePagesPaths.currentMovieReview.replace('[id]', String(movie.id))}>
+                    <a className="btn movie-card__button">Add review</a>
+                  </Link>}
+                </div>
+              </div>}
           </div>
         </div>
       </div>
 
       {isCurrentMoviePage && <MovieInformation movie_infogmation={movie_information} reviews={reviews} />}
+      {isCurrentMoviePageReview && <ReviewForm />}
 
-    </section>
+    </section >
   )
 }
 

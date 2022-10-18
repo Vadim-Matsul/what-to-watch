@@ -13,7 +13,7 @@ export interface currentSliceState_Interface {
 
 type CurrentMovieJeneric = typeof API_ACTIONS['fetchCurrentMovie'];
 
-type CurrentMovie_Fulfilled = ReturnType<CurrentMovieJeneric['fulfilled']>;
+export type CurrentMovie_Fulfilled = ReturnType<CurrentMovieJeneric['fulfilled']>;
 type CurrentMovie_Rejected = ReturnType<CurrentMovieJeneric['rejected']>;
 
 
