@@ -5,7 +5,7 @@ import MovieCover from '../../components/MovieCover/MovieCover';
 import { CurrentMovieProps } from './CurrentMovie.props';
 
 const CurrentMovie: React.FC<CurrentMovieProps> = ({ currentMovie, currentReviews }) => {
-
+  
 
   return (
     <>

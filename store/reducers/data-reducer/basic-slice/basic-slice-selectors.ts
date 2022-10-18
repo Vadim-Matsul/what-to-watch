@@ -5,7 +5,12 @@ import { Selector } from '../../../store.types';
 
 
 export const getMovies: Selector<Movies> = (state) => state.data.basic.movies;
-export const getMovieCover: Selector<Movie> = (state) => state.data.basic.movie_cover;
+export const getMovieCover: Selector<Movie> = (state) => {
+  const movieCopy = Object.assign<{}, Movie>({}, state.data.basic.movie_cover);
+  return movieCopy;
+};
+export const getFavoritesMovies: Selector<Movies> = (state) => state.data.basic.favorites_movies;
+
 
 export const getSortedMovies = createSelector(getMovies, movies => {
   const moviesList = { [ALL_GENRES]: movies };

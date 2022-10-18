@@ -10,6 +10,15 @@
   animation: Loading 1s infinite linear;
 }
 
+body {
+  background-color: #40351c;
+}
+
+.loader_center {
+  position: absolute;
+  transform: translate(50vw, 50vh);
+}
+
 @keyframes Loading {
   100% {transform: rotate(1turn)}
 }

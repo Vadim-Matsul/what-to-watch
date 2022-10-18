@@ -9,8 +9,14 @@ export const CONFIG = {
   TIMEOUT: 6000,
 };
 
+export const FavoritesStatus = {
+  ADD: '1',
+  DELETE: '0'
+};
+
 export const HTTP = {
   MOVIES: 'films',
+  FAVORITES: '/favorite',
   CURRENT_MOVIE: 'films/id',
   CURRENT_REVIEWS_MOVIE: 'comments/id',
   LOGIN: 'login',
@@ -19,6 +25,8 @@ export const HTTP = {
 
 export const API_NAMES = {
   fetchMovies: 'basic/fetchMovies',
+  fetchFavorites: 'basic/fetchFavorites',
+  changeFavorites: 'basic/changeFavorites',
   fetchCurrentMovie: 'current/fetchCurrentMovie',
   checkAuthorization: 'user/checkAutorization',
   sendUserData: 'user/sendUserData',
@@ -28,7 +36,8 @@ export const API_NAMES = {
 export const bePagesPaths = {
   currentMovie: '/films/[id]',
   login: '/login',
-  main: '/'
+  main: '/',
+  favorite: '/favorites'
 };
 
 export const ErrorConfig = {
@@ -42,3 +51,7 @@ export const ErrorConfig = {
 export const CurrentMovieNav = ['Overview', 'Details', 'Reviews'] as optionsMenu[];
 
 export const Months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+export const testApi = {
+  jwt: '/api/handler-token'
+}

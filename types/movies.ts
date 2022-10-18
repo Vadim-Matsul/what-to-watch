@@ -20,7 +20,6 @@ export interface Movie {
 
 export type Movies = Movie[];
 
-
 export interface MovieInformation {
   name: string;
   posterImage: string;
@@ -41,3 +40,8 @@ export type IsDetails = Array<{ name: string, value: strng | number }[]>;
 export type isOverview = Array<{ name?: string, value: strng }>;
 
 export type optionsMenu = 'Overview' | 'Details' | 'Reviews';
+
+export type movieFavoriteData = {
+  id: number,
+  status: string
+};

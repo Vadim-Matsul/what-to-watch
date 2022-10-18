@@ -1,10 +1,12 @@
 import { AnyAction } from '@reduxjs/toolkit';
+import axios from 'axios';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { HTTP } from '../../helpers/const/const';
+import { HTTP, testApi } from '../../helpers/const/const';
 import { useAppDispatch } from '../../helpers/Hooks/useAppDispatch';
 import CurrentMovie from '../../page-components/CurrentMovie/CurrentMovie';
+import { getToken } from '../../services/storage';
 import { API_ACTIONS } from '../../store/labouring/api-actions/api-actions';
 import { api, wrapper_Server_Client } from '../../store/store';
 import { isAsyncDispatch } from '../../store/store.types';
@@ -13,17 +15,15 @@ import { Reviews } from '../../types/reviews';
 
 type MoviePageProps = { movie: Movie, reviews: Reviews };
 
-const MoviePage: NextPage<MoviePageProps> = ({ movie, reviews }) => {
-  const dispatch = useAppDispatch();
-  dispatch(API_ACTIONS.checkAutorization());
-
-  return (
+const MoviePage: NextPage<MoviePageProps> = ({ movie, reviews }) => (
+  <>
     <CurrentMovie
       currentMovie={movie}
       currentReviews={reviews}
     />
-  );
-};
+  </>
+);
+
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const { data: movies } = await api.get<Movies>(HTTP.MOVIES);
@@ -34,8 +34,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
     fallback: false
   }
 }
-
-
 
 export const getStaticProps: GetStaticProps<MoviePageProps> = wrapper_Server_Client.getStaticProps(
   ({ dispatch, getState }: isAsyncDispatch) => async (ctx) => {
@@ -56,7 +54,7 @@ export const getStaticProps: GetStaticProps<MoviePageProps> = wrapper_Server_Cli
     return {
       props: {
         movie: current_movie,
-        reviews: current_reviews
+        reviews: current_reviews,
       }
     }
   });

@@ -37,7 +37,6 @@ export const LoginForm: React.FC = () => {
   } = useForm<LoginData>({
     mode: 'onChange'
   });
-  console.log('isSubmitting', isSubmitting);
   const isError = authStatus === 'NOAUTH' && isSubmitted;
   const shouldShowloader = isSubmitting || !isError && isSubmitted;
 

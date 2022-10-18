@@ -1,32 +1,28 @@
-import { GetStaticProps, NextPage } from 'next';
-import { useAppDispatch } from '../helpers/Hooks/useAppDispatch';
+import { NextPage } from 'next';
+import { useSelector } from 'react-redux';
+import { bePagesPaths, isServer } from '../helpers/const/const';
 import { Login } from '../page-components/Login/Login';
-import { API_ACTIONS } from '../store/labouring/api-actions/api-actions';
-import { wrapper_Server_Client } from '../store/store';
-import { isAsyncDispatch } from '../store/store.types';
+import { getAuthStatus } from '../store/reducers/user-reducer/user-slice-selectors';
+import withRouter from 'next/router';
+import { Loader } from '../components/Loader/Loader';
+import { useEffect, useState } from 'react';
 
 const LoginPage: NextPage = () => {
-  const dispatch = useAppDispatch();
-  dispatch(API_ACTIONS.checkAutorization());
+
+  const authStatus = useSelector(getAuthStatus);
+  const isAuth = authStatus === 'AUTH';
+  if (isAuth) { !isServer && withRouter.push(bePagesPaths.main) };
 
   return (
-    <Login />
+    <>
+      {isAuth
+        ? <span className='loader_center' >
+          <Loader />
+        </span>
+        : <Login />
+      }
+    </>
   );
 };
 
 export default LoginPage;
-
-export const getStaticProps: GetStaticProps = wrapper_Server_Client.getStaticProps(({ dispatch, getState }: isAsyncDispatch) => async ctx => {
-  await dispatch(API_ACTIONS.checkAutorization());
-
-  if (getState().user.authStatus === 'AUTH') {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: true
-      }
-    }
-  }
-
-  return { props: {} }
-});

@@ -28,9 +28,7 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
     }
   }, [ind])
 
-
-
-
+  
   return (
     <>
       <div className="catalog__movies-list" >

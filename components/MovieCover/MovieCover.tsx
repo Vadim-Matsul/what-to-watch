@@ -2,12 +2,30 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Header } from '../Header/Header';
 import ClassNames from 'classnames';
-import { bePagesPaths } from '../../helpers/const/const';
+import { bePagesPaths, isServer } from '../../helpers/const/const';
 import { MovieCoverProps } from './MoverCover.props';
 import { MovieInformation } from '../MovieInformation/MovieInformation';
 import { convertInMovieInformation } from '../../helpers/adapter/adapter';
+import { MovieButtons } from '../MovieButtons/MovieButtons';
+import { useSelector } from 'react-redux';
+import { getFavoritesMovies } from '../../store/reducers/data-reducer/basic-slice/basic-slice-selectors';
+import { useEffect } from 'react';
 
-const movie: React.FC<MovieCoverProps> = ({ movie, reviews }) => {
+const MovieCover: React.FC<MovieCoverProps> = ({ movie, reviews }) => {
+
+  const favoritesMovies = useSelector(getFavoritesMovies);
+
+  // самовызывающаяся функция вместо useEffect сделана для того,
+  // чтобы до полной отрисовки у фильма праивильно определялось состояние isFavorite
+  (function () {
+    favoritesMovies.length &&
+      favoritesMovies.forEach(favoriteMovie => {
+        if (favoriteMovie.id === movie.id) {
+          movie.isFavorite = true;
+        }
+      });
+  })();
+
 
   const { pathname } = useRouter();
   const isCurrentMoviePage = pathname === bePagesPaths.currentMovie;
@@ -22,7 +40,6 @@ const movie: React.FC<MovieCoverProps> = ({ movie, reviews }) => {
       className={sectionClass}
       style={{ background: movie.backgroundColor }}
     >
-
       <div className={cardHeroClass} >
         <div className="movie-card__bg">
           <Image
@@ -54,7 +71,6 @@ const movie: React.FC<MovieCoverProps> = ({ movie, reviews }) => {
               </div>
             }
 
-
             <div className="movie-card__desc">
               <h2 className="movie-card__title">{movie.name}</h2>
               <p className="movie-card__meta">
@@ -63,18 +79,10 @@ const movie: React.FC<MovieCoverProps> = ({ movie, reviews }) => {
               </p>
 
               <div className="movie-card__buttons">
-                <button className="btn btn--play movie-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
-                <button className="btn btn--list movie-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                </button>
+                <MovieButtons
+                  isFavorite={movie.isFavorite}
+                  movieId={movie.id}
+                />
                 {isCurrentMoviePage && <a href="add-review.html" className="btn movie-card__button">Add review</a>}
               </div>
             </div>
@@ -88,4 +96,5 @@ const movie: React.FC<MovieCoverProps> = ({ movie, reviews }) => {
   )
 }
 
-export default movie;
+
+export default MovieCover;

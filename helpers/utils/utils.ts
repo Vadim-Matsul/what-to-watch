@@ -62,3 +62,8 @@ export const getDate = (dateString: string): string[] => {
     `${Months[date.getMonth()]} ${date.getUTCDate()}, ${date.getFullYear()}`
   ];
 };
+
+export const getUpdatedMovies = (movies: Movies, movie: Movie): Movies => {
+  movies.splice(movie.id - 1, 1, movie);
+  return movies;
+};

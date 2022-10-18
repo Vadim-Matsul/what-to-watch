@@ -11,17 +11,12 @@ import { User } from './User/User';
 
 
 export const UserBlock: React.FC = () => {
-  const dispatch = useAppDispatch();
+
   const authStatus = useSelector(getAuthStatus);
   const progressStatus = useSelector(getStatusProgress);
 
   const isAuth = authStatus === 'AUTH';
   const isStatusChecking = progressStatus === 'none';
-
-  const handleLogout = async (evt: React.MouseEvent<HTMLAnchorElement>) => {
-    evt.preventDefault();
-    await dispatch(API_ACTIONS.logoutSession());
-  };
 
   return (
     <>
@@ -34,14 +29,25 @@ export const UserBlock: React.FC = () => {
           </>
         }
       </div>
-      {isAuth &&
-        <Link href={bePagesPaths.main} >
-          <a
-            className="user-block__link"
-            onClick={handleLogout}
-          >Logout</a>
-        </Link>
-      }
+      {isAuth && <Logout />}
     </>
+  );
+};
+
+const Logout: React.FC = () => {
+  const dispatch = useAppDispatch();
+
+  const handleLogout = async (evt: React.MouseEvent<HTMLAnchorElement>) => {
+    evt.preventDefault();
+    await dispatch(API_ACTIONS.logoutSession());
+  };
+
+  return (
+    <Link href={bePagesPaths.main} >
+      <a
+        className="user-block__link"
+        onClick={handleLogout}
+      >Logout</a>
+    </Link>
   );
 };

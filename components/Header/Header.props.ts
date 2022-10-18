@@ -1,3 +1,4 @@
 export interface HeaderProps {
-  shouldShowUser?: boolean
+  shouldShowUser?: boolean,
+  isFavorite?: boolean
 }

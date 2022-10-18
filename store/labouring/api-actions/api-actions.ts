@@ -1,13 +1,12 @@
-import { Movie, Movies } from '../../../types/movies';
+import { Movie, movieFavoriteData, Movies } from '../../../types/movies';
 import { ACTIONS } from '../actions/actions';
 import { AsyncThunkResult } from '../../store.types';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AxiosInstance } from 'axios';
 import { API_NAMES, HTTP } from '../../../helpers/const/const';
 import { setMovieCover } from '../../reducers/data-reducer/basic-slice/basic-slice';
 import { Reviews } from '../../../types/reviews';
 import { LoginData, UserData } from '../../../types/user';
-import { FulfilledActionFromAsyncThunk } from '@reduxjs/toolkit/dist/matchers';
+import { getUpdatedMovies } from '../../../helpers/utils/utils';
 
 export const API_ACTIONS = {
 
@@ -37,6 +36,32 @@ export const API_ACTIONS = {
       }
     }),
 
+  fetchFavorites: createAsyncThunk<void, void, AsyncThunkResult>(
+    API_NAMES.fetchFavorites,
+    async (_, { dispatch, extra }) => {
+      try {
+        const { data } = await extra.get<Movies>(HTTP.FAVORITES);
+        dispatch(ACTIONS.setFavoritesMovies(data));
+      } catch (err) {
+
+      }
+    }
+  ),
+
+  changeFavorites: createAsyncThunk<void, movieFavoriteData, AsyncThunkResult>(
+    API_NAMES.changeFavorites,
+    async (DATA, { dispatch, extra, getState }) => {
+      try {
+        const { data } = await extra.post<Movie>(HTTP.FAVORITES + `/${DATA.id}/` + DATA.status);
+        const currentMovies = getState().data.basic.movies;
+        const updatedMovies = getUpdatedMovies(currentMovies, data);
+        dispatch(ACTIONS.setMovies(updatedMovies));
+      } catch (err) {
+
+      }
+    }
+  ),
+
   checkAutorization: createAsyncThunk<void, void, AsyncThunkResult>(
     API_NAMES.checkAuthorization,
     async (_, { dispatch, extra, rejectWithValue }) => {
@@ -45,7 +70,6 @@ export const API_ACTIONS = {
         dispatch(ACTIONS.setUser(data));
         dispatch(ACTIONS.setAuthStatus('AUTH'));
       } catch (err) {
-        console.log('checkAutorization catch');
         dispatch(ACTIONS.setAuthStatus('NOAUTH'));
         return rejectWithValue('')
       }
@@ -72,8 +96,5 @@ export const API_ACTIONS = {
       } catch (err) {
         dispatch(ACTIONS.setAuthStatus('NOAUTH'));
       }
-    })
-
+    }),
 }
-
-
