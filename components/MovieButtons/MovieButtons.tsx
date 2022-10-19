@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -13,6 +14,7 @@ export const MovieButtons: React.FC<MovieButtonsProps> = ({ isFavorite, movieId 
 
 
   const [chosen, setChosen] = useState<boolean>(isFavorite);
+
   useEffect(() => {
     setChosen(isFavorite)
   }, [isFavorite, movieId])
@@ -33,12 +35,15 @@ export const MovieButtons: React.FC<MovieButtonsProps> = ({ isFavorite, movieId 
 
   return (
     <>
-      <button className="btn btn--play movie-card__button" type="button">
-        <svg viewBox="0 0 19 19" width="19" height="19">
-          <use xlinkHref="#play-s" />
-        </svg>
-        <span>Play</span>
-      </button>
+      <Link href={bePagesPaths.player.replace(/id/g, String(movieId))}  >
+        <a className="btn btn--play movie-card__button">
+          <svg viewBox="0 0 19 19" width="19" height="19">
+            <use xlinkHref="#play-s" />
+          </svg>
+          <span>Play</span>
+        </a>
+      </Link>
+
       <button
         className="btn btn--list movie-card__button"
         type="button"

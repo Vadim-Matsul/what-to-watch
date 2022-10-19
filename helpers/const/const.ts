@@ -37,6 +37,7 @@ export const API_NAMES = {
 export const bePagesPaths = {
   currentMovie: '/films/[id]',
   currentMovieReview: '/films/[id]/review',
+  player: '/player/id',
   login: '/login',
   main: '/',
   favorite: '/favorites',

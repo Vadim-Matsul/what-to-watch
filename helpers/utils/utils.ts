@@ -67,3 +67,19 @@ export const getUpdatedMovies = (movies: Movies, movie: Movie): Movies => {
   movies.splice(movie.id - 1, 1, movie);
   return movies;
 };
+
+
+
+type inSeconds = number;
+export const getNormolizeVideoTime = (current: inSeconds, duration: inSeconds): string => {
+  const timeDifference = Math.trunc(duration - current);
+  const m = Math.trunc(timeDifference / 60);
+  const s = timeDifference % 60;
+  const h = Math.trunc(m / 60);
+
+  return [
+    ('0' + h),
+    ('0' + m).slice(-2),
+    ('0' + s).slice(-2),
+  ].join(':')
+};
