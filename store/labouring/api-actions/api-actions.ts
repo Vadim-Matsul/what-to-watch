@@ -4,7 +4,7 @@ import { AsyncThunkResult } from '../../store.types';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { API_NAMES, HTTP } from '../../../helpers/const/const';
 import { setMovieCover } from '../../reducers/data-reducer/basic-slice/basic-slice';
-import { Reviews } from '../../../types/reviews';
+import { ReviewFormData, Reviews } from '../../../types/reviews';
 import { LoginData, UserData } from '../../../types/user';
 import { getUpdatedMovies } from '../../../helpers/utils/utils';
 
@@ -98,4 +98,19 @@ export const API_ACTIONS = {
         dispatch(ACTIONS.setAuthStatus('NOAUTH'));
       }
     }),
+
+  postMovieReview: createAsyncThunk<void, ReviewFormData, AsyncThunkResult>(
+    API_NAMES.postMovieReview,
+    async (data, { dispatch, extra }) => {
+      try {
+        await extra.post(HTTP.CURRENT_REVIEWS_MOVIE.replace(/id/g, String(data.id)), {
+          comment: data.comment,
+          rating: data.rating
+        });
+        dispatch(ACTIONS.setActiveMovieItem('Reviews'));
+      } catch (err) {
+
+      }
+    }
+  )
 }

@@ -16,7 +16,7 @@ export const FavoritesStatus = {
 
 export const HTTP = {
   MOVIES: 'films',
-  FAVORITES: '/favorite',
+  FAVORITES: 'favorite',
   CURRENT_MOVIE: 'films/id',
   CURRENT_REVIEWS_MOVIE: 'comments/id',
   LOGIN: 'login',
@@ -30,7 +30,8 @@ export const API_NAMES = {
   fetchCurrentMovie: 'current/fetchCurrentMovie',
   checkAuthorization: 'user/checkAutorization',
   sendUserData: 'user/sendUserData',
-  logoutSession: 'user/logoutSession'
+  logoutSession: 'user/logoutSession',
+  postMovieReview: 'current/postMovieReview',
 };
 
 export const bePagesPaths = {
@@ -38,7 +39,7 @@ export const bePagesPaths = {
   currentMovieReview: '/films/[id]/review',
   login: '/login',
   main: '/',
-  favorite: '/favorites'
+  favorite: '/favorites',
 };
 
 export const ErrorConfig = {
@@ -46,7 +47,10 @@ export const ErrorConfig = {
   incorrectEmail: 'Incorrect email',
   incorrectPassword: 'Password must contain letters and numbers',
   shortPassword: 'Password must be more than 8 symbols',
-  globalError: 'Oops, try reloading the page'
+  shortComment: 'Please enter a comment over then 50 symbols',
+  longComment: 'You are very eloquent, please write less than 150 characters',
+  indicateRating: 'Please indicate the rating',
+  globalError: 'Oops, try reloading the page',
 }
 
 export const CurrentMovieNav = ['Overview', 'Details', 'Reviews'] as optionsMenu[];

@@ -1,19 +1,42 @@
+import React from 'react';
+import { ReviewFormRatingProps } from './ReviewFormRating.props';
 
 
-export const ReviewFormRating: React.FC = () => {
-  const Rating = new Array(5).fill(null);
+export const ReviewFormRating = React.forwardRef<HTMLDivElement, ReviewFormRatingProps>(
+  ({ setRating, error }, ref) => {
+    const Rating = [1, 2, 3, 4, 5];
 
-  return (
-    <div className="rating">
-      <div className="rating__stars">
-        {Rating.map((r, i) => (
-          <span key={i + 1}>
-            <input className="rating__input" id={`star-${i + 1}`} type="radio" name="rating" value={i + 1} />
-            <label className="rating__label" htmlFor={`star-${i + 1}`}>Rating {i + 1}</label>
-          </span>
-        ))}
-      </div>
-    </div>
 
-  )
-}
+    const handleChangeRating = (evt: React.MouseEvent<HTMLInputElement>) => {
+      const { value } = evt.target as HTMLInputElement;
+      setRating(value);
+    };
+
+    return (
+      <div
+        className="rating"
+        ref={ref}
+      >
+        <div className="rating__stars">
+          {Rating.map(r => (
+            <React.Fragment key={r} >
+              <input
+                className="rating__input"
+                id={`star-${r}`}
+                type="radio"
+                value={r}
+                name='rating'
+                onClick={handleChangeRating}
+              />
+              <label
+                className="rating__label"
+                htmlFor={`star-${r}`}>Rating {r}</label>
+            </React.Fragment>
+          ))}
+        </div>
+        <div className='center'>{error && error.message}</div>
+      </div >
+    );
+  });
+
+ReviewFormRating.displayName = 'ReviewFormRating';

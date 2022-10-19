@@ -22,3 +22,21 @@ body {
 @keyframes Loading {
   100% {transform: rotate(1turn)}
 }
+
+.handle-review-text {
+  overflow: scroll;
+  overflow-y: hidden;
+}
+
+.handle-review-text::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  border-radius: 5px;
+  margin: 5px;
+  background: #c9b37e;
+}
+
+.handle-review-text::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: #483f29;
+}

@@ -9,7 +9,7 @@ export const Review: React.FC<ReviewProps> = ({ review }) => {
   return (
     <div className="review">
       <blockquote className="review__quote">
-        <p className="review__text">{review.comment}</p>
+        <p className="review__text handle-review-text ">{review.comment}</p>
 
         <footer className="review__details">
           <cite className="review__author">{review.user.name}</cite>

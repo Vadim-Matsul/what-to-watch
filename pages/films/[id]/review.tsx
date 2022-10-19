@@ -13,9 +13,9 @@ import { Movie, Movies } from '../../../types/movies';
 interface MovieReviewProps { movie: Movie }
 
 const MovieReview: NextPage<MovieReviewProps> = ({ movie }) => {
-  const authStatus = useSelector( getAuthStatus );
+  const authStatus = useSelector(getAuthStatus);
 
-  if ( authStatus === 'NOAUTH' && !isServer ){ withRouter.push(bePagesPaths.main) }
+  if (authStatus === 'NOAUTH' && !isServer) { withRouter.push(bePagesPaths.main) }
 
   return (
     <>
@@ -30,7 +30,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const paths = await api.get<Movies>(HTTP.MOVIES).then(({ data: movies }) =>
     movies.map(movie => ({ params: { id: String(movie.id) } }))
   );
-
 
   return {
     paths: paths,

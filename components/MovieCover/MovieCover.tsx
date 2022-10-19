@@ -104,7 +104,7 @@ const MovieCover: React.FC<MovieCoverProps> = (props) => {
       </div>
 
       {isCurrentMoviePage && <MovieInformation movie_infogmation={movie_information} reviews={reviews} />}
-      {isCurrentMoviePageReview && <ReviewForm />}
+      {isCurrentMoviePageReview && <ReviewForm movieId={movie.id} />}
 
     </section >
   )

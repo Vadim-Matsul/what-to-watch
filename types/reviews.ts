@@ -12,3 +12,9 @@ export interface Review {
 }
 
 export type Reviews = Review[]
+
+export interface ReviewFormData {
+  id?: number 
+  rating: string,
+  comment: string
+} 
