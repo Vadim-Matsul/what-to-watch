@@ -7,6 +7,7 @@ import { getMovieCover, getSortedMovies } from '../../store/reducers/data-reduce
 import { getActiveGenre } from '../../store/reducers/app-reducer/app-slice-selectors';
 
 const MainPage: React.FC = () => {
+
   const coverMovie = useSelector(getMovieCover);
   const active_genre = useSelector(getActiveGenre);
   const moviesList = useSelector(getSortedMovies);

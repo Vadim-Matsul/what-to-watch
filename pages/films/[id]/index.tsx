@@ -10,7 +10,7 @@ import { getAuthStatus } from '../../../store/reducers/user-reducer/user-slice-s
 import { api, wrapper_Server_Client } from '../../../store/store';
 import { isAsyncDispatch } from '../../../store/store.types';
 import { Movie, Movies } from '../../../types/movies';
-import { Review, Reviews } from '../../../types/reviews';
+import { Reviews } from '../../../types/reviews';
 
 type MoviePageProps = { movie: Movie, reviews: Reviews };
 
@@ -58,12 +58,13 @@ export const getStaticProps: GetStaticProps<MoviePageProps> = wrapper_Server_Cli
     const { payload } = await dispatch(API_ACTIONS.fetchCurrentMovie(ctx.params.id as string));
 
     if (getState().data.current.status === 'rejected') {
-      ({
+
+      return {
         redirect: {
           destination: bePagesPaths.main,
           permanent: true
         }
-      });
+      };
     }
 
     return {

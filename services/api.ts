@@ -26,7 +26,9 @@ export const createAxiosInstance = (): AxiosInstance => {
 
   api.interceptors.request.use((request) => {
     const token = isServer ? null : getToken();
-    if (token) { request.headers['x-token'] = token; }
+    if (token) {
+      request.headers['x-token'] = token;
+    }
     if (request.method === 'delete') { deleteToken(); }
     return request
   });

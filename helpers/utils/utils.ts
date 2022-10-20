@@ -1,5 +1,6 @@
 import { AnyAction } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
+import React from 'react';
 import { HYDRATE_ACTION_TYPE } from '../../store/store.types';
 import { Movie, Movies, optionsMenu } from '../../types/movies';
 import { Reviews } from '../../types/reviews';
@@ -69,7 +70,6 @@ export const getUpdatedMovies = (movies: Movies, movie: Movie): Movies => {
 };
 
 
-
 type inSeconds = number;
 export const getNormolizeVideoTime = (current: inSeconds, duration: inSeconds): string => {
   const timeDifference = Math.trunc(duration - current);
@@ -83,3 +83,15 @@ export const getNormolizeVideoTime = (current: inSeconds, duration: inSeconds): 
     ('0' + s).slice(-2),
   ].join(':')
 };
+
+type RemoveLisener = void;
+export const guardEventListener = (
+  type: string,
+  element: HTMLElement,
+  listener: (event: Event) => void
+): () => RemoveLisener => {
+  if (!element) return;
+    
+  element.addEventListener(type, listener);
+  return () => element.removeEventListener(type, listener);
+}

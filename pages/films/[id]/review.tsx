@@ -42,12 +42,12 @@ export const getStaticProps: GetStaticProps = wrapper_Server_Client.getStaticPro
     const { payload } = await dispatch(API_ACTIONS.fetchCurrentMovie(ctx.params.id as string));
 
     if (getState().data.current.status === 'rejected') {
-      ({
+      return {
         redirect: {
           destination: bePagesPaths.main,
           permanent: true
         }
-      });
+      };
     }
 
     return { props: { movie: payload[0] } }

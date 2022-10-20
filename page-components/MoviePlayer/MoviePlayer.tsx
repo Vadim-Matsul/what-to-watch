@@ -2,22 +2,39 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { MoviePlayerProps } from './MoviePlayer.props';
 import { MovieButtonToggle } from '../../components/Player/MovieButtonToggle/MovieButtonToggle';
 import PlayerTime from '../../components/Player/PlayerTime/PlayerTime';
+import { useRouter } from 'next/router';
+import { bePagesPaths } from '../../helpers/const/const';
 
 
 
 const MoviePlayer: React.FC<MoviePlayerProps> = ({ movie }) => {
 
   const videoRef = useRef<HTMLVideoElement>();
+  const router = useRouter();
   const [playError, setPlayError] = useState<boolean | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
 
   const changePlayingState = useCallback(() => setIsPlaying(prev => !prev), []);
+  const handleExit = () => router.push(bePagesPaths.main);
+  const handleFullScreen = () => videoRef.current.requestFullscreen();
+
 
   useEffect(() => {
-    if (playError) videoRef.current.muted = true;
+    /**
+     * Во время размонтирования videoRef.current будет null, т.к React-Dom изменяется,
+     * блок очистки эффектов выполняется ассинхронно, вследствие removeEventListener удаляет эффекты у null,
+     * 
+     * Чтобы избежать ошибки: 
+     *       • Единожды сохраняем HTMLElement в переменную, в дальнейшем ссылаясь на неё;
+     *       • Возможно использовать useLayoutEffect, тем самым гарантируя синхронное поведение блока очистки,
+     *         Но это замедлит перерисовку React-Dom;
+     */
+    const instance = videoRef.current;
+
+    if (playError) instance.muted = true;
 
     // Начинаем загрузку фильма, чтобы в PlayerTime/listenerLoadMetaData по окончании единожды забрать duration
-    videoRef.current.load();
+    instance.load();
 
     /**
      *  При прямом переходе на страницу взаимодействия пользователя со страницей
@@ -27,20 +44,23 @@ const MoviePlayer: React.FC<MoviePlayerProps> = ({ movie }) => {
      * 
      *  !При переходе с других страниц в рамках SPA ошибка не возникает;
      */
-    videoRef.current.play().then(
+    instance.play().then(
       () => setPlayError(false),
       () => setPlayError(true)
     );
 
-    videoRef.current.addEventListener('ended', changePlayingState);
-    return () => videoRef.current.removeEventListener('ended', changePlayingState);
+    instance.addEventListener('ended', changePlayingState);
+    return () => instance.removeEventListener('ended', changePlayingState);
   }, [playError]);
+
 
   useEffect(() => {
     playError !== null && isPlaying
       ? videoRef.current.play()
       : videoRef.current.pause();
   }, [isPlaying]);
+
+
 
   return (
     <div className="player">
@@ -49,7 +69,11 @@ const MoviePlayer: React.FC<MoviePlayerProps> = ({ movie }) => {
         <source src={movie.videoLink} type='video/mp4' />
       </video>
 
-      <button type="button" className="player__exit">Exit</button>
+      <button
+        type="button"
+        className="player__exit"
+        onClick={handleExit}
+      >Exit</button>
 
       <div className="player__controls">
         <PlayerTime
@@ -57,17 +81,19 @@ const MoviePlayer: React.FC<MoviePlayerProps> = ({ movie }) => {
         />
 
         <div className="player__controls-row">
-
           <MovieButtonToggle
             isPlaying={isPlaying}
             changePlayingState={changePlayingState}
           />
-
           <div className="player__name">{movie.name}</div>
 
-          <button type="button" className="player__full-screen">
+          <button
+            type="button"
+            className="player__full-screen"
+            onClick={handleFullScreen}
+          >
             <svg viewBox="0 0 27 27" width="27" height="27">
-              <use xlinkHref="#full-screen"></use>
+              <use xlinkHref="#full-screen" />
             </svg>
             <span>Full screen</span>
           </button>

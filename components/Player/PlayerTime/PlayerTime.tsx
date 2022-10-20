@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { getNormolizeVideoTime } from '../../../helpers/utils/utils';
+import React, { useEffect, useMemo, useState } from 'react';
+import { getNormolizeVideoTime, guardEventListener } from '../../../helpers/utils/utils';
 import { PlayerTimeProps } from './PlayerTime.props';
 
 
@@ -23,20 +23,21 @@ const PlayerTime: React.FC<PlayerTimeProps> = ({ videoRef }) => {
       setDurationTime(Math.trunc(duration));
     };
 
-    videoRef.current.addEventListener('timeupdate', listenerChangeData);
-    videoRef.current.addEventListener('loadedmetadata', listenerLoadMetaData);
+    //! Т.к videoRef используется с модуля MoviePlayer, возможно значение null при размонтировании, 
+    //!     поведение не обрабатываем;
+    const removeTimeupdate = guardEventListener('timeupdate', videoRef.current, listenerChangeData);
+    const removeLoadedmetadata = guardEventListener('loadedmetadata', videoRef.current, listenerLoadMetaData);
 
     return () => {
-      videoRef.current.removeEventListener('timeupdate', listenerChangeData);
-      videoRef.current.removeEventListener('loadedmetadata', listenerLoadMetaData);
+      removeTimeupdate();
+      removeLoadedmetadata();
     };
   }, [durationTime]);
 
-  
   return (
     <div className="player__controls-row">
       <div className="player__time">
-        <progress className="player__progress" value={percent || 0} max="100"></progress>
+        <progress className="player__progress" value={percent || 0} max="100" />
         <div className="player__toggler" style={{ left: percent + '%' }} >Toggler</div>
       </div>
       <div className="player__time-value">{lastTime}</div>
@@ -44,5 +45,5 @@ const PlayerTime: React.FC<PlayerTimeProps> = ({ videoRef }) => {
   );
 };
 
-export default React.memo(PlayerTime)
+export default React.memo(PlayerTime);
 
