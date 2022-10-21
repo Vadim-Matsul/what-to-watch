@@ -1,8 +1,10 @@
 import { AnyAction } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
 import React from 'react';
+import MoviePlayer from '../../page-components/MoviePlayer/MoviePlayer';
 import { deleteOrderFavorite, getOrderFavorites, setOrderFav, setOrderFavorites } from '../../services/storage';
-import { HYDRATE_ACTION_TYPE } from '../../store/store.types';
+import { basicInitialState_Interface } from '../../store/reducers/data-reducer/basic-slice/basic-types';
+import { HYDRATE_ACTION_TYPE, RootState } from '../../store/store.types';
 import { Movie, movieFavoriteData, Movies, optionsMenu, OrderDataObj } from '../../types/movies';
 import { Reviews } from '../../types/reviews';
 import { ALL_GENRES, Months } from '../const/const';
@@ -65,10 +67,21 @@ export const getDate = (dateString: string): string[] => {
   ];
 };
 
-export const getUpdatedMovies = (movies: Movies, movie: Movie): Movies => {
-  movies.splice(movie.id - 1, 1, movie);
-  return movies;
-};
+
+export const UpdateMoviesData = (getState: () => RootState, DATA: movieFavoriteData, data: Movie): [Movies, Movies] => {
+  const basicState: basicInitialState_Interface = JSON.parse(JSON.stringify(getState().data.basic));
+  const { movies, favorites_movies } = basicState;
+
+  if (DATA.status === '1') {
+    favorites_movies.push(data);
+  } else {
+    const favInd = favorites_movies.findIndex(movie => movie.id === data.id)
+    favorites_movies.splice(favInd, 1);
+  }
+
+  movies.splice(data.id - 1, 1, data);
+  return [movies, favorites_movies]
+}
 
 
 type inSeconds = number;

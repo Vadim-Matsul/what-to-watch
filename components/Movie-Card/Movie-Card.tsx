@@ -8,19 +8,17 @@ import classNames from 'classnames';
 import { useDrag } from '../hooks/useDrag';
 
 const MovieCard: React.FC<MovieCardProps> = (props) => {
-  const { imgTitle, posterImage, id, previewLink } = props;
-  const { pathname } = useRouter();
-  const isFavoritesPage = bePagesPaths.favorite === pathname;
+  const { imgTitle, posterImage, id, previewLink, isFavorite } = props;
   const cardRef = useRef<HTMLElement>();
 
-  useDrag(cardRef, isFavoritesPage, id);
+  useDrag(cardRef, isFavorite, id);
 
   const cardClass = classNames('small-movie-card__link', {
-    'draggable': isFavoritesPage
+    'draggable': isFavorite
   });
 
   return (
-    <article className='small-movie-card catalog__movies-card' draggable={isFavoritesPage} ref={cardRef} >
+    <article className='small-movie-card catalog__movies-card' draggable={isFavorite} ref={cardRef} >
       <Link href={bePagesPaths.currentMovie.replace('[id]', String(id))} scroll={false}  >
         <a className={cardClass}>
           <VideoPlayer previewLink={previewLink} posterImage={posterImage} isFavoritesPage />

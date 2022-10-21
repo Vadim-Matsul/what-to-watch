@@ -5,11 +5,13 @@ import { getSortedMovies } from '../../store/reducers/data-reducer/basic-slice/b
 import { getActiveGenre } from '../../store/reducers/app-reducer/app-slice-selectors';
 import { useEffect, useState } from 'react';
 import { ALL_GENRES } from '../../helpers/const/const';
+import Link from 'next/link';
+import { bePagesPaths } from '../../helpers/const/const';
 
-
-const MovieList: React.FC<MovieListProps> = ({ movies }) => {
+const MovieList: React.FC<MovieListProps> = ({ movies, isFavorite = false }) => {
 
   const [ind, setInd] = useState<number>(4);
+  const shouldShowEmpty = isFavorite && !movies.length;
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -28,7 +30,7 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
     }
   }, [ind])
 
-  
+
   return (
     <>
       <div className="catalog__movies-list" >
@@ -39,8 +41,18 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
             posterImage={movie.previewImage}
             previewLink={movie.previewVideoLink}
             id={movie.id}
+            isFavorite={isFavorite}
           />)}
       </div>
+      {shouldShowEmpty &&
+        <Link href={bePagesPaths.main}>
+          <a className='btn' >
+            <span className='text-center' >
+              ADD MOVIES
+            </span>
+          </a>
+        </Link>
+      }
       <div id='showMore' />
     </>
   );

@@ -21,8 +21,7 @@ export const MovieButtons: React.FC<MovieButtonsProps> = ({ isFavorite, movieId 
   useEffect(() => {
     if (authStatus === 'NOAUTH') { setChosen(false); return; }
     setChosen(isFavorite);
-  }, [isFavorite, authStatus])
-
+  }, [authStatus, isFavorite])
 
 
   const handleAddInFavorites = async () => {
@@ -32,7 +31,6 @@ export const MovieButtons: React.FC<MovieButtonsProps> = ({ isFavorite, movieId 
       status: chosen ? FavoritesStatus.DELETE : FavoritesStatus.ADD
     };
     await dispatch(API_ACTIONS.changeFavorites(movieData));
-    setChosen(prev => !prev);
   };
 
   return (

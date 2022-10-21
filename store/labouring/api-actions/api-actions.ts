@@ -6,7 +6,7 @@ import { API_NAMES, HTTP } from '../../../helpers/const/const';
 import { setMovieCover } from '../../reducers/data-reducer/basic-slice/basic-slice';
 import { ReviewFormData, Reviews } from '../../../types/reviews';
 import { LoginData, UserData } from '../../../types/user';
-import { changeOrderStage, getUpdatedMovies } from '../../../helpers/utils/utils';
+import { changeOrderStage, UpdateMoviesData } from '../../../helpers/utils/utils';
 import { setOrderFavorites } from '../../../services/storage';
 
 export const API_ACTIONS = {
@@ -56,9 +56,10 @@ export const API_ACTIONS = {
       try {
         const { data } = await extra.post<Movie>(HTTP.FAVORITES + `/${DATA.id}/` + DATA.status);
         changeOrderStage(DATA);
-        const currentMovies = getState().data.basic.movies;
-        const updatedMovies = getUpdatedMovies(currentMovies, data);
-        dispatch(ACTIONS.setMovies(updatedMovies));
+        const [movies, favMovies] = UpdateMoviesData(getState, DATA, data);
+        dispatch(ACTIONS.setMovies(movies));
+        dispatch(ACTIONS.setFavoritesMovies(favMovies));
+        console.log('changeFavorites');
       } catch (err) {
 
       }

@@ -27,6 +27,7 @@ const MovieCover: React.FC<MovieCoverProps> = (props) => {
       })
   })();
 
+  console.log(movie.isFavorite, movie.id);
 
 
   const { pathname } = useRouter();
@@ -106,6 +107,7 @@ const MovieCover: React.FC<MovieCoverProps> = (props) => {
 
       {isCurrentMoviePage && <MovieInformation movie_infogmation={movie_information} reviews={reviews} />}
       {isCurrentMoviePageReview && <ReviewForm movieId={movie.id} />}
+
 
     </section >
   )

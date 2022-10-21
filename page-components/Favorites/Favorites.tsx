@@ -10,14 +10,16 @@ import { getFavoritesMovies, getSortedFavoritesMovies } from '../../store/reduce
 export const MyFavoritesList: React.FC = () => {
   const favoritesMovies = isServer ? [] : useSelector(getSortedFavoritesMovies);
 
+
   return (
     <div className="user-page">
       <Header isFavorite />
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-        <MovieList movies={favoritesMovies} />
+        <MovieList movies={favoritesMovies} isFavorite />
+
       </section>
-      <Footer />
+      <Footer shouldShowTrash={Boolean(favoritesMovies.length)} />
     </div>
   );
 };
