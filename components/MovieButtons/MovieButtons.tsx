@@ -12,16 +12,18 @@ import { MovieButtonsProps } from './MovieButtons.props';
 
 export const MovieButtons: React.FC<MovieButtonsProps> = ({ isFavorite, movieId }) => {
 
+  const authStatus = useSelector(getAuthStatus);
+  const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const [chosen, setChosen] = useState<boolean>(isFavorite);
 
   useEffect(() => {
-    setChosen(isFavorite)
-  }, [isFavorite, movieId])
+    if (authStatus === 'NOAUTH') { setChosen(false); return; }
+    setChosen(isFavorite);
+  }, [isFavorite, authStatus])
 
-  const authStatus = useSelector(getAuthStatus);
-  const router = useRouter();
-  const dispatch = useAppDispatch();
+
 
   const handleAddInFavorites = async () => {
     if (authStatus === 'NOAUTH') { router.push(bePagesPaths.login); return }

@@ -15,7 +15,8 @@ export interface Movie {
   id: number
   isFavorite: boolean
   videoLink: string
-  previewVideoLink: string
+  previewVideoLink: string,
+  order?: number
 };
 
 export type Movies = Movie[];
@@ -45,3 +46,10 @@ export type movieFavoriteData = {
   id: number,
   status: string
 };
+
+export type OrderDataObj = {
+  id: number,
+  order: number
+};
+
+export type OrderData = OrderDataObj[];

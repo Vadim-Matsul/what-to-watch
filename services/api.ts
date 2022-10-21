@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios'
 import { CONFIG, isServer } from '../helpers/const/const'
 import { UserData } from '../types/user';
-import { deleteToken, getToken, setToken } from './storage'
+import { deleteOrderFav, deleteToken, firstSetOrderFav, getToken, setToken } from './storage'
 
 
 export const createAxiosInstance = (): AxiosInstance => {
@@ -17,6 +17,7 @@ export const createAxiosInstance = (): AxiosInstance => {
     (response: AxiosResponse<UserData>) => {
       if (response.config.method === 'post' && response.data.token) {
         setToken(response.data.token);
+        firstSetOrderFav();
         delete response.data.token;
       }
       return response;
@@ -29,7 +30,7 @@ export const createAxiosInstance = (): AxiosInstance => {
     if (token) {
       request.headers['x-token'] = token;
     }
-    if (request.method === 'delete') { deleteToken(); }
+    if (request.method === 'delete') { deleteToken(); deleteOrderFav(); }
     return request
   });
 

@@ -1,8 +1,9 @@
 import { AnyAction } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
 import React from 'react';
+import { deleteOrderFavorite, getOrderFavorites, setOrderFav, setOrderFavorites } from '../../services/storage';
 import { HYDRATE_ACTION_TYPE } from '../../store/store.types';
-import { Movie, Movies, optionsMenu } from '../../types/movies';
+import { Movie, movieFavoriteData, Movies, optionsMenu, OrderDataObj } from '../../types/movies';
 import { Reviews } from '../../types/reviews';
 import { ALL_GENRES, Months } from '../const/const';
 
@@ -91,7 +92,25 @@ export const guardEventListener = (
   listener: (event: Event) => void
 ): () => RemoveLisener => {
   if (!element) return;
-    
+
   element.addEventListener(type, listener);
   return () => element.removeEventListener(type, listener);
 }
+
+export const changeOrderStage = ({ id, status }: movieFavoriteData) => {
+  status === '1'
+    ? setOrderFavorites({ id: id, order: id } as OrderDataObj)
+    : deleteOrderFavorite(id);
+};
+
+export const changeOrderMovies = (startId: number, droppedId: number) => {
+  const actual = getOrderFavorites();
+
+  const orderStart = actual.find(obj => obj.id === startId).order;
+  const orderDropped = actual.find(obj => obj.id === droppedId).order;
+
+  actual.forEach(data => { if (data.id === startId) data.order = orderDropped });
+  actual.forEach(data => { if (data.id === droppedId) data.order = orderStart });
+
+  setOrderFav(JSON.stringify(actual));
+};

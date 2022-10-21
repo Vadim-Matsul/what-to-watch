@@ -3,11 +3,12 @@ import { useSelector } from 'react-redux';
 import { Footer } from '../../components/Footer/Footer';
 import { Header } from '../../components/Header/Header';
 import MovieList from '../../components/Move-List/Movie-List';
-import { getFavoritesMovies } from '../../store/reducers/data-reducer/basic-slice/basic-slice-selectors';
+import { isServer } from '../../helpers/const/const';
+import { getFavoritesMovies, getSortedFavoritesMovies } from '../../store/reducers/data-reducer/basic-slice/basic-slice-selectors';
 
 
 export const MyFavoritesList: React.FC = () => {
-  const favoritesMovies = useSelector(getFavoritesMovies);
+  const favoritesMovies = isServer ? [] : useSelector(getSortedFavoritesMovies);
 
   return (
     <div className="user-page">

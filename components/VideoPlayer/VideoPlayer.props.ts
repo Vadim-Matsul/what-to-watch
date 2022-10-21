@@ -1,6 +1,7 @@
 
 
-export interface VideoPlayerProps  {
+export interface VideoPlayerProps {
   posterImage: string,
-  previewLink: string
+  previewLink: string,
+  isFavoritesPage?: boolean
 }

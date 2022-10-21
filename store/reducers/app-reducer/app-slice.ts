@@ -12,9 +12,12 @@ export const appSlice = createSlice({
     },
     setActiveMovieItem(state, action: PayloadAction<optionsMenu>) {
       state.active_movie_item = action.payload
+    },
+    setActiveFavId(state, action: PayloadAction<number>) {
+      state.active_fav_id = action.payload
     }
   }
 });
 
 
-export const { setActiveGenre, setActiveMovieItem } = appSlice.actions;
+export const { setActiveGenre, setActiveMovieItem, setActiveFavId } = appSlice.actions;

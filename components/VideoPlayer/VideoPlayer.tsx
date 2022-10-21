@@ -3,7 +3,7 @@ import { VideoPlayerProps } from './VideoPlayer.props'
 
 
 
-export const VideoPlayer: React.FC<VideoPlayerProps> = ({ previewLink, posterImage }) => {
+export const VideoPlayer: React.FC<VideoPlayerProps> = ({ previewLink, posterImage, isFavoritesPage = false }) => {
 
   const wrapperVideo = useRef<HTMLVideoElement>();
   const videoTimeout = useRef<NodeJS.Timeout>();
@@ -15,16 +15,18 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ previewLink, posterIma
     current.poster = posterImage;
     current.muted;
 
-    return clearTimeout(videoTimeout.current);
+    return () => clearTimeout(videoTimeout.current);
   }, []);
 
   const handleVideoPlay = () => {
+    if (isFavoritesPage) return;
     videoTimeout.current = setTimeout(() => {
       wrapperVideo.current.play();
     }, 1000);
   };
 
   const handleVideoPause = () => {
+    if (isFavoritesPage) return;
     wrapperVideo.current.load();
     clearTimeout(videoTimeout.current);
   }
@@ -35,7 +37,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ previewLink, posterIma
       onMouseEnter={handleVideoPlay}
       onMouseLeave={handleVideoPause}
     >
-      <video ref={wrapperVideo} >
+      <video ref={ wrapperVideo} >
         <source src={previewLink} />
       </video>
     </div>

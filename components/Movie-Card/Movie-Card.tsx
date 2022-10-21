@@ -1,20 +1,33 @@
 import { MovieCardProps } from './Movie-Card.props'
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import Link from 'next/link';
 import { VideoPlayer } from '../VideoPlayer/VideoPlayer';
+import { useRouter } from 'next/router';
+import { bePagesPaths } from '../../helpers/const/const';
+import classNames from 'classnames';
+import { useDrag } from '../hooks/useDrag';
 
 const MovieCard: React.FC<MovieCardProps> = (props) => {
   const { imgTitle, posterImage, id, previewLink } = props;
+  const { pathname } = useRouter();
+  const isFavoritesPage = bePagesPaths.favorite === pathname;
+  const cardRef = useRef<HTMLElement>();
+
+  useDrag(cardRef, isFavoritesPage, id);
+
+  const cardClass = classNames('small-movie-card__link', {
+    'draggable': isFavoritesPage
+  });
 
   return (
-    <article className="small-movie-card catalog__movies-card" >
-      <Link href={`/films/${id}`} scroll={false} >
-        <a className="small-movie-card__link" >
-          <VideoPlayer previewLink={previewLink} posterImage={posterImage} />
-          <h3 className="small-movie-card__title">{imgTitle}</h3>
+    <article className='small-movie-card catalog__movies-card' draggable={isFavoritesPage} ref={cardRef} >
+      <Link href={bePagesPaths.currentMovie.replace('[id]', String(id))} scroll={false}  >
+        <a className={cardClass}>
+          <VideoPlayer previewLink={previewLink} posterImage={posterImage} isFavoritesPage />
+          <h3 className="small-movie-card__title movie-title-link">{imgTitle}</h3>
         </a>
-      </Link>
-    </article>
+      </Link >
+    </article >
   );
 };
 
