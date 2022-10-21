@@ -12,8 +12,18 @@ import { isServer } from '../helpers/const/const';
 export default function MyApp({ Component, ...rest }) {
 
   const { store, props: { pageProps } } = wrapper_Server_Client.useWrappedStore(rest);
-  !isServer && store.dispatch(API_ACTIONS.checkAutorization() as unknown as AnyAction);
-  !isServer && store.dispatch(API_ACTIONS.fetchFavorites() as unknown as AnyAction);
+
+
+  /**
+   * Таким образом исключаем ошибку обновления
+   *       при рендеринге компонента
+   */
+  (async function () {
+    if (!isServer) {
+      await store.dispatch(API_ACTIONS.checkAutorization() as unknown as AnyAction);
+      await store.dispatch(API_ACTIONS.fetchFavorites() as unknown as AnyAction);
+    }
+  })();
 
   return (
     <Provider store={store} >
@@ -22,7 +32,7 @@ export default function MyApp({ Component, ...rest }) {
   );
 };
 
-MyApp.getInitialProps = wrapper_Server_Client.getInitialAppProps(({ dispatch, getState }: isAsyncDispatch) => async ctx => {
+MyApp.getInitialProps = wrapper_Server_Client.getInitialAppProps(({ dispatch }: isAsyncDispatch) => async ctx => {
   await dispatch(API_ACTIONS.fetchMovies());
   return {
     pageProps: {

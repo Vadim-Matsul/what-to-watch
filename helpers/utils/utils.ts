@@ -75,13 +75,13 @@ export const UpdateMoviesData = (getState: () => RootState, DATA: movieFavoriteD
   if (DATA.status === '1') {
     favorites_movies.push(data);
   } else {
-    const favInd = favorites_movies.findIndex(movie => movie.id === data.id)
+    const favInd = favorites_movies.findIndex(movie => movie.id === data.id);
     favorites_movies.splice(favInd, 1);
   }
 
   movies.splice(data.id - 1, 1, data);
-  return [movies, favorites_movies]
-}
+  return [movies, favorites_movies];
+};
 
 
 type inSeconds = number;

@@ -4,14 +4,17 @@ import { useSelector } from 'react-redux';
 import { getSortedMovies } from '../../store/reducers/data-reducer/basic-slice/basic-slice-selectors';
 import { getActiveGenre } from '../../store/reducers/app-reducer/app-slice-selectors';
 import { useEffect, useState } from 'react';
-import { ALL_GENRES } from '../../helpers/const/const';
+import { ALL_GENRES, isServer } from '../../helpers/const/const';
 import Link from 'next/link';
 import { bePagesPaths } from '../../helpers/const/const';
 
 const MovieList: React.FC<MovieListProps> = ({ movies, isFavorite = false }) => {
 
   const [ind, setInd] = useState<number>(4);
-  const shouldShowEmpty = isFavorite && !movies.length;
+  const shouldShowEmpty = isFavorite && !movies.length
+
+  console.log(ind);
+
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -22,13 +25,13 @@ const MovieList: React.FC<MovieListProps> = ({ movies, isFavorite = false }) => 
           setInd(prev => prev += 4);
           observer.unobserve(entries[0].target);
         }
-      }, { root: null, rootMargin: '100px' });
+      }, { root: null, threshold: [0.1, 0.3, 0.7, 1], rootMargin: '40px' });
 
       ind >= movies.length
         ? observer.disconnect()
         : observer.observe(document.getElementById('showMore'));
     }
-  }, [ind])
+  }, [ind, movies])
 
 
   return (
@@ -53,7 +56,7 @@ const MovieList: React.FC<MovieListProps> = ({ movies, isFavorite = false }) => 
           </a>
         </Link>
       }
-      <div id='showMore' />
+      <div id='showMore' className='show-more' />
     </>
   );
 };

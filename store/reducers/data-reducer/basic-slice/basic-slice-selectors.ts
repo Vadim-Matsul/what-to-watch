@@ -2,6 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import { ALL_GENRES } from '../../../../helpers/const/const';
 import { getOrderFavorites } from '../../../../services/storage';
 import { Movie, Movies } from '../../../../types/movies';
+import { Status } from '../../../../types/user';
 import { Selector } from '../../../store.types';
 
 
@@ -12,6 +13,8 @@ export const getMovieCover: Selector<Movie> = (state) => {
 };
 
 export const getFavoritesMovies: Selector<Movies> = (state) => state.data.basic.favorites_movies;
+
+export const getBasicStatus: Selector<Status> = (state) => state.data.basic.status;
 
 export const getSortedFavoritesMovies: Selector<Movies> = (state) => {
 

@@ -40,12 +40,12 @@ export const API_ACTIONS = {
 
   fetchFavorites: createAsyncThunk<void, void, AsyncThunkResult>(
     API_NAMES.fetchFavorites,
-    async (_, { dispatch, extra }) => {
+    async (_, { dispatch, extra, rejectWithValue }) => {
       try {
         const { data } = await extra.get<Movies>(HTTP.FAVORITES);
         dispatch(ACTIONS.setFavoritesMovies(data));
       } catch (err) {
-
+        return rejectWithValue('');
       }
     }
   ),
@@ -59,7 +59,6 @@ export const API_ACTIONS = {
         const [movies, favMovies] = UpdateMoviesData(getState, DATA, data);
         dispatch(ACTIONS.setMovies(movies));
         dispatch(ACTIONS.setFavoritesMovies(favMovies));
-        console.log('changeFavorites');
       } catch (err) {
 
       }

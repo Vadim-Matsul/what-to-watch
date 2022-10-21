@@ -27,8 +27,6 @@ const MovieCover: React.FC<MovieCoverProps> = (props) => {
       })
   })();
 
-  console.log(movie.isFavorite, movie.id);
-
 
   const { pathname } = useRouter();
 

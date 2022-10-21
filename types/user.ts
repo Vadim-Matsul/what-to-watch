@@ -1,4 +1,4 @@
-export type Status = 'fulfilled' | 'rejected' | 'none';
+export type Status = 'fulfilled' | 'rejected' | 'none' | 'pending';
 
 export interface UserData {
   id: number

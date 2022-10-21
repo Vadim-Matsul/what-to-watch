@@ -3,6 +3,7 @@ import { basicInitialState } from './basic-state';
 import { PayloadAction } from '@reduxjs/toolkit'
 import { Movie, Movies } from '../../../../types/movies';
 import { isHydrateAction } from '../../../../helpers/utils/utils';
+import { isFetchFavoritesMovies_F, isFetchFavoritesMovies_P, isFetchFavoritesMovies_R } from './basic-types';
 
 export const basicSlice = createSlice({
   name: 'basic',
@@ -25,6 +26,11 @@ export const basicSlice = createSlice({
         ? { ...action.payload.data.basic }  // HYDRATE ACTION из _app, заменяемый нулевое состояние
         : { ...state }    // HYDRATE ACTION со страницы, который не должен заменять уже существующие состояние, полученное HYDRATE ACTION из _app
     });
+
+    builder.addMatcher(isFetchFavoritesMovies_F, (state, action) => { state.status = action.meta.requestStatus });
+    builder.addMatcher(isFetchFavoritesMovies_P, (state, action) => { state.status = action.meta.requestStatus });
+    builder.addMatcher(isFetchFavoritesMovies_R, (state, action) => { state.status = action.meta.requestStatus });
+
   }
 });
 

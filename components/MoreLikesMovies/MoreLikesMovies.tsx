@@ -12,8 +12,13 @@ export const MoreLikesMovies: React.FC<MoreLikesMoviesProps> = ({ curent_movie_i
 
   return (
     <section className="catalog catalog--like-this">
-      <h2 className="catalog__title">More like this</h2>
-      <MovieList movies={filterdMovies} />
+      {filterdMovies.length
+        ? <>
+          <h2 className="catalog__title">More like this</h2>
+          <MovieList movies={filterdMovies} />
+        </>
+        : <></>
+      }
     </section>
   );
 };

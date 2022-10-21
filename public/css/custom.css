@@ -101,3 +101,7 @@ body {
 .text-center {
   margin: 0 auto;
 }
+
+.show-more {
+  height: 80px;
+}
