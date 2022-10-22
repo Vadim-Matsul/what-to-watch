@@ -6,3 +6,5 @@ export const dataReducer = combineReducers({
   basic: basicSlice.reducer,
   current: currentSlice.reducer
 });
+
+export type dataReducerInterface = ReturnType<typeof dataReducer>;

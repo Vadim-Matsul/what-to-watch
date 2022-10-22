@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { bePagesPaths, FavoritesStatus } from '../../helpers/const/const';
 import { useAppDispatch } from '../../helpers/Hooks/useAppDispatch';
@@ -21,7 +21,9 @@ export const MovieButtons: React.FC<MovieButtonsProps> = ({ isFavorite, movieId 
   useEffect(() => {
     if (authStatus === 'NOAUTH') { setChosen(false); return; }
     setChosen(isFavorite);
-  }, [authStatus, isFavorite])
+
+    return () => setChosen(isFavorite);
+  }, [authStatus, isFavorite, movieId])
 
 
   const handleAddInFavorites = async () => {

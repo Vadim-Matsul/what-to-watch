@@ -11,22 +11,25 @@ import { useSelector } from 'react-redux';
 import { getFavoritesMovies } from '../../store/reducers/data-reducer/basic-slice/basic-slice-selectors';
 import { ReviewForm } from '../ReviewForm/ReviewForm';
 import Link from 'next/link';
+import { useEffect, useLayoutEffect } from 'react';
+import { Movie } from '../../types/movies';
 
 const MovieCover: React.FC<MovieCoverProps> = (props) => {
-  const { movie, reviews, shouldShowBreadcrumbsHeader = false } = props;
+  const { movie: draftMovie, reviews, shouldShowBreadcrumbsHeader = false } = props;
   const favoritesMovies = useSelector(getFavoritesMovies);
+  const editableMovie: Movie = JSON.parse(JSON.stringify(draftMovie));
 
   // самовызывающаяся функция вместо useEffect сделана для того,
   // чтобы до полной отрисовки у фильма праивильно определялось состояние isFavorite
   (function () {
-    favoritesMovies.length &&
-      favoritesMovies.forEach(favoriteMovie => {
-        if (favoriteMovie.id === movie.id) {
-          movie.isFavorite = true;
+    favoritesMovies.length
+      ? favoritesMovies.forEach(favoriteMovie => {
+        if (favoriteMovie.id === editableMovie.id) {
+          editableMovie.isFavorite = true
         }
       })
+      : editableMovie.isFavorite = false;
   })();
-
 
   const { pathname } = useRouter();
 
@@ -42,21 +45,21 @@ const MovieCover: React.FC<MovieCoverProps> = (props) => {
   const posterClass = ClassNames("movie-card__poster", { ['movie-card__poster--small']: isCurrentMoviePageReview });
   const wrapClass = ClassNames({ "movie-card__wrap": !isCurrentMoviePageReview });
 
-  const movie_information = convertInMovieInformation(movie);
+  const movie_information = convertInMovieInformation(editableMovie);
 
 
   return (
     <section
       className={sectionClass}
-      style={{ background: movie.backgroundColor }}
+      style={{ background: editableMovie.backgroundColor }}
     >
       <div className={cardHeroClass} >
         <div className="movie-card__bg">
           <Image
-            src={movie.backgroundImage}
-            alt={movie.name}
+            src={editableMovie.backgroundImage}
+            alt={editableMovie.name}
             layout='fill'
-            blurDataURL={movie.backgroundImage}
+            blurDataURL={editableMovie.backgroundImage}
             placeholder='blur'
           />
         </div>
@@ -71,11 +74,11 @@ const MovieCover: React.FC<MovieCoverProps> = (props) => {
             {!isCurrentMoviePage &&
               <div className={posterClass}>
                 <Image
-                  src={movie.posterImage}
-                  alt={movie.name}
+                  src={editableMovie.posterImage}
+                  alt={editableMovie.name}
                   width={218}
                   height={327}
-                  blurDataURL={movie.posterImage}
+                  blurDataURL={editableMovie.posterImage}
                   placeholder='blur'
                 />
               </div>
@@ -83,18 +86,18 @@ const MovieCover: React.FC<MovieCoverProps> = (props) => {
 
             {!isCurrentMoviePageReview &&
               <div className="movie-card__desc">
-                <h2 className="movie-card__title">{movie.name}</h2>
+                <h2 className="movie-card__title">{editableMovie.name}</h2>
                 <p className="movie-card__meta">
-                  <span className="movie-card__genre">{movie.genre}</span>
-                  <span className="movie-card__year">{movie.released}</span>
+                  <span className="movie-card__genre">{editableMovie.genre}</span>
+                  <span className="movie-card__year">{editableMovie.released}</span>
                 </p>
 
                 <div className="movie-card__buttons">
                   <MovieButtons
-                    isFavorite={movie.isFavorite}
-                    movieId={movie.id}
+                    isFavorite={editableMovie.isFavorite}
+                    movieId={editableMovie.id}
                   />
-                  {isCurrentMoviePage && <Link href={bePagesPaths.currentMovieReview.replace('[id]', String(movie.id))}>
+                  {isCurrentMoviePage && <Link href={bePagesPaths.currentMovieReview.replace('[id]', String(editableMovie.id))}>
                     <a className="btn movie-card__button">Add review</a>
                   </Link>}
                 </div>
@@ -104,7 +107,7 @@ const MovieCover: React.FC<MovieCoverProps> = (props) => {
       </div>
 
       {isCurrentMoviePage && <MovieInformation movie_infogmation={movie_information} reviews={reviews} />}
-      {isCurrentMoviePageReview && <ReviewForm movieId={movie.id} />}
+      {isCurrentMoviePageReview && <ReviewForm movieId={editableMovie.id} />}
 
 
     </section >

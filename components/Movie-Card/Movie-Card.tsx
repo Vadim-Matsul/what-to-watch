@@ -5,7 +5,7 @@ import { VideoPlayer } from '../VideoPlayer/VideoPlayer';
 import { useRouter } from 'next/router';
 import { bePagesPaths } from '../../helpers/const/const';
 import classNames from 'classnames';
-import { useDrag } from '../hooks/useDrag';
+import { useDrag } from '../../helpers/Hooks/useDrag';
 
 const MovieCard: React.FC<MovieCardProps> = (props) => {
   const { imgTitle, posterImage, id, previewLink, isFavorite } = props;

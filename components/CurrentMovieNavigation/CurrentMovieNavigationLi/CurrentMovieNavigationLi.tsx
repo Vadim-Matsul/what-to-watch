@@ -1,8 +1,8 @@
 import { CurrentMovieNavigationLiProps } from './CurrentMovieNavigationLi.props'
-import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
 import { ACTIONS } from '../../../store/labouring/actions/actions';
 import { getActiveMovieItem } from '../../../store/reducers/app-reducer/app-slice-selectors';
+import classNames from 'classnames';
 
 export const CurrentMovieNavigationLi: React.FC<CurrentMovieNavigationLiProps> = ({ item }) => {
 
@@ -20,5 +20,5 @@ export const CurrentMovieNavigationLi: React.FC<CurrentMovieNavigationLiProps> =
     >
       <span className="movie-nav__link">{item}</span>
     </li>
-  )
-}
+  );
+};

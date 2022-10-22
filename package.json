@@ -15,12 +15,15 @@
     "redux-thunk": "^2.4.1"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
+    "@jedmao/redux-mock-store": "^3.0.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
     "@types/node": "18.8.3",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
+    "axios-mock-adapter": "^1.21.2",
     "cross-env": "^7.0.3",
     "eslint": "^8.25.0",
     "jest": "^29.1.2",

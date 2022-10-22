@@ -94,7 +94,7 @@ body {
   cursor: crosshair;
 }
 
-.trash:hover > g {
+.trash:hover > svg > g {
   fill: rgba(203, 51, 17, 0.807);
 }
 

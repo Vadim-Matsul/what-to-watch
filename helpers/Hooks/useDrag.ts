@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeOrderMovies, guardEventListener } from '../../helpers/utils/utils';
+import { changeOrderMovies, guardEventListener } from '../utils/utils';
 import { ACTIONS } from '../../store/labouring/actions/actions';
 import { getActiveFavId } from '../../store/reducers/app-reducer/app-slice-selectors';
 

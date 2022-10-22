@@ -13,8 +13,6 @@ const MovieList: React.FC<MovieListProps> = ({ movies, isFavorite = false }) => 
   const [ind, setInd] = useState<number>(4);
   const shouldShowEmpty = isFavorite && !movies.length
 
-  console.log(ind);
-
 
   useEffect(() => {
     if (typeof window !== 'undefined') {

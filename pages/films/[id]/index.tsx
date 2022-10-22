@@ -18,7 +18,6 @@ type MoviePageProps = { movie: Movie, reviews: Reviews };
 const MoviePage: NextPage<MoviePageProps> = ({ movie, reviews }) => {
 
   const [reviewsState, setReviewsState] = useState<Reviews>(reviews);
-
   const dispatch = useAppDispatch();
   const authStatus = useSelector(getAuthStatus);
 
@@ -58,7 +57,6 @@ export const getStaticProps: GetStaticProps<MoviePageProps> = wrapper_Server_Cli
     const { payload } = await dispatch(API_ACTIONS.fetchCurrentMovie(ctx.params.id as string));
 
     if (getState().data.current.status === 'rejected') {
-
       return {
         redirect: {
           destination: bePagesPaths.main,
