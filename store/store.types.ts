@@ -30,3 +30,5 @@ export type AsyncThunkResult = {
 export type isAsyncDispatch<Returned = void> = {
   dispatch: <R = Returned, A = AsyncThunkAction<R, any, AsyncThunkResult>>(value: A) => Promise<R>
 } & RootStore;
+
+export const constrictType = <T extends string>(type: T) => type;

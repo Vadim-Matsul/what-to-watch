@@ -8,7 +8,8 @@ import { Review, Reviews, User } from '../../types/reviews';
  */
 
 export const createMovie = (
-  isFavorite = false
+  isFavorite = false,
+  id: number = faker.datatype.number({ min: 1, max: 2000 })
 ): Movie => ({
   name: faker.commerce.productName(),
   posterImage: faker.image.imageUrl(),
@@ -23,13 +24,15 @@ export const createMovie = (
   runTime: faker.datatype.number({ min: 30, max: 150 }),
   genre: faker.commerce.productAdjective(),
   released: faker.datatype.number({ min: 1970, max: 2022 }),
-  id: faker.datatype.number({ min: 1, max: 2000 }),
+  id: id,
   isFavorite: isFavorite,
   videoLink: 'https://www.youtube.com/watch?v=fKopy74weus',
   previewVideoLink: 'https://www.youtube.com/watch?v=fKopy74weus',
 });
 
-export const createMovies = (isFavorite = false): Movies => new Array(10).fill(createMovie(isFavorite));
+export const createMovies = (isFavorite = false, count = 10): Movies => new Array(count).fill(null).map((movie, i) => createMovie(isFavorite, i + 1));
+console.log(createMovies(false, 5));
+
 
 /**
  *  Review
@@ -48,4 +51,4 @@ export const createReview = (): Review => ({
   user: createUser(),
 })
 
-export const createReviews = (): Reviews => new Array(5).fill(createReview());
+export const createReviews = (count = 5): Reviews => new Array(count).fill(createReview());

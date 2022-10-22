@@ -3,9 +3,9 @@ import { rootReducer, ConfigState } from './reducers/root-reducer';
 import { createAxiosInstance } from '../services/api';
 import { createWrapper } from 'next-redux-wrapper';
 import { HYDRATE } from 'next-redux-wrapper'
-import { constrictType } from '../helpers/utils/utils';
 import thunk, { ThunkMiddleware } from 'redux-thunk';
 import { AxiosInstance } from 'axios';
+import { constrictType } from './store.types';
 
 export const api = createAxiosInstance();
 

@@ -7,8 +7,12 @@ import { createMovie, createMovies, createReviews } from './test-data';
 
 
 /** store/data/basic */
-export const create_mock_Data_Basic = (fav: Movies = []): basicInitialState_Interface => ({
-  movies: createMovies(),
+export const create_mock_Data_Basic = (
+  fav: Movies = [], 
+  isFavoriteMovies: boolean = false,
+  count: number = 10
+  ): basicInitialState_Interface => ({
+  movies: createMovies(isFavoriteMovies, count),
   movie_cover: createMovie(),
   favorites_movies: fav,
   status: 'none'

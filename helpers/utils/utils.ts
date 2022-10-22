@@ -1,7 +1,5 @@
 import { AnyAction } from '@reduxjs/toolkit';
 import { HYDRATE } from 'next-redux-wrapper';
-import React from 'react';
-import MoviePlayer from '../../page-components/MoviePlayer/MoviePlayer';
 import { deleteOrderFavorite, getOrderFavorites, setOrderFav, setOrderFavorites } from '../../services/storage';
 import { basicInitialState_Interface } from '../../store/reducers/data-reducer/basic-slice/basic-types';
 import { HYDRATE_ACTION_TYPE, RootState } from '../../store/store.types';
@@ -9,9 +7,6 @@ import { Movie, movieFavoriteData, Movies, optionsMenu, OrderDataObj } from '../
 import { Reviews } from '../../types/reviews';
 import { ALL_GENRES, Months } from '../const/const';
 
-export const constrictType = <T extends string>(type: T) => type;
-
-export const getStringForImg = (str: string): string => str.toLowerCase().replace(/\s/g, '-');
 
 export const getMoviesGenres = (movies: Movies): string[] => {
   const allGenres = Array.from(
@@ -21,7 +16,7 @@ export const getMoviesGenres = (movies: Movies): string[] => {
   ).sort();
   allGenres.splice(0, 0, ALL_GENRES);
   return allGenres;
-}
+};
 
 export const isHydrateAction = (action: AnyAction): action is HYDRATE_ACTION_TYPE => action.type === HYDRATE ? true : false;
 
@@ -36,7 +31,7 @@ export const spotActiveNavClass = (activeItem: optionsMenu): string => {
 export const convertMinuteToTime = (time: number): string => {
   const m = time % 60;
   const h = (time - m) / 60;
-  return `${h}h ${m && m + 'm'}`
+  return `${Boolean(h) ? (h + 'h') : ''} ${Boolean(m) ? (m + 'm') : ''}`
 };
 
 export const devideToThree = (reviews: Reviews): Reviews[] => {
@@ -87,9 +82,11 @@ export const UpdateMoviesData = (getState: () => RootState, DATA: movieFavoriteD
 type inSeconds = number;
 export const getNormolizeVideoTime = (current: inSeconds, duration: inSeconds): string => {
   const timeDifference = Math.trunc(duration - current);
-  const m = Math.trunc(timeDifference / 60);
-  const s = timeDifference % 60;
-  const h = Math.trunc(m / 60);
+  const h = Math.trunc(timeDifference / 3600);
+  const lastSeconds = (timeDifference - (h * 3600));
+  const m = Math.trunc(lastSeconds / 60);
+  const s = Math.trunc(lastSeconds % 60);
+
 
   return [
     ('0' + h),
@@ -98,6 +95,7 @@ export const getNormolizeVideoTime = (current: inSeconds, duration: inSeconds): 
   ].join(':')
 };
 
+/** EventListener */
 type RemoveLisener = void;
 export const guardEventListener = (
   type: string,
@@ -110,6 +108,7 @@ export const guardEventListener = (
   return () => element.removeEventListener(type, listener);
 }
 
+/** localStorage */
 export const changeOrderStage = ({ id, status }: movieFavoriteData) => {
   status === '1'
     ? setOrderFavorites({ id: id, order: id } as OrderDataObj)
