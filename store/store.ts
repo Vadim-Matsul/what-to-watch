@@ -10,14 +10,15 @@ import { constrictType } from './store.types';
 export const api = createAxiosInstance();
 
 
+const middlewareThunk = [thunk.withExtraArgument(api)]
 
 export const makeStore = () => configureStore<
   ConfigState,
-  AnyAction,
-  Array<ThunkMiddleware<ConfigState, AnyAction, AxiosInstance>>
+  Action,
+  Array<ThunkMiddleware<ConfigState, Action, AxiosInstance>>
 >({
   reducer: rootReducer,
-  middleware: [thunk.withExtraArgument(api)]
+  middleware: middlewareThunk
 });
 
 

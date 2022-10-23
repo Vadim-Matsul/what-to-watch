@@ -4,8 +4,9 @@ import { create_mock_Data_Current, makeApp, mock_RootStore } from './store-examp
 import { Provider } from 'react-redux';
 import UserEvent from '@testing-library/user-event';
 
-const makeFakeStore = configureMockStore();
 
+
+const makeFakeStore = configureMockStore();
 
 export const testBundle = {
   render,

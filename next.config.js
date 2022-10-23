@@ -1,6 +1,4 @@
-module.exports = {
-  reactStrictMode: true,
-  images: {
-    domains: ['10.react.pages.academy']
-  }
-}
+export const reactStrictMode = true;
+export const images = {
+  domains: ['10.react.pages.academy']
+};

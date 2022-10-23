@@ -31,7 +31,6 @@ export const createMovie = (
 });
 
 export const createMovies = (isFavorite = false, count = 10): Movies => new Array(count).fill(null).map((movie, i) => createMovie(isFavorite, i + 1));
-console.log(createMovies(false, 5));
 
 
 /**
@@ -52,3 +51,12 @@ export const createReview = (): Review => ({
 })
 
 export const createReviews = (count = 5): Reviews => new Array(count).fill(createReview());
+
+
+/** Another */
+export const generateRandomId = (toString: boolean = false) => {
+  const id = faker.datatype.number({ min: 1, max: 1000 });
+  return toString
+    ? String(id)
+    : id;
+} 

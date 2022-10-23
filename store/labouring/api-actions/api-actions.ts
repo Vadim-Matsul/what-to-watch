@@ -19,10 +19,9 @@ export const API_ACTIONS = {
         dispatch(ACTIONS.setMovies(data));
         dispatch(setMovieCover(data[data.length - 1]));
       } catch (err) {
-
+        
       }
     }),
-
 
   fetchCurrentMovie: createAsyncThunk<[Movie, Reviews], string, AsyncThunkResult>(
     API_NAMES.fetchCurrentMovie,
