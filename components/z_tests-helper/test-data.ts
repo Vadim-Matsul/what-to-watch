@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { Movie, Movies } from '../../types/movies';
-import { Review, Reviews, User } from '../../types/reviews';
+import { Review, ReviewFormData, Reviews, User } from '../../types/reviews';
+import { LoginData, UserData } from '../../types/user';
 
 
 /**
@@ -52,6 +53,24 @@ export const createReview = (): Review => ({
 
 export const createReviews = (count = 5): Reviews => new Array(count).fill(createReview());
 
+export const createFakeReviewData = (): ReviewFormData => ({
+  id: faker.datatype.number({ min: 1, max: 1000 }),
+  rating: faker.datatype.number({ min: 1, max: 5 }).toString(),
+  comment: faker.commerce.productDescription(),
+});
+
+/** User */
+export const getFakeUser = (): UserData => ({
+  id: Number(faker.datatype.uuid()),
+  name: faker.name.firstName(),
+  email: faker.internet.email(),
+  avatarUrl: faker.image.image()
+});
+
+export const getFakeLoginData = (): LoginData => ({
+  email: faker.internet.email(),
+  password: faker.internet.password()
+});
 
 /** Another */
 export const generateRandomId = (toString: boolean = false) => {
