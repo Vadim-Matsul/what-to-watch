@@ -6,4 +6,6 @@ const createJestConfig = nextJest({
 
 /** @type { import('jest').Config } */
 
-export default createJestConfig({});
+export default createJestConfig({
+  setupFilesAfterEnv: ['<rootDir>/jest.setupTests.js']
+});

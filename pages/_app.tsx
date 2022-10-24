@@ -5,8 +5,10 @@ import { isAsyncDispatch } from '../store/store.types';
 import App from 'next/app'
 import '../public/css/main.min.css';
 import '../public/css/custom.css';
+import 'react-toastify/dist/ReactToastify.css';
 import { AnyAction } from '@reduxjs/toolkit';
 import { isServer } from '../helpers/const/const';
+import { ToastContainer, Flip } from 'react-toastify';
 
 
 export default function MyApp({ Component, ...rest }) {
@@ -28,6 +30,12 @@ export default function MyApp({ Component, ...rest }) {
   return (
     <Provider store={store} >
       <Component {...pageProps} />
+      <ToastContainer
+        position='top-center'
+        transition={Flip}
+        autoClose={2000}
+        theme="dark"
+      />
     </Provider>
   );
 };

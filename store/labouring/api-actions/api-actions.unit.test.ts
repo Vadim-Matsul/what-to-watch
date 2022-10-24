@@ -23,7 +23,7 @@ const mockAxios = axios as jest.Mocked<typeof axios>;
  *       указываем __esModule: true, который присваивает configurable: true ( по умолчанию false )
  *                                                                       /\
  * Например, альтернатива этого действия:                                |
- *  Object.defineProperty( someObj, 'som key', {                         |
+ *  Object.defineProperty( someObj, 'some key', {                        |
  *    enumarable: true,                                                  |
  *    writable: true,                                                    |
  *    configurable: false   --->   jest не сможет замокать, пока не переопределим на true;
@@ -276,12 +276,16 @@ describe('Module API_ACTIONS', () => {
 
       expect(actions.find(a => a.type === 'user/setUser').payload).toEqual(fake_UserData);
       expect(actions.find(a => a.type === 'user/setAuthStatus').payload).toEqual('AUTH');
+      expect(actions.find(a => a.type === 'user/setStatusUser').payload).toEqual('fulfilled');
     });
 
     it('Выполняются все actions при rejected', async () => {
       mockAxios.post.mockRejectedValueOnce({ data: '' });
       await mockStore.dispatch(API_ACTIONS.sendUserData('' as unknown as LoginData));
-      expect(mockStore.getActions().find(a => a.type === 'user/setAuthStatus').payload).toEqual('NOAUTH');
+      const actions = mockStore.getActions();
+
+      expect(actions.find(a => a.type === 'user/setAuthStatus').payload).toEqual('NOAUTH');
+      expect(actions.find(a => a.type === 'user/setStatusUser').payload).toEqual('rejected');
     });
 
   });

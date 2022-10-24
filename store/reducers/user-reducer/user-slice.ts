@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { isHydrateAction } from '../../../helpers/utils/utils';
 import { User } from '../../../types/reviews';
-import { UserData } from '../../../types/user';
+import { Status, UserData } from '../../../types/user';
 import { userInitialState } from './user-state';
 import { AuthStatus, isCheckAutorization_Fulfilled, isCheckAutorization_Rejected } from './user-types';
 
@@ -16,6 +16,9 @@ export const userSlice = createSlice({
     },
     setAuthStatus(state, action: PayloadAction<AuthStatus>) {
       state.authStatus = action.payload
+    },
+    setStatusUser(state, action: PayloadAction<Status>) {
+      state.status = action.payload
     }
   },
   extraReducers: builder => {
@@ -34,4 +37,4 @@ export const userSlice = createSlice({
   }
 });
 
-export const { setUser, setAuthStatus } = userSlice.actions;
+export const { setUser, setAuthStatus, setStatusUser } = userSlice.actions;

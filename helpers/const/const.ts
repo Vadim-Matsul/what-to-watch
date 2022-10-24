@@ -23,6 +23,19 @@ export const HTTP = {
   LOGOUT: 'logout'
 };
 
+export const ToastConfig = {
+  toastWait: 'Waiting...',
+  s_addedToFav: 'Successfully added',
+  s_commentSubmit: 'Successfully sent',
+  s_removedFromFav: 'Successfully removed',
+  s_authForm: 'Pleasant viewing',
+  s_logout: 'Hurry up go back',
+  s_player: 'Thanks for watching',
+  r_error: 'error, try reload!',
+  welcome: 'Welcome ',
+  sh_login: 'Would be nice to login',
+};
+
 export const API_NAMES = {
   fetchMovies: 'basic/fetchMovies',
   fetchFavorites: 'basic/fetchFavorites',

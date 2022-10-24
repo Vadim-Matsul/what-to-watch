@@ -13,7 +13,6 @@ interface MoviePlayerPageProps {
 
 const MoviePlayerPage: NextPage<MoviePlayerPageProps> = ({ movie }) => {
 
-
   return (
     <MoviePlayer movie={movie} />
   );

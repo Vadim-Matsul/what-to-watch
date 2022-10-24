@@ -13,10 +13,12 @@ import { ReviewForm } from '../ReviewForm/ReviewForm';
 import Link from 'next/link';
 import { useEffect, useLayoutEffect } from 'react';
 import { Movie } from '../../types/movies';
+import { getAuthStatus } from '../../store/reducers/user-reducer/user-slice-selectors';
 
 const MovieCover: React.FC<MovieCoverProps> = (props) => {
   const { movie: draftMovie, reviews, shouldShowBreadcrumbsHeader = false } = props;
   const favoritesMovies = useSelector(getFavoritesMovies);
+  const authStatus = useSelector(getAuthStatus);
   const editableMovie: Movie = JSON.parse(JSON.stringify(draftMovie));
 
   // самовызывающаяся функция вместо useEffect сделана для того,
@@ -36,6 +38,7 @@ const MovieCover: React.FC<MovieCoverProps> = (props) => {
   const isCurrentMoviePageReview = pathname === bePagesPaths.currentMovieReview;
   const isCurrentMoviePage = pathname === bePagesPaths.currentMovie;
   const doubleBundle = isCurrentMoviePage || isCurrentMoviePageReview;
+  const shouldShowReviewButton = isCurrentMoviePage && authStatus === 'AUTH';
 
   const imgClass = isCurrentMoviePageReview ? 'header' : 'hero';
 
@@ -97,7 +100,7 @@ const MovieCover: React.FC<MovieCoverProps> = (props) => {
                     isFavorite={editableMovie.isFavorite}
                     movieId={editableMovie.id}
                   />
-                  {isCurrentMoviePage && <Link href={bePagesPaths.currentMovieReview.replace('[id]', String(editableMovie.id))}>
+                  {shouldShowReviewButton && <Link href={bePagesPaths.currentMovieReview.replace('[id]', String(editableMovie.id))}>
                     <a className="btn movie-card__button">Add review</a>
                   </Link>}
                 </div>
