@@ -1,10 +1,8 @@
-import { AsyncThunkAction } from '@reduxjs/toolkit';
-import { AxiosInstance } from 'axios';
 import { useRouter } from 'next/router';
-import { Dispatch, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { bePagesPaths, ErrorConfig, isServer } from '../../helpers/const/const';
+import { useSelector } from 'react-redux';
+import { bePagesPaths, ErrorConfig } from '../../helpers/const/const';
 import { useAppDispatch } from '../../helpers/Hooks/useAppDispatch';
 import { API_ACTIONS } from '../../store/labouring/api-actions/api-actions';
 import { getAuthStatus } from '../../store/reducers/user-reducer/user-slice-selectors';
@@ -20,7 +18,7 @@ export const LoginForm: React.FC = () => {
     if (authStatus === 'AUTH') {
       router.push(bePagesPaths.main);
     }
-  })
+  });
 
   const {
     register,
@@ -85,12 +83,12 @@ export const LoginForm: React.FC = () => {
               <div className="sign-in__field">
                 <input className="sign-in__input" type="email" placeholder="Email address" id="email" {...registerEmail} />
                 <label className="sign-in__label visually-hidden" htmlFor="email">Email address</label>
-                <div className='center' >{email && email.message}</div>
+                {email && <div className='center' data-testid='error' >{email.message}</div>}
               </div>
               <div className="sign-in__field">
                 <input className="sign-in__input" type="password" placeholder="Password" id="password" {...registerPassword} />
                 <label className="sign-in__label visually-hidden" htmlFor="password">Password</label>
-                <div className='center' >{password && password.message}</div>
+                {password && <div className='center' data-testid='error' >{password.message}</div>}
               </div>
             </div>
             <div className="sign-in__submit">
@@ -101,7 +99,7 @@ export const LoginForm: React.FC = () => {
               >Sign in</button>
             </div>
           </form>
-          {isError && <div className='center' >{ErrorConfig.globalError}</div>}
+          {isError && <div className='center' data-testid='form_error'>{ErrorConfig.globalError}</div>}
         </>}
     </div>
   );
