@@ -7,7 +7,6 @@ import { getCurrentMovie } from '../../store/reducers/data-reducer/current-slice
 export const Breadcrumbs: React.FC = () => {
   const currentMovie = useSelector(getCurrentMovie);
 
-
   return (
     <nav className="breadcrumbs">
       <ul className="breadcrumbs__list">

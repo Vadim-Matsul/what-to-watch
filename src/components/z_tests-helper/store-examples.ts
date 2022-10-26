@@ -1,9 +1,11 @@
+import { faker } from '@faker-js/faker';
 import { appInitialState_Interface } from '../../store/reducers/app-reducer/app-types';
 import { basicInitialState_Interface } from '../../store/reducers/data-reducer/basic-slice/basic-types';
 import { currentSliceState_Interface } from '../../store/reducers/data-reducer/current-slice/current-types';
 import { dataReducerInterface } from '../../store/reducers/data-reducer/data-reducer.combine';
 import { AuthStatus, userInitialState_Interface } from '../../store/reducers/user-reducer/user-types';
-import { Movies, optionsMenu } from '../../types/movies';
+import { Movie, Movies, optionsMenu } from '../../types/movies';
+import { Reviews } from '../../types/reviews';
 import { Status, UserData } from '../../types/user';
 import { createMovie, createMovies, createReviews } from './test-data';
 
@@ -21,29 +23,29 @@ export const create_mock_Data_Basic = (
 });
 
 /** store/data/current */
-export const create_mock_Data_Current = (): currentSliceState_Interface => ({
-  current_movie: createMovie(),
-  current_movie_reviews: createReviews(),
-  status: 'none'
+export const makeDataCurrentSlice = (
+  current_movie: Movie | null = createMovie(),
+  current_movie_reviews: Reviews = createReviews(),
+  status: Status = 'none'
+): Record<'current', currentSliceState_Interface> => ({
+  current: { current_movie, current_movie_reviews, status }
 });
 
 /** store/data */
 export const makeData = (): dataReducerInterface => (
   {
     basic: { ...create_mock_Data_Basic() },
-    current: { ...create_mock_Data_Current() }
+    ...makeDataCurrentSlice()
   }
 );
 
 /** store/app */
-export const makeApp = (
-  active_movie_item: optionsMenu = 'Details'
-): appInitialState_Interface => (
-  {
-    active_genre: 'Adventure',
-    active_movie_item,
-    active_fav_id: 1
-  }
+export const makeAppSlice = (
+  active_genre: string = 'Adventure',
+  active_movie_item: optionsMenu = 'Details',
+  active_fav_id: number = faker.datatype.number(),
+): Record<'app', appInitialState_Interface> => (
+  { app: { active_genre, active_movie_item, active_fav_id } }
 );
 
 /** store/user */
@@ -60,7 +62,8 @@ export const makeUserSlice = (
 /** store */
 export const mock_RootStore = {
   data: makeData(),
-  app: makeApp(),
+  ...makeAppSlice(),
+  ...makeUserSlice(),
 }
 
 

@@ -23,11 +23,10 @@ import { FC, ReactElement } from 'react';
  *    необходимые данные для отрисовки замоканы;
  *  ( для ослеживания манипуляций - свой @param value )
  */
-
-export const HOC_withProviders = <P extends Record<string, unknown>>(
+export const HOC_withProviders = <P extends Record<string, any>>(
   Component: FC<P>,
   store: MockStore = makeFakeStore({}),
-  value: NextRouter = createMockRouter({}),
+  value: NextRouter = createMockRouter({})
 ) => {
   return function ProvidersWrapper(props: P): ReactElement {
     return (

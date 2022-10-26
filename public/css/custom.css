@@ -105,3 +105,10 @@ body {
 .show-more {
   height: 80px;
 }
+
+.cursor {
+  cursor:pointer;
+}
+.cursor-active {
+  cursor:e-resize;
+}

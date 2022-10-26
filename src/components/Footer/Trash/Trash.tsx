@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { FavoritesStatus } from '../../../helpers/const/const';
 import { useAppDispatch } from '../../../helpers/Hooks/useAppDispatch';
 import { API_ACTIONS } from '../../../store/labouring/api-actions/api-actions';
@@ -10,11 +10,11 @@ import { movieFavoriteData } from '../../../types/movies';
 export const Trash: React.FC = () => {
   const startId = useSelector(getActiveFavId)
   const dispatch = useAppDispatch();
-  const svgRef = useRef<SVGSVGElement>();
+  const svgRef = useRef<SVGSVGElement>(null);
 
   const handleDelete = async (evt: React.DragEvent<HTMLSpanElement>) => {
     evt.preventDefault();
-    const svg = svgRef.current;
+    const svg = svgRef.current!;
     const DATA: movieFavoriteData = { id: startId, status: FavoritesStatus.DELETE }
     await dispatch(API_ACTIONS.changeFavorites(DATA));
     svg.setAttribute('class', '')
@@ -22,13 +22,13 @@ export const Trash: React.FC = () => {
 
   const handleDragOver = (evt: React.DragEvent<HTMLSpanElement>) => {
     evt.preventDefault();
-    const svg = svgRef.current
+    const svg = svgRef.current!;
     svg.setAttribute('class', 'trash-over')
   }
 
   const handleDragLeave = (evt: React.DragEvent<HTMLSpanElement>) => {
     evt.preventDefault();
-    const svg = svgRef.current
+    const svg = svgRef.current!;
     svg.setAttribute('class', '')
   }
 
@@ -38,6 +38,8 @@ export const Trash: React.FC = () => {
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       className='trash'
+      data-testid='trash'
+    
     >
       <svg
         width="80px"
