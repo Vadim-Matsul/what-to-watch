@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { bePagesPaths } from '../../../helpers/const/const';
 
 export const User: React.FC = () => {
-  const user = useSelector(getUser);
+  const user = useSelector(getUser)!;
 
   return (
     <Link href={bePagesPaths.favorite} >
@@ -21,6 +21,5 @@ export const User: React.FC = () => {
         </div>
       </a>
     </Link>
-
   );
-}
+};

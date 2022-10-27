@@ -2,11 +2,8 @@ import { useSelector } from 'react-redux'
 import { spotActiveNavClass } from '../../../helpers/utils/utils';
 import { getActiveMovieItem } from '../../../store/reducers/app-reducer/app-slice-selectors'
 import { MovieInformationBlockProps } from './MovieInformationBlock.props';
+import { Details, Overview, OverviewAdditional, Reviews } from '../..';
 import classNames from 'classnames';
-import { Overview } from './Overview/Overview';
-import { Details } from './Details/Details';
-import { OverviewAdditional } from './Overview/OverviewAdditional/OverviewAdditional';
-import { Reviews } from './Reviews/Reviews';
 
 export const MovieInformationBlock: React.FC<MovieInformationBlockProps> = (props) => {
 
@@ -32,11 +29,11 @@ export const MovieInformationBlock: React.FC<MovieInformationBlockProps> = (prop
         />
       }
 
-      <div className={wrapperBlock}>
+      <div className={wrapperBlock} data-testid='wrapper' >
         {isOverview && <Overview info={movie_infogmation} />}
         {isDetails && <Details info={movie_infogmation} />}
         {isReviews && <Reviews reviews={reviews} />}
       </div>
     </>
-  )
-}
+  );
+};

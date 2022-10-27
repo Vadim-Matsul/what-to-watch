@@ -10,11 +10,11 @@ export const Reviews: React.FC<ReviewsProps> = ({ reviews }) => {
     <>
       {convertedReviews.length
         ? convertedReviews.map((block, i) =>
-          <div className="movie-card__reviews-col" key={i} >
+          <div className="movie-card__reviews-col" key={i} data-testid='wrapper' >
             {block.map(review => <Review key={review.id} review={review} />)}
           </div>
         )
-        : <h1>Оставьте комментарий Первым!</h1>}
+        : <h1>Be the first to commnet!</h1>}
     </>
   );
 };

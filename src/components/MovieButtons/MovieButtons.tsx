@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { bePagesPaths, FavoritesStatus } from '../../helpers/const/const';
 import { useAppDispatch } from '../../helpers/Hooks/useAppDispatch';
@@ -23,7 +23,7 @@ export const MovieButtons: React.FC<MovieButtonsProps> = ({ isFavorite, movieId 
     setChosen(isFavorite);
 
     return () => setChosen(isFavorite);
-  }, [authStatus, isFavorite, movieId])
+  }, [authStatus, isFavorite, movieId]);
 
 
   const handleAddInFavorites = async () => {
@@ -52,10 +52,10 @@ export const MovieButtons: React.FC<MovieButtonsProps> = ({ isFavorite, movieId 
         onClick={handleAddInFavorites}
       >
         {chosen
-          ? <svg viewBox="0 0 18 14" width="18" height="14">
+          ? <svg viewBox="0 0 18 14" width="18" height="14" data-testid='in-list' >
             <use xlinkHref="#in-list" />
           </svg>
-          : <svg viewBox="0 0 19 20" width="19" height="20">
+          : <svg viewBox="0 0 19 20" width="19" height="20" data-testid='add'>
             <use xlinkHref="#add" />
           </svg>
         }

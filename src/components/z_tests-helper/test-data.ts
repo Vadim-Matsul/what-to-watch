@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { Movie, Movies } from '../../types/movies';
+import { Movie, MovieInformation, Movies } from '../../types/movies';
 import { Review, ReviewFormData, Reviews, User } from '../../types/reviews';
 import { LoginData, UserData } from '../../types/user';
 
@@ -33,6 +33,21 @@ export const createMovie = (
 
 export const createMovies = (isFavorite = false, count = 10): Movies => new Array(count).fill(null).map((movie, i) => createMovie(isFavorite, i + 1));
 
+
+export const makeMovieInformation = (): MovieInformation => ({
+  name: faker.commerce.productName(),
+  posterImage: faker.image.imageUrl(),
+  description: faker.commerce.productDescription(),
+  rating: faker.datatype.number({ min: 1, max: 10 }),
+  scores_count: faker.datatype.number({ min: 1341, max: 8497 }),
+  director: faker.name.fullName(),
+  starring: new Array(3).fill(faker.name.firstName()),
+  run_time: faker.datatype.number({ min: 20, max: 180 }),
+  genre: faker.commerce.productAdjective(),
+  released: faker.datatype.number({ min: 1990, max: 2022 }),
+  is_favorite: false,
+  video_link: 'https://www.youtube.com/watch?v=fKopy74weus',
+});
 
 /**
  *  Review

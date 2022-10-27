@@ -1,6 +1,5 @@
 import { testBundle } from '../../z_tests-helper/testBundle';
 import { CurrentMovieNavigationLi } from './CurrentMovieNavigationLi';
-import { CurrentMovieNavigationLiProps } from './CurrentMovieNavigationLi.props';
 
 
 const {
@@ -13,7 +12,7 @@ const {
 } = testBundle;
 
 describe('Component: CurrentMovieNavigationLi', () => {
-  const mockStore = makeFakeStore(makeAppSlice());
+  const mockStore = makeFakeStore(makeAppSlice({}));
   const CurrentMovieNavigationLiWrapped =
     HOC_withProviders(CurrentMovieNavigationLi, mockStore);
 

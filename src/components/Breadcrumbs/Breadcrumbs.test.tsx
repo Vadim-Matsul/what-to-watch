@@ -11,10 +11,11 @@ const {
   storeExamples: { makeDataCurrentSlice } } = testBundle;
 
 describe('Component: Breadcrumbs', () => {
+
   it('Корректный рендер компонента', () => {
     const fakeMovie = createMovie();
     const toBePath = bePagesPaths.currentMovie.replace(`[id]`, String(fakeMovie.id));
-    const BreadcrumbsWrapped = HOC_withProviders(Breadcrumbs, makeFakeStore({ data: makeDataCurrentSlice(fakeMovie) }));
+    const BreadcrumbsWrapped = HOC_withProviders(Breadcrumbs, makeFakeStore({ data: makeDataCurrentSlice({ current_movie: fakeMovie }) }));
     render(BreadcrumbsWrapped({}));
 
     expect(screen.getByRole('link')).toHaveAttribute('href', toBePath);

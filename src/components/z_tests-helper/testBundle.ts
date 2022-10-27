@@ -1,13 +1,13 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { configureMockStore } from '@jedmao/redux-mock-store';
-import { makeAppSlice, makeDataCurrentSlice, makeUserSlice, mock_RootStore } from './store-examples';
+import { makeDataBasicSlice, makeAppSlice, makeDataCurrentSlice, makeUserSlice, makeRootState } from './store-examples';
 import UserEvent from '@testing-library/user-event';
 import { createMockRouter } from './mockRouter';
 import { HOC_withProviders } from './HOC_withProviders';
 import { faker } from '@faker-js/faker'
+import { createMovie, createMovies, createReview, createReviews } from './test-data';
 
 export const makeFakeStore = configureMockStore();
-
 
 export const testBundle = {
   faker,
@@ -18,9 +18,16 @@ export const testBundle = {
   makeFakeStore,
   createMockRouter,
   HOC_withProviders,
+  creators: {
+    createMovie,
+    createMovies,
+    createReview,
+    createReviews,
+  },
   storeExamples: {
-    root: mock_RootStore,
+    makeRootState,
     makeDataCurrentSlice,
+    makeDataBasicSlice,
     makeAppSlice,
     makeUserSlice
   }

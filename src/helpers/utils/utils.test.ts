@@ -1,9 +1,13 @@
-import { create_mock_Data_Basic } from '../../components/z_tests-helper/store-examples';
 import { createMovie, createMovies, createReviews } from '../../components/z_tests-helper/test-data';
+import { testBundle } from '../../components/z_tests-helper/testBundle';
 import { RootState } from '../../store/store.types';
 import { movieFavoriteData, Movies, optionsMenu } from '../../types/movies';
 import { ALL_GENRES } from '../const/const';
 import { convertMinuteToTime, devideToThree, getDate, getMoviesGenres, getNormolizeVideoTime, PickRatingRang, spotActiveNavClass, UpdateMoviesData } from './utils';
+
+const {
+  storeExamples: { makeRootState }
+} = testBundle;
 
 describe('Модуль utils', () => {
 
@@ -101,12 +105,10 @@ describe('Модуль utils', () => {
 
     afterEach(() => jest.restoreAllMocks());
 
-    const createStore = (favorites_movies: Movies) => (): RootState => {
+    const createStore = (favorites: Movies) => (): RootState => {
       return {
-        data: {
-          basic: { ...create_mock_Data_Basic(favorites_movies) }
-        }
-      } as RootState;
+        ...makeRootState({ favorites_movies: favorites })
+      };
     };
 
     it('Корректно отрабатывает при status "1"', () => {
@@ -123,7 +125,9 @@ describe('Модуль utils', () => {
       expect(jsonStringifyMock).toBeCalled();
       expect(spliceMock).toBeCalledTimes(1);
       expect(favorites_movies.length).toBe(1);
-      expect(movies[7].isFavorite).toBe(true);
+      console.log('status "1"', movies);
+
+      expect(movies[0].isFavorite).toBe(true);
     });
 
     it('Корректно отрабатывает при status "0"', () => {
@@ -140,7 +144,8 @@ describe('Модуль utils', () => {
       expect(jsonParseMock).toBeCalled();
       expect(jsonStringifyMock).toBeCalled();
       expect(favorites_movies).toEqual([]);
-      expect(movies[7].isFavorite).toBe(false);
+      console.log('status "0"', movies);
+      expect(movies[0].isFavorite).toBe(false);
     });
 
   });

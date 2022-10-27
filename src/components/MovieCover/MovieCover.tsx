@@ -100,22 +100,22 @@ const MovieCover: React.FC<MovieCoverProps> = (props) => {
                     isFavorite={editableMovie.isFavorite}
                     movieId={editableMovie.id}
                   />
-                  {shouldShowReviewButton && <Link href={bePagesPaths.currentMovieReview.replace('[id]', String(editableMovie.id))}>
-                    <a className="btn movie-card__button">Add review</a>
-                  </Link>}
+                  {shouldShowReviewButton &&
+                    <Link href={bePagesPaths.currentMovieReview.replace('[id]', String(editableMovie.id))}>
+                      <a className="btn movie-card__button">Add review</a>
+                    </Link>}
                 </div>
               </div>}
           </div>
         </div>
       </div>
 
-      {isCurrentMoviePage && <MovieInformation movie_infogmation={movie_information} reviews={reviews} />}
+      {isCurrentMoviePage && <MovieInformation movie_infogmation={movie_information} reviews={reviews!} />}
       {isCurrentMoviePageReview && <ReviewForm movieId={editableMovie.id} />}
 
 
     </section >
-  )
-}
-
+  );
+};
 
 export default MovieCover;

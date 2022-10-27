@@ -1,21 +1,22 @@
 import { createFakeReviewData, createMovie, createMovies, createReview, generateRandomId, getFakeLoginData, getFakeUser } from '../../../components/z_tests-helper/test-data';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { Action, PayloadAction } from '@reduxjs/toolkit';
-import axios, { AxiosInstance } from 'axios';
 import thunk, { ThunkDispatch } from 'redux-thunk';
 import { HTTP } from '../../../helpers/const/const';
 import { API_ACTIONS } from './api-actions';
 import { CurrentMovie_Fulfilled } from '../../reducers/data-reducer/current-slice/current-types';
 import { movieFavoriteData } from '../../../types/movies';
 import * as changeFavUtils from '../../../helpers/utils/utils';
-import { LoginData } from '../../../types/user';
-
-
-type ThunkDispatchResult = ThunkDispatch<{}, AxiosInstance, Action>;
-const makeStore = configureMockStore<{}, PayloadAction, ThunkDispatchResult>([thunk.withExtraArgument(axios)]);
+import axios, { AxiosInstance } from 'axios';
+import { LoginData, UserData } from '../../../types/user';
+import { RootState } from '../../store.types';
 
 jest.mock('axios');
+type ThunkDispatchResult = ThunkDispatch<RootState, AxiosInstance, Action>;
+const makeStore = configureMockStore<RootState, PayloadAction, ThunkDispatchResult>([thunk.withExtraArgument(axios)]);
+
 const mockAxios = axios as jest.Mocked<typeof axios>;
+
 
 /**
  * Чтобы jest смог переопределить экспорт модуля, 
@@ -40,7 +41,7 @@ describe('Module API_ACTIONS', () => {
   let mockStore: ReturnType<typeof makeStore>;
   beforeEach(() => {
     mockStore = makeStore({});
-  })
+  });
 
   afterEach(() => jest.clearAllMocks());
 
@@ -55,8 +56,8 @@ describe('Module API_ACTIONS', () => {
       await mockStore.dispatch(API_ACTIONS.fetchMovies());
       const actionsArr = mockStore.getActions();
 
-      expect(actionsArr.find(a => a.type === 'basic/setMovies').payload).toEqual(fakeMovies);
-      expect(actionsArr.find(a => a.type === 'basic/setMovieCover').payload).toBeInstanceOf(Object);
+      expect(actionsArr.find(a => a.type === 'basic/setMovies')!.payload).toEqual(fakeMovies);
+      expect(actionsArr.find(a => a.type === 'basic/setMovieCover')!.payload).toBeInstanceOf(Object);
     });
 
     it('выполняется запрос', async () => {
@@ -81,13 +82,14 @@ describe('Module API_ACTIONS', () => {
       const testId = generateRandomId(true) as string;
 
       // имитируем реализацую запроса к серверу с помощью mockImplementation
-      mockAxios.get.mockImplementation(url => {
+      mockAxios.get.mockImplementation((url) => {
         if (url.startsWith(HTTP.CURRENT_MOVIE.split('/')[0])) {
           return Promise.resolve({ data: fake_movie });
         }
         if (url.startsWith(HTTP.CURRENT_REVIEWS_MOVIE.split('/')[0])) {
           return Promise.resolve({ data: fake_review });
         }
+        return Promise.resolve();
       });
 
       const { payload: [movie, review] } = await mockStore.dispatch(API_ACTIONS.fetchCurrentMovie(testId)) as CurrentMovie_Fulfilled;
@@ -95,8 +97,8 @@ describe('Module API_ACTIONS', () => {
 
       expect(movie).toEqual(fake_movie);
       expect(review).toEqual(fake_review);
-      expect(actions.find(a => a.type === 'current/setCurrentMovie').payload).toEqual(fake_movie);
-      expect(actions.find(a => a.type === 'current/setCurrentMovieReviews').payload).toEqual(fake_review);
+      expect(actions.find(a => a.type === 'current/setCurrentMovie')!.payload).toEqual(fake_movie);
+      expect(actions.find(a => a.type === 'current/setCurrentMovieReviews')!.payload).toEqual(fake_review);
     });
 
     it('выполняется запрос фильма и комментаиев', async () => {
@@ -145,7 +147,7 @@ describe('Module API_ACTIONS', () => {
       const actions = mockStore.getActions();
 
       expect(axiosSpy).not.toBeCalledTimes(0);
-      expect(actions.find(a => a.type === 'basic/setFavoritesMovies').payload).toEqual(fakeFavoritesMovies);
+      expect(actions.find(a => a.type === 'basic/setFavoritesMovies')!.payload).toEqual(fakeFavoritesMovies);
     });
 
     it('При ошибке action не вызывается', async () => {
@@ -193,8 +195,8 @@ describe('Module API_ACTIONS', () => {
 
       expect(spyChangeOrderStage).toBeCalledTimes(1);
       expect(spyUpdateMoviesData).toBeCalledTimes(1);
-      expect(actions.find(a => a.type === 'basic/setMovies').payload).toEqual(fake_Movies);
-      expect(actions.find(a => a.type === 'basic/setFavoritesMovies').payload).toEqual(fake_FMovies);
+      expect(actions.find(a => a.type === 'basic/setMovies')!.payload).toEqual(fake_Movies);
+      expect(actions.find(a => a.type === 'basic/setFavoritesMovies')!.payload).toEqual(fake_FMovies);
     });
 
   });
@@ -202,7 +204,7 @@ describe('Module API_ACTIONS', () => {
   describe('checkAutorization', () => {
     let mockStore: ReturnType<typeof makeStore>;
     beforeEach(() => {
-      mockStore = makeStore({ user: { status: 'test' } });
+      mockStore = makeStore({ user: { status: 'fulfilled' } });
     });
 
 
@@ -220,8 +222,8 @@ describe('Module API_ACTIONS', () => {
       await mockStore.dispatch(API_ACTIONS.checkAutorization());
       const actions = mockStore.getActions();
 
-      expect(actions.find(a => a.type === 'user/setUser').payload).toEqual(fakeUser);
-      expect(actions.find(a => a.type === 'user/setAuthStatus').payload).toBe('AUTH');
+      expect(actions.find(a => a.type === 'user/setUser')!.payload).toEqual(fakeUser);
+      expect(actions.find(a => a.type === 'user/setAuthStatus')!.payload).toBe('AUTH');
 
       mockAxios.get.mockReset();
     });
@@ -230,7 +232,7 @@ describe('Module API_ACTIONS', () => {
       mockAxios.get.mockRejectedValue('test');
       await mockStore.dispatch(API_ACTIONS.checkAutorization());
 
-      expect(mockStore.getActions().find(a => a.type === 'user/setAuthStatus').payload).toBe('NOAUTH');
+      expect(mockStore.getActions().find(a => a.type === 'user/setAuthStatus')!.payload).toBe('NOAUTH');
     });
 
   });
@@ -250,8 +252,8 @@ describe('Module API_ACTIONS', () => {
       await mockStore.dispatch(API_ACTIONS.logoutSession());
       const actions = mockStore.getActions();
 
-      expect(actions.find(a => a.type === 'user/setAuthStatus').payload).toBe('NOAUTH');
-      expect(actions.find(a => a.type === 'basic/setFavoritesMovies').payload).toEqual([]);
+      expect(actions.find(a => a.type === 'user/setAuthStatus')!.payload).toBe('NOAUTH');
+      expect(actions.find(a => a.type === 'basic/setFavoritesMovies')!.payload).toEqual([]);
     });
 
   });
@@ -267,7 +269,7 @@ describe('Module API_ACTIONS', () => {
 
     it('Выполняются все actions при fulfilled', async () => {
       const fake_LoginData = getFakeLoginData();
-      const fake_UserData = getFakeUser();
+      const fake_UserData: Partial<UserData> = getFakeUser();
       delete fake_UserData.email;
       Object.defineProperty(fake_UserData, 'email', {
         value: fake_LoginData.email,
@@ -278,9 +280,9 @@ describe('Module API_ACTIONS', () => {
       await mockStore.dispatch(API_ACTIONS.sendUserData(fake_LoginData));
       const actions = mockStore.getActions();
 
-      expect(actions.find(a => a.type === 'user/setUser').payload).toEqual(fake_UserData);
-      expect(actions.find(a => a.type === 'user/setAuthStatus').payload).toEqual('AUTH');
-      expect(actions.find(a => a.type === 'user/setStatusUser').payload).toEqual('fulfilled');
+      expect(actions.find(a => a.type === 'user/setUser')!.payload).toEqual(fake_UserData);
+      expect(actions.find(a => a.type === 'user/setAuthStatus')!.payload).toEqual('AUTH');
+      expect(actions.find(a => a.type === 'user/setStatusUser')!.payload).toEqual('fulfilled');
     });
 
     it('Выполняются все actions при rejected', async () => {
@@ -288,15 +290,15 @@ describe('Module API_ACTIONS', () => {
       await mockStore.dispatch(API_ACTIONS.sendUserData('' as unknown as LoginData));
       const actions = mockStore.getActions();
 
-      expect(actions.find(a => a.type === 'user/setAuthStatus').payload).toEqual('NOAUTH');
-      expect(actions.find(a => a.type === 'user/setStatusUser').payload).toEqual('rejected');
+      expect(actions.find(a => a.type === 'user/setAuthStatus')!.payload).toEqual('NOAUTH');
+      expect(actions.find(a => a.type === 'user/setStatusUser')!.payload).toEqual('rejected');
     });
 
   });
 
   describe('postMovieReview', () => {
     const fake_ReviewData = createFakeReviewData();
-    const toBePath = HTTP.CURRENT_REVIEWS_MOVIE.replace(/id/g, fake_ReviewData.id.toString());
+    const toBePath = HTTP.CURRENT_REVIEWS_MOVIE.replace(/id/g, fake_ReviewData.id!.toString());
 
     it('Корректный url запроса', async () => {
       const axiosSpy = jest.spyOn(axios, 'post');
@@ -308,7 +310,7 @@ describe('Module API_ACTIONS', () => {
     it('Выполняются все actions', async () => {
       mockAxios.post.mockImplementation(() => (Promise.resolve()));
       await mockStore.dispatch(API_ACTIONS.postMovieReview(fake_ReviewData));
-      expect(mockStore.getActions().find(a => a.type === 'app/setActiveMovieItem').payload).toBe('Reviews');
+      expect(mockStore.getActions().find(a => a.type === 'app/setActiveMovieItem')!.payload).toBe('Reviews');
     });
 
   });

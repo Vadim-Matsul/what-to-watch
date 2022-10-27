@@ -2,18 +2,18 @@ import { useEffect, useRef } from 'react'
 import { VideoPlayerProps } from './VideoPlayer.props'
 
 
-
 export const VideoPlayer: React.FC<VideoPlayerProps> = ({ previewLink, posterImage, isFavoritesPage = false }) => {
 
-  const wrapperVideo = useRef<HTMLVideoElement>();
+  const wrapperVideo = useRef<HTMLVideoElement>(null);
   const videoTimeout = useRef<NodeJS.Timeout>();
+
 
   useEffect(() => {
     const { current } = wrapperVideo;
-    current.width = 280;
-    current.height = 175;
-    current.poster = posterImage;
-    current.muted;
+    current!.width = 280;
+    current!.height = 175;
+    current!.poster = posterImage;
+    current!.muted;
 
     return () => clearTimeout(videoTimeout.current);
   }, []);
@@ -21,13 +21,13 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ previewLink, posterIma
   const handleVideoPlay = () => {
     if (isFavoritesPage) return;
     videoTimeout.current = setTimeout(() => {
-      wrapperVideo.current.play();
+      wrapperVideo.current!.play();
     }, 1000);
   };
 
   const handleVideoPause = () => {
     if (isFavoritesPage) return;
-    wrapperVideo.current.load();
+    wrapperVideo.current!.load();
     clearTimeout(videoTimeout.current);
   }
 
@@ -37,8 +37,8 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ previewLink, posterIma
       onMouseEnter={handleVideoPlay}
       onMouseLeave={handleVideoPause}
     >
-      <video ref={ wrapperVideo} >
-        <source src={previewLink} />
+      <video ref={wrapperVideo} data-testid='video'>
+        <source src={previewLink} data-testid='source' />
       </video>
     </div>
   );

@@ -11,7 +11,11 @@ export const Details: React.FC<DetailsProps> = ({ info }) => {
   return (
     <>
       {detailsInfo.map((infoBlock, i) =>
-        <div className="movie-card__text-col" key={i} >
+        <div
+          className="movie-card__text-col"
+          data-testid='wrapper'
+          key={i}
+        >
           {infoBlock.map(infoItem =>
             <DetailsItem
               name={infoItem.name}

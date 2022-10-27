@@ -1,69 +1,83 @@
-import { faker } from '@faker-js/faker';
+import { appInitialState } from '../../store/reducers/app-reducer/app-state';
 import { appInitialState_Interface } from '../../store/reducers/app-reducer/app-types';
+import { basicInitialState } from '../../store/reducers/data-reducer/basic-slice/basic-state';
 import { basicInitialState_Interface } from '../../store/reducers/data-reducer/basic-slice/basic-types';
+import { currentSliceState } from '../../store/reducers/data-reducer/current-slice/current-state';
 import { currentSliceState_Interface } from '../../store/reducers/data-reducer/current-slice/current-types';
 import { dataReducerInterface } from '../../store/reducers/data-reducer/data-reducer.combine';
-import { AuthStatus, userInitialState_Interface } from '../../store/reducers/user-reducer/user-types';
-import { Movie, Movies, optionsMenu } from '../../types/movies';
-import { Reviews } from '../../types/reviews';
-import { Status, UserData } from '../../types/user';
-import { createMovie, createMovies, createReviews } from './test-data';
+import { userInitialState } from '../../store/reducers/user-reducer/user-state';
+import { userInitialState_Interface } from '../../store/reducers/user-reducer/user-types';
+import { RootState } from '../../store/store.types';
 
+
+/** TYPE */
+type PartsBasic = Partial<basicInitialState_Interface>;
+type PartsCurrent = Partial<currentSliceState_Interface>;
+type PartsApp = Partial<appInitialState_Interface>;
+type PartsUser = Partial<userInitialState_Interface>;
 
 /** store/data/basic */
-export const create_mock_Data_Basic = (
-  fav: Movies = [],
-  isFavoriteMovies: boolean = false,
-  count: number = 10
-): basicInitialState_Interface => ({
-  movies: createMovies(isFavoriteMovies, count),
-  movie_cover: createMovie(),
-  favorites_movies: fav,
-  status: 'none'
+export const makeDataBasicSlice = (
+  substitute: PartsBasic
+): Record<'basic', basicInitialState_Interface> => ({
+  basic: {
+    ...basicInitialState,
+    ...substitute,
+  }
 });
 
 /** store/data/current */
 export const makeDataCurrentSlice = (
-  current_movie: Movie | null = createMovie(),
-  current_movie_reviews: Reviews = createReviews(),
-  status: Status = 'none'
+  substitute: PartsCurrent
 ): Record<'current', currentSliceState_Interface> => ({
-  current: { current_movie, current_movie_reviews, status }
+  current: {
+    ...currentSliceState,
+    ...substitute,
+  }
 });
 
 /** store/data */
-export const makeData = (): dataReducerInterface => (
-  {
-    basic: { ...create_mock_Data_Basic() },
-    ...makeDataCurrentSlice()
+export const makeData = (
+  substituteBasic: PartsBasic,
+  substituteCurrent: PartsCurrent,
+): Record<'data', dataReducerInterface> => ({
+  data: {
+    ...makeDataBasicSlice(substituteBasic),
+    ...makeDataCurrentSlice(substituteCurrent)
   }
-);
+});
+
+
 
 /** store/app */
 export const makeAppSlice = (
-  active_genre: string = 'Adventure',
-  active_movie_item: optionsMenu = 'Details',
-  active_fav_id: number = faker.datatype.number(),
-): Record<'app', appInitialState_Interface> => (
-  { app: { active_genre, active_movie_item, active_fav_id } }
-);
+  substitute: PartsApp,
+): Record<'app', appInitialState_Interface> => ({
+  app: {
+    ...appInitialState,
+    ...substitute,
+  }
+});
 
 /** store/user */
-
 export const makeUserSlice = (
-  authStatus: AuthStatus = 'UNKNOWN',
-  user: UserData | null = null,
-  status: Status = 'none'
+  substitute: PartsUser,
 ): Record<'user', userInitialState_Interface> => ({
-  user: { authStatus, user, status }
+  user: {
+    ...userInitialState,
+    ...substitute,
+  }
 });
 
 
 /** store */
-export const mock_RootStore = {
-  data: makeData(),
-  ...makeAppSlice(),
-  ...makeUserSlice(),
-}
-
-
+export const makeRootState = (
+  substituteBasic: PartsBasic = {},
+  substituteCurrent: PartsCurrent = {},
+  substituteApp: PartsApp = {},
+  substituteUser: PartsUser = {},
+): RootState => ({
+  ...makeData(substituteBasic, substituteCurrent),
+  ...makeAppSlice(substituteApp),
+  ...makeUserSlice(substituteUser),
+});

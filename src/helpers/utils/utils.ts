@@ -97,17 +97,19 @@ export const getNormolizeVideoTime = (current: inSeconds, duration: inSeconds): 
 
 /** EventListener */
 type RemoveLisener = void;
+export type Events = Event | DragEvent;
+
 export const guardEventListener = (
   type: string,
   element: HTMLElement,
-  listener: (event: Event) => void
+  listener: (event: Events) => void
 ): () => RemoveLisener => {
   if (element) {
     element.addEventListener(type, listener);
     return () => element.removeEventListener(type, listener);
   }
   return element;
-}
+};
 
 /** localStorage */
 export const changeOrderStage = ({ id, status }: movieFavoriteData) => {

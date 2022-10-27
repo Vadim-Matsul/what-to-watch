@@ -1,17 +1,13 @@
 import { MovieListProps } from './Movie-List.props';
-import MovieCard from '../Movie-Card/Movie-Card';
-import { useSelector } from 'react-redux';
-import { getSortedMovies } from '../../store/reducers/data-reducer/basic-slice/basic-slice-selectors';
-import { getActiveGenre } from '../../store/reducers/app-reducer/app-slice-selectors';
 import { useEffect, useState } from 'react';
-import { ALL_GENRES, isServer } from '../../helpers/const/const';
 import Link from 'next/link';
 import { bePagesPaths } from '../../helpers/const/const';
+import { MovieCard } from '..';
 
 const MovieList: React.FC<MovieListProps> = ({ movies, isFavorite = false }) => {
 
   const [ind, setInd] = useState<number>(4);
-  const shouldShowEmpty = isFavorite && !movies.length
+  const shouldShowEmpty = isFavorite && !movies.length;
 
 
   useEffect(() => {
@@ -27,9 +23,9 @@ const MovieList: React.FC<MovieListProps> = ({ movies, isFavorite = false }) => 
 
       ind >= movies.length
         ? observer.disconnect()
-        : observer.observe(document.getElementById('showMore'));
+        : observer.observe(document.getElementById('showMore')!);
     }
-  }, [ind, movies])
+  }, [ind, movies]);
 
 
   return (
@@ -54,10 +50,9 @@ const MovieList: React.FC<MovieListProps> = ({ movies, isFavorite = false }) => 
           </a>
         </Link>
       }
-      <div id='showMore' className='show-more' />
+      <div id='showMore' className='show-more' data-testid='showMore' />
     </>
   );
 };
-
 
 export default MovieList;

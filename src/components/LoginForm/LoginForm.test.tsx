@@ -22,7 +22,7 @@ describe('Component: LoginForm', () => {
   });
 
   it('Корректный рендер компонента', () => {
-    const userState = makeUserSlice('UNKNOWN');
+    const userState = makeUserSlice({ authStatus: 'UNKNOWN' });
     const LoginFormWrapped = HOC_withProviders(LoginForm, makeFakeStore(userState));
     render(LoginFormWrapped({}));
 
@@ -40,7 +40,7 @@ describe('Component: LoginForm', () => {
   });
 
   it('Редирект со странице при NOAUTH', () => {
-    const userState = makeUserSlice('AUTH');
+    const userState = makeUserSlice({ authStatus: 'AUTH' });
     const LoginFormWrapped = HOC_withProviders(LoginForm, makeFakeStore(userState), mockRouter);
     render(LoginFormWrapped({}));
 
@@ -48,7 +48,7 @@ describe('Component: LoginForm', () => {
   });
 
   it('Корректная работа формы', async () => {
-    const mockStore = makeFakeStore(makeUserSlice('NOAUTH'));
+    const mockStore = makeFakeStore(makeUserSlice({ authStatus: 'NOAUTH' }));
     const LoginFormWrapped = HOC_withProviders(LoginForm, mockStore);
     render(LoginFormWrapped({}));
     const dispatchSpy = jest.spyOn(mockStore, 'dispatch').mockImplementation(a => a);

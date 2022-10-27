@@ -1,7 +1,5 @@
 import classNames from 'classnames';
-import { Breadcrumbs } from '../Breadcrumbs/Breadcrumbs';
-import { LogoLink } from '../Footer/LogoLink/LogoLink'
-import { UserBlock } from '../UserBlock/UserBlock';
+import { Breadcrumbs, LogoLink, UserBlock } from '..';
 import { HeaderProps } from './Header.props';
 
 
@@ -17,7 +15,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
   const headerClass = classNames(`page-header ${theHeaderClass}__head`);
 
   return (
-    <header className={headerClass} >
+    <header className={headerClass} data-testid='header' >
       <LogoLink />
       {shouldShowBreadcrumbs && <Breadcrumbs />}
       {shouldShowUser && <UserBlock />}

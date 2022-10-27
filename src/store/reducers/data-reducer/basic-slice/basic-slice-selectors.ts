@@ -7,14 +7,15 @@ import { Selector } from '../../../store.types';
 
 
 export const getMovies: Selector<Movies> = (state) => state.data.basic.movies;
+export const getFavoritesMovies: Selector<Movies> = (state) => state.data.basic.favorites_movies;
+export const getBasicStatus: Selector<Status> = (state) => state.data.basic.status;
+
+
 export const getMovieCover: Selector<Movie> = (state) => {
-  const movieCopy = Object.assign<{}, Movie>({}, state.data.basic.movie_cover);
+  const movieCopy = Object.assign<{}, Movie>({}, state.data.basic.movie_cover!);
   return movieCopy;
 };
 
-export const getFavoritesMovies: Selector<Movies> = (state) => state.data.basic.favorites_movies;
-
-export const getBasicStatus: Selector<Status> = (state) => state.data.basic.status;
 
 export const getSortedFavoritesMovies: Selector<Movies> = (state) => {
 
@@ -23,21 +24,22 @@ export const getSortedFavoritesMovies: Selector<Movies> = (state) => {
 
   favoriteOrdersId && currentFavorites.forEach((movie) => {
     favoriteOrdersId.forEach(obj => {
-      if (movie.id === obj.id) movie.order = obj.order
+      if (movie.id === obj.id) movie.order = obj.order;
     });
   });
 
-  return currentFavorites.sort((a, b) => a.order > b.order ? 1 : -1);
-}
+  return currentFavorites.sort((a, b) => a.order! > b.order! ? 1 : -1);
+};
+
 
 export const getSortedMovies = createSelector(getMovies, movies => {
-  const moviesList = { [ALL_GENRES]: movies };
+  const moviesList: Record<string, Movies> = { [ALL_GENRES]: movies };
 
   movies.forEach(movie => {
     movie.genre in moviesList
       ? moviesList[movie.genre].push(movie)
-      : moviesList[movie.genre] = [movie]
+      : moviesList[movie.genre] = [movie];
   });
 
   return moviesList;
-}) as Selector<Record<string, Movie[]>>
+}) as Selector<Record<string, Movie[]>>;

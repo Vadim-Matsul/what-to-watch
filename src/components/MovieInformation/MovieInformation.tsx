@@ -1,7 +1,5 @@
-import { useState } from 'react'
-import { CurrentMovieNavigation } from '../CurrentMovieNavigation/CurrentMovieNavigation';
+import { CurrentMovieNavigation, MovieInformationBlock } from '..';
 import { MovieInformationProps } from './MovieInformation.props'
-import { MovieInformationBlock } from './MovieInformationBlock/MovieInformationBlock';
 import Image from 'next/image';
 
 
@@ -34,5 +32,5 @@ export const MovieInformation: React.FC<MovieInformationProps> = (props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

@@ -10,11 +10,9 @@ import { FC, ReactElement } from 'react';
 /**
  *  HOC используется в компоненте, 
  *      использующем router и state;
- * 
  *  @param store 
  *   • по умолчанию state { }
  *   • для создания с иным state - makeFakeStore
- * 
  *  @param value 
  *    • замоканый router ( по умолчаннию NextRouter )
  *    • для создания с переопределёнными параметрами router - createMockRouter
