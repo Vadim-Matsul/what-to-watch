@@ -6,7 +6,7 @@ import { useAppDispatch } from '../../../helpers/Hooks/useAppDispatch';
 import CurrentMovie from '../../../page-components/CurrentMovie/CurrentMovie';
 import { API_ACTIONS } from '../../../store/labouring/api-actions/api-actions';
 import { CurrentMovie_Fulfilled } from '../../../store/reducers/data-reducer/current-slice/current-types';
-import { getAuthStatus } from '../../../store/reducers/user-reducer/user-slice-selectors';
+import { getAuthStatus } from '../../../store/reducers/index.selectors';
 import { api, wrapper_Server_Client } from '../../../store/store';
 import { isAsyncDispatch } from '../../../store/store.types';
 import { Movie, Movies } from '../../../types/movies';

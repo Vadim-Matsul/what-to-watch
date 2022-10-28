@@ -9,8 +9,7 @@ import { MovieCoverProps } from './MoverCover.props';
 import { bePagesPaths } from '../../helpers/const/const';
 import { Header, MovieButtons, MovieInformation, ReviewForm } from '..';
 import { convertInMovieInformation } from '../../helpers/adapter/adapter';
-import { getAuthStatus } from '../../store/reducers/user-reducer/user-slice-selectors';
-import { getFavoritesMovies } from '../../store/reducers/data-reducer/basic-slice/basic-slice-selectors';
+import { getAuthStatus, getFavoritesMovies } from '../../store/reducers/index.selectors';
 
 const MovieCover: React.FC<MovieCoverProps> = (props) => {
   const { movie: draftMovie, reviews, shouldShowBreadcrumbsHeader = false } = props;

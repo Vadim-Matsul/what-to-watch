@@ -101,9 +101,9 @@ export type Events = Event | DragEvent;
 
 export const guardEventListener = (
   type: string,
-  element: HTMLElement,
+  element: HTMLElement | null,
   listener: (event: Events) => void
-): () => RemoveLisener => {
+): (() => RemoveLisener) | null => {
   if (element) {
     element.addEventListener(type, listener);
     return () => element.removeEventListener(type, listener);

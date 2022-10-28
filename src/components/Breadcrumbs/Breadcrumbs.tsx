@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useSelector } from 'react-redux'
 import { bePagesPaths } from '../../helpers/const/const';
-import { getCurrentMovie } from '../../store/reducers/data-reducer/current-slice/current-slice-selectors'
+import { getCurrentMovie } from '../../store/reducers/index.selectors';
 
 
 export const Breadcrumbs: React.FC = () => {

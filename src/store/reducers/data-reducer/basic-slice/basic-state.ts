@@ -5,4 +5,4 @@ export const basicInitialState: basicInitialState_Interface = {
   movie_cover: null,
   favorites_movies: [],
   status: 'none'
-}
+};

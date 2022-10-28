@@ -1,8 +1,8 @@
 import { GenreItemProps } from './Genre-Item.props';
 import { useSelector, useDispatch } from 'react-redux';
-import { getActiveGenre } from '../../store/reducers/app-reducer/app-slice-selectors';
 import { ACTIONS } from '../../store/labouring/actions/actions';
 import classNames from 'classnames';
+import { getActiveGenre } from '../../store/reducers/index.selectors';
 
 export const GenreItem: React.FC<GenreItemProps> = ({ genre }) => {
   const active_genre = useSelector(getActiveGenre);

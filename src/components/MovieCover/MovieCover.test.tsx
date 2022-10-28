@@ -85,7 +85,7 @@ describe('Component: MovieCover', () => {
     expect(getByTestId('Header')).toBeInTheDocument();
     expect(getByTestId('MovieButtons')).toBeInTheDocument();
     expect(getByTestId('section')
-    ).toHaveAttribute('style', `background: ${HEXtoRGB(movie.backgroundColor)};`)
+    ).toHaveAttribute('style', `background: ${HEXtoRGB(movie.backgroundColor)};`);
   });
 
   test('Успешная отрисовка на странице фильма', () => {
@@ -118,7 +118,7 @@ describe('Component: MovieCover', () => {
     // NOAUTH
     MockStore = makeFakeStore(makeRootState({}, {}, {}, { authStatus: 'NOAUTH' }));
     MovieCoverWrapped = HOC_withProviders(MovieCover, MockStore, router);
-    rerender(MovieCoverWrapped({ movie, reviews }))
+    rerender(MovieCoverWrapped({ movie, reviews }));
 
     expect(queryByRole('link')).toBeNull();
   });

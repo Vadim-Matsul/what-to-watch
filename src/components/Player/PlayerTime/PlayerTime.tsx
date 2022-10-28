@@ -25,12 +25,12 @@ const PlayerTime: React.FC<PlayerTimeProps> = ({ videoRef }) => {
 
     //! Т.к videoRef используется с модуля MoviePlayer, возможно значение null при размонтировании, 
     //!     поведение не обрабатываем;
-    const removeTimeupdate = guardEventListener('timeupdate', videoRef.current, listenerChangeData);
-    const removeLoadedmetadata = guardEventListener('loadedmetadata', videoRef.current, listenerLoadMetaData);
+    const removeTimeupdate = guardEventListener('timeupdate', videoRef.current!, listenerChangeData);
+    const removeLoadedmetadata = guardEventListener('loadedmetadata', videoRef.current!, listenerLoadMetaData);
 
     return () => {
-      removeTimeupdate();
-      removeLoadedmetadata();
+      removeTimeupdate!();
+      removeLoadedmetadata!();
     };
   }, [durationTime]);
 

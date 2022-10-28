@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { bePagesPaths, FavoritesStatus } from '../../helpers/const/const';
 import { useAppDispatch } from '../../helpers/Hooks/useAppDispatch';
 import { API_ACTIONS } from '../../store/labouring/api-actions/api-actions';
-import { getAuthStatus } from '../../store/reducers/user-reducer/user-slice-selectors';
+import { getAuthStatus } from '../../store/reducers/index.selectors';
 import { movieFavoriteData } from '../../types/movies';
 import { MovieButtonsProps } from './MovieButtons.props';
 

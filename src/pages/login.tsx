@@ -2,10 +2,9 @@ import { NextPage } from 'next';
 import { useSelector } from 'react-redux';
 import { bePagesPaths, isServer } from '../helpers/const/const';
 import { Login } from '../page-components/Login/Login';
-import { getAuthStatus } from '../store/reducers/user-reducer/user-slice-selectors';
 import withRouter from 'next/router';
 import { Loader } from '../components/Loader/Loader';
-import { useEffect, useState } from 'react';
+import { getAuthStatus } from '../store/reducers/index.selectors';
 
 const LoginPage: NextPage = () => {
 

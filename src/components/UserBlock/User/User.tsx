@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux'
-import { getUser } from '../../../store/reducers/user-reducer/user-slice-selectors';
 import Image from 'next/image';
 import Link from 'next/link';
 import { bePagesPaths } from '../../../helpers/const/const';
+import { getUser } from '../../../store/reducers/index.selectors';
 
 export const User: React.FC = () => {
   const user = useSelector(getUser)!;

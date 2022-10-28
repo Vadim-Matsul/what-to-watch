@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { FavoritesStatus } from '../../../helpers/const/const';
 import { useAppDispatch } from '../../../helpers/Hooks/useAppDispatch';
 import { API_ACTIONS } from '../../../store/labouring/api-actions/api-actions';
-import { getActiveFavId } from '../../../store/reducers/app-reducer/app-slice-selectors';
+import { getActiveFavId } from '../../../store/reducers/index.selectors';
 import { movieFavoriteData } from '../../../types/movies';
 
 

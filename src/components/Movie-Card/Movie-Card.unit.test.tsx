@@ -1,6 +1,7 @@
+
 import { bePagesPaths } from '../../helpers/const/const';
 import { testBundle } from '../z_tests-helper/testBundle';
-import MovieCard from './Movie-Card';
+import { MovieCard } from './Movie-Card';
 
 
 const {
@@ -31,7 +32,7 @@ describe('Component: MovieCard', () => {
     );
 
     const Link = getByRole('link');
-    
+
     expect(Link).toHaveAttribute('href', bePath);
     expect(Link).not.toHaveClass('draggable');
     expect(getByTestId('article')).toHaveAttribute('draggable', 'false');

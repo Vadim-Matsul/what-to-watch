@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeOrderMovies, Events, guardEventListener } from '../utils/utils';
 import { ACTIONS } from '../../store/labouring/actions/actions';
-import { getActiveFavId } from '../../store/reducers/app-reducer/app-slice-selectors';
+import { getActiveFavId } from '../../store/reducers/index.selectors';
 
 export const useDrag = (ref: React.RefObject<HTMLElement>, should: boolean, movieId: number) => {
   if (!should) { return; }
@@ -63,11 +63,11 @@ export const useDrag = (ref: React.RefObject<HTMLElement>, should: boolean, movi
     const removeDragDrop = guardEventListener('drop', instance, listenerDragDrop);
 
     return () => {
-      removeDragStart();
-      removeDragOver();
-      removeDragEnd();
-      removeDragLeave();
-      removeDragDrop();
+      removeDragStart!();
+      removeDragOver!();
+      removeDragEnd!();
+      removeDragLeave!();
+      removeDragDrop!();
     }
   }, [startId]);
 };

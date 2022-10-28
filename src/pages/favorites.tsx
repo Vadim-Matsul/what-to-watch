@@ -1,11 +1,9 @@
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
-import { Loader } from '../components/Loader/Loader';
-import { bePagesPaths, isServer } from '../helpers/const/const';
+import { bePagesPaths } from '../helpers/const/const';
 import { MyFavoritesList } from '../page-components/Favorites/Favorites';
-import { getBasicStatus } from '../store/reducers/data-reducer/basic-slice/basic-slice-selectors';
-import { getAuthStatus } from '../store/reducers/user-reducer/user-slice-selectors';
+import { getAuthStatus, getBasicStatus } from '../store/reducers/index.selectors';
 
 
 const FavoritePage: NextPage = () => {
@@ -15,11 +13,7 @@ const FavoritePage: NextPage = () => {
 
   if (authStatus === 'NOAUTH' || basicStatus === 'rejected') router.push(bePagesPaths.main);
 
-  return (
-    <>
-      <MyFavoritesList />
-    </>
-  )
+  return <MyFavoritesList />
 }
 
 export default FavoritePage;

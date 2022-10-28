@@ -3,8 +3,7 @@ import { GenresCatalog } from '../../components/Genres-Catalog/Genres-Catalog';
 import MovieCover from '../../components/MovieCover/MovieCover';
 import { Footer } from '../../components/Footer/Footer';
 import { useSelector } from 'react-redux';
-import { getMovieCover, getSortedMovies } from '../../store/reducers/data-reducer/basic-slice/basic-slice-selectors';
-import { getActiveGenre } from '../../store/reducers/app-reducer/app-slice-selectors';
+import { getActiveGenre, getMovieCover, getSortedMovies } from '../../store/reducers/index.selectors';
 
 const MainPage: React.FC = () => {
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { getSortedMovies } from '../../store/reducers/data-reducer/basic-slice/basic-slice-selectors';
+import { getSortedMovies } from '../../store/reducers/index.selectors';
 import MovieList from '../Move-List/Movie-List';
 import { MoreLikesMoviesProps } from './MoreLikesMovies.props';
 

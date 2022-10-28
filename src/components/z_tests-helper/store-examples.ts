@@ -1,13 +1,15 @@
-import { appInitialState } from '../../store/reducers/app-reducer/app-state';
-import { appInitialState_Interface } from '../../store/reducers/app-reducer/app-types';
-import { basicInitialState } from '../../store/reducers/data-reducer/basic-slice/basic-state';
-import { basicInitialState_Interface } from '../../store/reducers/data-reducer/basic-slice/basic-types';
-import { currentSliceState } from '../../store/reducers/data-reducer/current-slice/current-state';
-import { currentSliceState_Interface } from '../../store/reducers/data-reducer/current-slice/current-types';
-import { dataReducerInterface } from '../../store/reducers/data-reducer/data-reducer.combine';
-import { userInitialState } from '../../store/reducers/user-reducer/user-state';
-import { userInitialState_Interface } from '../../store/reducers/user-reducer/user-types';
 import { RootState } from '../../store/store.types';
+
+import { appInitialState } from '../../store/reducers/app-reducer/app-state';
+import { userInitialState } from '../../store/reducers/user-reducer/user-state';
+import { basicInitialState } from '../../store/reducers/data-reducer/basic-slice/basic-state';
+import { currentSliceState } from '../../store/reducers/data-reducer/current-slice/current-state';
+
+import { dataReducerInterface } from '../../store/reducers/data-reducer/data-reducer.combine';
+import { appInitialState_Interface } from '../../store/reducers/app-reducer/app-types';
+import { basicInitialState_Interface } from '../../store/reducers/data-reducer/basic-slice/basic-types';
+import { currentSliceState_Interface } from '../../store/reducers/data-reducer/current-slice/current-types';
+import { userInitialState_Interface } from '../../store/reducers/user-reducer/user-types';
 
 
 /** TYPE */
@@ -18,7 +20,7 @@ type PartsUser = Partial<userInitialState_Interface>;
 
 /** store/data/basic */
 export const makeDataBasicSlice = (
-  substitute: PartsBasic
+  substitute: PartsBasic = {},
 ): Record<'basic', basicInitialState_Interface> => ({
   basic: {
     ...basicInitialState,
@@ -28,7 +30,7 @@ export const makeDataBasicSlice = (
 
 /** store/data/current */
 export const makeDataCurrentSlice = (
-  substitute: PartsCurrent
+  substitute: PartsCurrent = {}
 ): Record<'current', currentSliceState_Interface> => ({
   current: {
     ...currentSliceState,
@@ -38,8 +40,8 @@ export const makeDataCurrentSlice = (
 
 /** store/data */
 export const makeData = (
-  substituteBasic: PartsBasic,
-  substituteCurrent: PartsCurrent,
+  substituteBasic: PartsBasic = {},
+  substituteCurrent: PartsCurrent = {},
 ): Record<'data', dataReducerInterface> => ({
   data: {
     ...makeDataBasicSlice(substituteBasic),
@@ -47,11 +49,9 @@ export const makeData = (
   }
 });
 
-
-
 /** store/app */
 export const makeAppSlice = (
-  substitute: PartsApp,
+  substitute: PartsApp = {},
 ): Record<'app', appInitialState_Interface> => ({
   app: {
     ...appInitialState,
@@ -61,14 +61,13 @@ export const makeAppSlice = (
 
 /** store/user */
 export const makeUserSlice = (
-  substitute: PartsUser,
+  substitute: PartsUser = {},
 ): Record<'user', userInitialState_Interface> => ({
   user: {
     ...userInitialState,
     ...substitute,
   }
 });
-
 
 /** store */
 export const makeRootState = (

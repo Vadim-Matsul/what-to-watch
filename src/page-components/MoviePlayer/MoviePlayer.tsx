@@ -3,14 +3,14 @@ import { MoviePlayerProps } from './MoviePlayer.props';
 import { MovieButtonToggle } from '../../components/Player/MovieButtonToggle/MovieButtonToggle';
 import PlayerTime from '../../components/Player/PlayerTime/PlayerTime';
 import { useRouter } from 'next/router';
-import { bePagesPaths, ToastConfig } from '../../../helpers/const/const';
+import { bePagesPaths, ToastConfig } from '../../helpers/const/const';
 import { toast } from 'react-toastify';
 
 
 
 const MoviePlayer: React.FC<MoviePlayerProps> = ({ movie }) => {
 
-  const videoRef = useRef<HTMLVideoElement>();
+  const videoRef = useRef<HTMLVideoElement>(null);
   const router = useRouter();
   const [playError, setPlayError] = useState<boolean | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
@@ -20,7 +20,7 @@ const MoviePlayer: React.FC<MoviePlayerProps> = ({ movie }) => {
     toast.success(ToastConfig.s_player, { autoClose: 5000 });
   }, []);
   const handleExit = () => router.push(bePagesPaths.main);
-  const handleFullScreen = () => videoRef.current.requestFullscreen();
+  const handleFullScreen = () => videoRef.current!.requestFullscreen();
 
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const MoviePlayer: React.FC<MoviePlayerProps> = ({ movie }) => {
      *       • Возможно использовать useLayoutEffect, тем самым гарантируя синхронное поведение блока очистки,
      *         Но это замедлит перерисовку React-Dom;
      */
-    const instance = videoRef.current;
+    const instance = videoRef.current!;
 
     if (playError) instance.muted = true;
 
@@ -54,14 +54,14 @@ const MoviePlayer: React.FC<MoviePlayerProps> = ({ movie }) => {
     );
 
     instance.addEventListener('ended', changePlayingState);
-    return () => instance.removeEventListener('ended', changePlayingState);
+    return () => instance!.removeEventListener('ended', changePlayingState);
   }, [playError]);
 
 
   useEffect(() => {
     playError !== null && isPlaying
-      ? videoRef.current.play()
-      : videoRef.current.pause();
+      ? videoRef.current!.play()
+      : videoRef.current!.pause();
   }, [isPlaying]);
 
 
