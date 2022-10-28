@@ -6,12 +6,11 @@ import { ErrorConfig } from '../../helpers/const/const'
 import { ReviewFormData } from '../../types/reviews';
 import { useAppDispatch } from '../../helpers/Hooks/useAppDispatch';
 import { API_ACTIONS } from '../../store/labouring/api-actions/api-actions';
-import withRouter from 'next/router';
+import { useRouter } from 'next/router';
 
 export const ReviewForm: React.FC<ReviewFormProps> = ({ movieId }) => {
-
+  const router = useRouter();
   const dispatch = useAppDispatch();
-
   const {
     control,
     register,
@@ -19,7 +18,7 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({ movieId }) => {
     handleSubmit,
     formState: {
       errors: { comment },
-      isSubmitting
+      isSubmitting,
     }
   } = useForm<ReviewFormData>({
     mode: 'onChange',
@@ -46,7 +45,7 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({ movieId }) => {
     data.id = movieId;
     await dispatch(API_ACTIONS.postMovieReview(data));
     reset();
-    withRouter.back();
+    router.back();
   };
 
   const buttonText = isSubmitting ? 'Pending' : 'Post';
@@ -56,6 +55,7 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({ movieId }) => {
       <form
         className="add-review__html-form"
         onSubmit={handleSubmit(handlerFormSubmit)}
+        role='form'
       >
         <Controller
           name='rating'
@@ -81,7 +81,8 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({ movieId }) => {
             placeholder="Review text"
             {...commentRegister}
           />
-          <div className='center' >{comment && comment.message}</div>
+          {comment &&
+            <div className='center' data-testid='error_comment'>{comment.message}</div>}
           <div className="add-review__submit">
             <button
               className="add-review__btn"

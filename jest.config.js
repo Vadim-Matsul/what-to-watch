@@ -7,6 +7,7 @@ const createConfig = nextJest({
 const customConfig = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
+  clearMocks: true,
   setupFilesAfterEnv: ['./src/jest.setup.ts'],
   globals: {
     'ts-jest': {

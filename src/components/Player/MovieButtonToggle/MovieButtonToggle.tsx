@@ -2,7 +2,7 @@ import { MovieButtonToggleProps } from './MovieButtonToggle.props'
 
 
 export const MovieButtonToggle: React.FC<MovieButtonToggleProps> = ({ isPlaying, changePlayingState }) => (
-  <span onClick={changePlayingState} >
+  <span onClick={changePlayingState} data-testid='toggler'>
     {isPlaying
       ?
       <button type="button" className="player__play" >

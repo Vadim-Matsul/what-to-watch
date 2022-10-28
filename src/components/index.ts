@@ -14,6 +14,8 @@ export * from './UserBlock/Guest/Guest';
 
 export * from './VideoPlayer/VideoPlayer';
 
+export * from './Header/Header';
+
 export * from './Movie-Card/Movie-Card';
 
 export * from './MovieButtons/MovieButtons';
@@ -25,4 +27,6 @@ export * from './MovieInformation/MovieInformationBlock/Reviews/Reviews';
 
 export * from './MovieInformation/MovieInformationBlock/MovieInformationBlock';
 export * from './CurrentMovieNavigation/CurrentMovieNavigation';
+export * from './MovieInformation/MovieInformation';
 
+export * from './ReviewForm/ReviewForm';

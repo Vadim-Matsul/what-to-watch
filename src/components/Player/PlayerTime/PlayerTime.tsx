@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getNormolizeVideoTime, guardEventListener } from '../../../helpers/utils/utils';
 import { PlayerTimeProps } from './PlayerTime.props';
 
@@ -37,7 +37,7 @@ const PlayerTime: React.FC<PlayerTimeProps> = ({ videoRef }) => {
   return (
     <div className="player__controls-row">
       <div className="player__time">
-        <progress className="player__progress" value={percent || 0} max="100" />
+        <progress className="player__progress" value={percent || 0} max="100" data-testid='progress' />
         <div className="player__toggler" style={{ left: percent + '%' }} >Toggler</div>
       </div>
       <div className="player__time-value">{lastTime}</div>
@@ -46,4 +46,3 @@ const PlayerTime: React.FC<PlayerTimeProps> = ({ videoRef }) => {
 };
 
 export default React.memo(PlayerTime);
-

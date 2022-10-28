@@ -1,19 +1,16 @@
-import Image from 'next/image';
-import { useRouter } from 'next/router';
-import { Header } from '../Header/Header';
-import ClassNames from 'classnames';
-import { bePagesPaths, isServer } from '../../helpers/const/const';
-import { MovieCoverProps } from './MoverCover.props';
-import { MovieInformation } from '../MovieInformation/MovieInformation';
-import { convertInMovieInformation } from '../../helpers/adapter/adapter';
-import { MovieButtons } from '../MovieButtons/MovieButtons';
-import { useSelector } from 'react-redux';
-import { getFavoritesMovies } from '../../store/reducers/data-reducer/basic-slice/basic-slice-selectors';
-import { ReviewForm } from '../ReviewForm/ReviewForm';
 import Link from 'next/link';
-import { useEffect, useLayoutEffect } from 'react';
+import Image from 'next/image';
+import ClassNames from 'classnames';
+import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
+
 import { Movie } from '../../types/movies';
+import { MovieCoverProps } from './MoverCover.props';
+import { bePagesPaths } from '../../helpers/const/const';
+import { Header, MovieButtons, MovieInformation, ReviewForm } from '..';
+import { convertInMovieInformation } from '../../helpers/adapter/adapter';
 import { getAuthStatus } from '../../store/reducers/user-reducer/user-slice-selectors';
+import { getFavoritesMovies } from '../../store/reducers/data-reducer/basic-slice/basic-slice-selectors';
 
 const MovieCover: React.FC<MovieCoverProps> = (props) => {
   const { movie: draftMovie, reviews, shouldShowBreadcrumbsHeader = false } = props;
@@ -50,13 +47,15 @@ const MovieCover: React.FC<MovieCoverProps> = (props) => {
 
   const movie_information = convertInMovieInformation(editableMovie);
 
+  console.log('editableMovie', editableMovie.backgroundColor);
 
   return (
     <section
       className={sectionClass}
       style={{ background: editableMovie.backgroundColor }}
+      data-testid='section'
     >
-      <div className={cardHeroClass} >
+      <div className={cardHeroClass} data-testid='cardHeroClass' >
         <div className="movie-card__bg">
           <Image
             src={editableMovie.backgroundImage}
@@ -64,6 +63,7 @@ const MovieCover: React.FC<MovieCoverProps> = (props) => {
             layout='fill'
             blurDataURL={editableMovie.backgroundImage}
             placeholder='blur'
+            data-testid='image-require'
           />
         </div>
 
@@ -71,11 +71,11 @@ const MovieCover: React.FC<MovieCoverProps> = (props) => {
 
         <Header shouldShowBreadcrumbs={shouldShowBreadcrumbsHeader} />
 
-        <div className={wrapClass}>
-          <div className={infoBlockClass}>
+        <div className={wrapClass} data-testid='wrapClass' >
+          <div className={infoBlockClass} data-testid='infoBlockClass'>
 
             {!isCurrentMoviePage &&
-              <div className={posterClass}>
+              <div className={posterClass} data-testid='poster-sec' >
                 <Image
                   src={editableMovie.posterImage}
                   alt={editableMovie.name}
@@ -83,12 +83,13 @@ const MovieCover: React.FC<MovieCoverProps> = (props) => {
                   height={327}
                   blurDataURL={editableMovie.posterImage}
                   placeholder='blur'
+                  data-testid='poster'
                 />
               </div>
             }
 
             {!isCurrentMoviePageReview &&
-              <div className="movie-card__desc">
+              <div className="movie-card__desc" data-testid='card__desc' >
                 <h2 className="movie-card__title">{editableMovie.name}</h2>
                 <p className="movie-card__meta">
                   <span className="movie-card__genre">{editableMovie.genre}</span>
@@ -112,7 +113,6 @@ const MovieCover: React.FC<MovieCoverProps> = (props) => {
 
       {isCurrentMoviePage && <MovieInformation movie_infogmation={movie_information} reviews={reviews!} />}
       {isCurrentMoviePageReview && <ReviewForm movieId={editableMovie.id} />}
-
 
     </section >
   );
