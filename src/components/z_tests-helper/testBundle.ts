@@ -31,5 +31,17 @@ export const testBundle = {
     makeDataBasicSlice,
     makeAppSlice,
     makeUserSlice,
-  }
+  },
+  createBubbleEvent,
 };
+
+// Создание bubbles event ( в браузере события всплывают )
+// для теста drag and drop;
+function createBubbleEvent(type: string, props: Record<string, unknown> = {}) {
+  return Object.assign(new Event(type, { bubbles: true }), props);
+};
+
+const event = new Event('scroll', {
+  bubbles: true,
+  
+})

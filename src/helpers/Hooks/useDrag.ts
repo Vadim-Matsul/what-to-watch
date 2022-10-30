@@ -10,8 +10,8 @@ export const useDrag = (ref: React.RefObject<HTMLElement>, should: boolean, movi
   const startId = useSelector(getActiveFavId);
 
   const handleChangeStartId = (startId: number) => {
-    dispatch(ACTIONS.setActiveFavId(startId))
-  }
+    dispatch(ACTIONS.setActiveFavId(startId));
+  };
 
   useEffect(() => {
 
@@ -25,35 +25,35 @@ export const useDrag = (ref: React.RefObject<HTMLElement>, should: boolean, movi
       evt.preventDefault();
       const target = evt.currentTarget as HTMLElement;
       if (startId == movieId) return;
-      target.className = 'drag-on-hover'
+      target.className = 'drag-on-hover';
     }
 
     const listenerDragStart = (evt: Events) => {
       const target = evt.currentTarget as HTMLElement;
-      handleChangeStartId(movieId)
-      target.className = 'drag-start'
+      handleChangeStartId(movieId);
+      target.className = 'drag-start';
     }
 
     const listenerDragEnd = (evt: Events) => {
       const target = evt.currentTarget as HTMLElement;
       // Для того, чтобы состояние карточки не хэшировалось и блок if в listenerDragOver & listenerDragLeave
       // отрабатывал корректно, меняем на изначальное состояние
-      handleChangeStartId(0)
-      target.className = 'small-movie-card catalog__movies-card'
+      handleChangeStartId(0);
+      target.className = 'small-movie-card catalog__movies-card';
     }
 
     const listenerDragLeave = (evt: Events) => {
       if (startId == movieId) return;
       const target = evt.currentTarget as HTMLElement;
-      target.style.transition = 'all 0.3s ease-in-out;'
-      target.className = 'small-movie-card catalog__movies-card'
+      target.style.transition = 'all 0.3s ease-in-out;';
+      target.className = 'small-movie-card catalog__movies-card';
     }
 
     const listenerDragDrop = (evt: Events) => {
       const target = evt.currentTarget as HTMLElement;
-      target.className = 'small-movie-card catalog__movies-card'
+      target.className = 'small-movie-card catalog__movies-card';
       if (movieId === startId) return;
-      changeOrderMovies(startId, movieId)
+      changeOrderMovies(startId, movieId);
     }
 
     const removeDragStart = guardEventListener('dragstart', instance, listenerDragStart);

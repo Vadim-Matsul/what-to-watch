@@ -61,7 +61,6 @@ describe('Component: MovieCover', () => {
 
   test('Корректная отрисовка на всех страницах', () => {
     const movie = createMovie();
-    console.log(movie.backgroundColor);
 
     // В movie HEX color, в jsdom отображается RGB color
     // Чтобы тест успешно прошёл, конвертируем HEX -> RGB с помощью parseInt;

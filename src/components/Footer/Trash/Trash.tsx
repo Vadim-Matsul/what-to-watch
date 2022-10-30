@@ -8,7 +8,7 @@ import { movieFavoriteData } from '../../../types/movies';
 
 
 export const Trash: React.FC = () => {
-  const startId = useSelector(getActiveFavId)
+  const startId = useSelector(getActiveFavId);
   const dispatch = useAppDispatch();
   const svgRef = useRef<SVGSVGElement>(null);
 
@@ -18,19 +18,20 @@ export const Trash: React.FC = () => {
     const DATA: movieFavoriteData = { id: startId, status: FavoritesStatus.DELETE }
     await dispatch(API_ACTIONS.changeFavorites(DATA));
     svg.setAttribute('class', '')
-  }
+  };
 
   const handleDragOver = (evt: React.DragEvent<HTMLSpanElement>) => {
     evt.preventDefault();
     const svg = svgRef.current!;
     svg.setAttribute('class', 'trash-over')
-  }
+  };
 
   const handleDragLeave = (evt: React.DragEvent<HTMLSpanElement>) => {
     evt.preventDefault();
     const svg = svgRef.current!;
     svg.setAttribute('class', '')
-  }
+  };
+
 
   return (
     <div
@@ -39,13 +40,13 @@ export const Trash: React.FC = () => {
       onDragLeave={handleDragLeave}
       className='trash'
       data-testid='trash'
-    
     >
       <svg
         width="80px"
         height="80px"
         viewBox="0 0 1280 1280"
         ref={svgRef}
+        data-testid='svg'
       >
         <g transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)" fill="rgb(165 44 16 / 70%)" stroke="none">
           <path d="M1320 12475 l0 -325 5075 0 5075 0 0 325 0 325 -5075 0 -5075 0 0 -325z" />

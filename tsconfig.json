@@ -22,8 +22,7 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "src/store/labouring/api-actions/api-actions.unit.test.mts"  ],
+    "**/*.tsx"],
   "exclude": [
     "node_modules",
     ".next"

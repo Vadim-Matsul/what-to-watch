@@ -30,7 +30,6 @@ describe('Component: MovieButtonToggle', () => {
     expect(fakeToggler).not.toBeCalled();
     fireEvent.click(document.activeElement!)
 
-    console.log(document.activeElement!);
     waitFor(() => expect(fakeToggler).toBeCalledTimes(1), { timeout: 100 });
 
     rerender(

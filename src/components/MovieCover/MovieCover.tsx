@@ -46,8 +46,6 @@ const MovieCover: React.FC<MovieCoverProps> = (props) => {
 
   const movie_information = convertInMovieInformation(editableMovie);
 
-  console.log('editableMovie', editableMovie.backgroundColor);
-
   return (
     <section
       className={sectionClass}

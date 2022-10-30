@@ -9,13 +9,11 @@ const MovieList: React.FC<MovieListProps> = ({ movies, isFavorite = false }) => 
   const [ind, setInd] = useState<number>(4);
   const shouldShowEmpty = isFavorite && !movies.length;
 
-
   useEffect(() => {
     if (typeof window !== 'undefined') {
 
       const observer = new IntersectionObserver((entries, observer) => {
-
-        if (entries[0].isIntersecting) {
+        if (entries[0] && entries[0].isIntersecting) {
           setInd(prev => prev += 4);
           observer.unobserve(entries[0].target);
         }
@@ -38,7 +36,6 @@ const MovieList: React.FC<MovieListProps> = ({ movies, isFavorite = false }) => 
             posterImage={movie.previewImage}
             previewLink={movie.previewVideoLink}
             id={movie.id}
-            isFavorite={isFavorite}
           />)}
       </div>
       {shouldShowEmpty &&

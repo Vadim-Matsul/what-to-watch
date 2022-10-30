@@ -5,5 +5,4 @@ export interface MovieCardProps {
   posterImage: string,
   previewLink: string,
   id: number,
-  isFavorite?: boolean
 }

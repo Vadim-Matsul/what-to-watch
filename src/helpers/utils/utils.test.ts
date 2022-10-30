@@ -125,7 +125,6 @@ describe('Модуль utils', () => {
       expect(jsonStringifyMock).toBeCalled();
       expect(spliceMock).toBeCalledTimes(1);
       expect(favorites_movies.length).toBe(1);
-      console.log('status "1"', movies);
 
       expect(movies[0].isFavorite).toBe(true);
     });
@@ -144,7 +143,6 @@ describe('Модуль utils', () => {
       expect(jsonParseMock).toBeCalled();
       expect(jsonStringifyMock).toBeCalled();
       expect(favorites_movies).toEqual([]);
-      console.log('status "0"', movies);
       expect(movies[0].isFavorite).toBe(false);
     });
 
