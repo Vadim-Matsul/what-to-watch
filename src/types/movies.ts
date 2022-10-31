@@ -52,4 +52,8 @@ export type OrderDataObj = {
   order: number
 };
 
+export type EqualsId = {
+  [key: string]: Array<{ id: number, index: number }>
+};
+
 export type OrderData = OrderDataObj[];
