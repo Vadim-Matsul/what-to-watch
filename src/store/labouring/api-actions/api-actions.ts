@@ -1,15 +1,15 @@
-import { Movie, movieFavoriteData, Movies } from '../../../types/movies';
-import { ACTIONS } from '../actions/actions';
-import { AsyncThunkResult } from '../../store.types';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
+
 import { setMovieCover } from '../../reducers/data-reducer/basic-slice/basic-slice';
+import { changeOrderStage, UpdateMoviesData } from '../../../helpers/utils/utils';
+import { API_NAMES, HTTP, ToastConfig } from '../../../helpers/const/const';
+import { Movie, movieFavoriteData, Movies } from '../../../types/movies';
 import { ReviewFormData, Reviews } from '../../../types/reviews';
 import { LoginData, UserData } from '../../../types/user';
-import { toast } from 'react-toastify';
-import { Slide, Zoom, Flip, Bounce } from 'react-toastify';
-import { type } from 'os';
-import { API_NAMES, HTTP, ToastConfig } from '../../../helpers/const/const';
-import { changeOrderStage, UpdateMoviesData } from '../../../helpers/utils/utils';
+import { AsyncThunkResult } from '../../store.types';
+import { ACTIONS } from '../actions/actions';
+
 
 export const API_ACTIONS = {
 
@@ -59,6 +59,7 @@ export const API_ACTIONS = {
         const { data } = await extra.post<Movie>(HTTP.FAVORITES + `/${DATA.id}/` + DATA.status);
         changeOrderStage(DATA);
         const [movies, favMovies] = UpdateMoviesData(getState, DATA, data);
+
         dispatch(ACTIONS.setMovies(movies));
         dispatch(ACTIONS.setFavoritesMovies(favMovies));
 
@@ -75,7 +76,7 @@ export const API_ACTIONS = {
   checkAutorization: createAsyncThunk<void, void, AsyncThunkResult>(
     API_NAMES.checkAuthorization,
     async (_, { dispatch, extra, rejectWithValue, getState }) => {
-      let Id
+      let Id: number | string;
       if (getState().user.status === 'none') {
         toast.dismiss();
         Id = toast(ToastConfig.toastWait, { autoClose: 6000 });
@@ -84,12 +85,12 @@ export const API_ACTIONS = {
       try {
         const { data } = await extra.get<UserData>(HTTP.LOGIN);
 
-        toast.update(Id, { render: ToastConfig.welcome + data.name, type: 'success', autoClose: 2000 });
+        toast.update(Id!, { render: ToastConfig.welcome + data.name, type: 'success', autoClose: 2000 });
 
         dispatch(ACTIONS.setUser(data));
         dispatch(ACTIONS.setAuthStatus('AUTH'));
       } catch (err) {
-        toast.update(Id, { render: ToastConfig.sh_login, type: 'default', autoClose: 2000 });
+        toast.update(Id!, { render: ToastConfig.sh_login, type: 'default', autoClose: 2000 });
 
         dispatch(ACTIONS.setAuthStatus('NOAUTH'));
         return rejectWithValue('')
@@ -146,4 +147,4 @@ export const API_ACTIONS = {
       }
     }
   )
-}
+};

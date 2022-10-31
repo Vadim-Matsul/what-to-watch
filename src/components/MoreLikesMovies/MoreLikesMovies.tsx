@@ -1,8 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+
 import { getSortedMovies } from '../../store/reducers/index.selectors';
-import MovieList from '../Move-List/Movie-List';
 import { MoreLikesMoviesProps } from './MoreLikesMovies.props';
+import MovieList from '../Move-List/Movie-List';
 
 
 export const MoreLikesMovies: React.FC<MoreLikesMoviesProps> = ({ curent_movie_id, curent_movie_genre }) => {

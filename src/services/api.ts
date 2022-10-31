@@ -1,7 +1,8 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios'
+
+import { deleteOrderFav, deleteToken, firstSetOrderFav, getToken, setToken } from './storage'
 import { CONFIG, isServer } from '../helpers/const/const';
 import { UserData } from '../types/user';
-import { deleteOrderFav, deleteToken, firstSetOrderFav, getToken, setToken } from './storage'
 
 
 export const createAxiosInstance = (): AxiosInstance => {
@@ -9,7 +10,7 @@ export const createAxiosInstance = (): AxiosInstance => {
   const api = axios.create({
     baseURL: CONFIG.BASE,
     timeout: CONFIG.TIMEOUT,
-  })
+  });
 
   api.interceptors.response.use(
     (response: AxiosResponse<UserData>) => {

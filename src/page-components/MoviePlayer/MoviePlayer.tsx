@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { MoviePlayerProps } from './MoviePlayer.props';
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+
 import { MovieButtonToggle } from '../../components/Player/MovieButtonToggle/MovieButtonToggle';
 import PlayerTime from '../../components/Player/PlayerTime/PlayerTime';
-import { useRouter } from 'next/router';
 import { bePagesPaths, ToastConfig } from '../../helpers/const/const';
-import { toast } from 'react-toastify';
+import { MoviePlayerProps } from './MoviePlayer.props';
 
 
 
@@ -17,7 +18,6 @@ const MoviePlayer: React.FC<MoviePlayerProps> = ({ movie }) => {
 
   const changePlayingState = useCallback(() => {
     setIsPlaying(prev => !prev);
-    toast.success(ToastConfig.s_player, { autoClose: 5000 });
   }, []);
   const handleExit = () => router.push(bePagesPaths.main);
   const handleFullScreen = () => videoRef.current!.requestFullscreen();

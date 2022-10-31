@@ -9,7 +9,6 @@ import { getSortedFavoritesMovies } from '../../store/reducers/index.selectors';
 
 export const MyFavoritesList: React.FC = () => {
   const favoritesMovies = isServer ? [] : useSelector(getSortedFavoritesMovies);
- 
 
   return (
     <div className="user-page">

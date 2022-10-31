@@ -1,15 +1,17 @@
-import { createFakeReviewData, createMovie, createMovies, createReview, generateRandomId, getFakeLoginData, getFakeUser } from '../../../components/z_tests-helper/test-data';
-import { configureMockStore } from '@jedmao/redux-mock-store';
-import { Action, PayloadAction } from '@reduxjs/toolkit';
-import thunk, { ThunkDispatch } from 'redux-thunk';
-import { HTTP } from '../../../helpers/const/const';
-import { API_ACTIONS } from './api-actions';
-import { CurrentMovie_Fulfilled } from '../../reducers/data-reducer/current-slice/current-types';
-import { movieFavoriteData } from '../../../types/movies';
-import * as changeFavUtils from '../../../helpers/utils/utils';
 import axios, { AxiosInstance } from 'axios';
+import thunk, { ThunkDispatch } from 'redux-thunk';
+import { Action, PayloadAction } from '@reduxjs/toolkit';
+import { configureMockStore } from '@jedmao/redux-mock-store';
+
+import { CurrentMovie_Fulfilled } from '../../reducers/data-reducer/current-slice/current-types';
+import { testBundle } from '../../../components/z_tests-helper/testBundle';
+import * as changeFavUtils from '../../../helpers/utils/utils';
+import { movieFavoriteData } from '../../../types/movies';
 import { LoginData, UserData } from '../../../types/user';
+import { HTTP } from '../../../helpers/const/const';
 import { RootState } from '../../store.types';
+import { API_ACTIONS } from './api-actions';
+
 
 jest.mock('axios');
 type ThunkDispatchResult = ThunkDispatch<RootState, AxiosInstance, Action>;
@@ -33,6 +35,20 @@ jest.mock('../../../helpers/utils/utils', () => ({
   __esModule: true,
   ...jest.requireActual('../../../helpers/utils/utils')
 }));
+
+
+const {
+  creators: {
+    createFakeReviewData,
+    createFakeLoginData,
+    createRandomId,
+    createFakeUser,
+    createMovies,
+    createReview,
+    createMovie,
+  }
+} = testBundle;
+
 
 describe('Module API_ACTIONS', () => {
 
@@ -79,7 +95,7 @@ describe('Module API_ACTIONS', () => {
     it('успешно возвращаются данные и выполняются все actions', async () => {
       const fake_movie = createMovie();
       const fake_review = createReview();
-      const testId = generateRandomId(true) as string;
+      const testId = createRandomId(true) as string;
 
       // имитируем реализацую запроса к серверу с помощью mockImplementation
       mockAxios.get.mockImplementation((url) => {
@@ -106,7 +122,7 @@ describe('Module API_ACTIONS', () => {
       // чтобы проселдить с какими аргументами вызывался и сколько раз
       const axiosSpy = jest.spyOn(axios, 'get').mockResolvedValue({ data: 'test' });
 
-      const testId = generateRandomId(true) as string;
+      const testId = createRandomId(true) as string;
       const reqRouteM = HTTP.CURRENT_MOVIE.replace(/id/g, testId);
       const reqRouteR = HTTP.CURRENT_REVIEWS_MOVIE.replace(/id/g, testId);
 
@@ -118,7 +134,7 @@ describe('Module API_ACTIONS', () => {
     });
 
     it('данные не возвращаются при ошибке', async () => {
-      const testId = generateRandomId(true) as string;
+      const testId = createRandomId(true) as string;
       const axiosSpy = jest.spyOn(axios, 'get').mockRejectedValue('');
 
       const { payload } = await mockStore.dispatch(API_ACTIONS.fetchCurrentMovie(testId));
@@ -216,7 +232,7 @@ describe('Module API_ACTIONS', () => {
     });
 
     it('Выполняются все actions при fulfilled', async () => {
-      const fakeUser = getFakeUser();
+      const fakeUser = createFakeUser();
       mockAxios.get.mockResolvedValue({ data: fakeUser });
 
       await mockStore.dispatch(API_ACTIONS.checkAutorization());
@@ -268,8 +284,8 @@ describe('Module API_ACTIONS', () => {
     });
 
     it('Выполняются все actions при fulfilled', async () => {
-      const fake_LoginData = getFakeLoginData();
-      const fake_UserData: Partial<UserData> = getFakeUser();
+      const fake_LoginData = createFakeLoginData();
+      const fake_UserData: Partial<UserData> = createFakeUser();
       delete fake_UserData.email;
       Object.defineProperty(fake_UserData, 'email', {
         value: fake_LoginData.email,

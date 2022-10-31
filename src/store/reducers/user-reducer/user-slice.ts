@@ -1,10 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+import { AuthStatus, isCheckAutorization_Fulfilled, isCheckAutorization_Rejected } from './user-types';
 import { isHydrateAction } from '../../../helpers/utils/utils';
-import { User } from '../../../types/reviews';
 import { Status, UserData } from '../../../types/user';
 import { userInitialState } from './user-state';
-import { AuthStatus, isCheckAutorization_Fulfilled, isCheckAutorization_Rejected } from './user-types';
-
 
 
 export const userSlice = createSlice({

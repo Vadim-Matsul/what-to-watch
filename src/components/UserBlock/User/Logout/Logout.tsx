@@ -1,7 +1,8 @@
 import Link from 'next/link';
-import { bePagesPaths } from '../../../../helpers/const/const';
-import { useAppDispatch } from '../../../../helpers/Hooks/useAppDispatch';
+
 import { API_ACTIONS } from '../../../../store/labouring/api-actions/api-actions';
+import { useAppDispatch } from '../../../../helpers/Hooks/useAppDispatch';
+import { bePagesPaths } from '../../../../helpers/const/const';
 
 export const Logout: React.FC = () => {
   const dispatch = useAppDispatch();

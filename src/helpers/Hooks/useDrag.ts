@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { changeOrderMovies, Events, guardEventListener } from '../utils/utils';
-import { ACTIONS } from '../../store/labouring/actions/actions';
 import { getActiveFavId } from '../../store/reducers/index.selectors';
+import { ACTIONS } from '../../store/labouring/actions/actions';
+
 
 export const useDrag = (ref: React.RefObject<HTMLElement>, should: boolean, movieId: number) => {
   if (!should) { return; }

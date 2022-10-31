@@ -1,6 +1,7 @@
 import { AnyAction, AsyncThunkAction } from '@reduxjs/toolkit';
-import { AxiosInstance } from 'axios';
 import { ThunkDispatch } from 'redux-thunk';
+import { AxiosInstance } from 'axios';
+
 import { HYDRATE_ACTION, store } from './store';
 
 
@@ -27,6 +28,7 @@ export type AsyncThunkResult = {
  * 
  * @Jeneric_Returned возвращаемое значение из asyncThunkAction
  */
+//  xtends Action ? A = Action : A = AsyncThunkAction<R, any, AsyncThunkResult>
 export type isAsyncDispatch<Returned = void> = {
   dispatch: <R = Returned, A = AsyncThunkAction<R, any, AsyncThunkResult>>(value: A) => Promise<R>
 } & RootStore;

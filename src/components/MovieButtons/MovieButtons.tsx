@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { bePagesPaths, FavoritesStatus } from '../../helpers/const/const';
-import { useAppDispatch } from '../../helpers/Hooks/useAppDispatch';
+import { useEffect, useState } from 'react';
+
 import { API_ACTIONS } from '../../store/labouring/api-actions/api-actions';
+import { bePagesPaths, FavoritesStatus } from '../../helpers/const/const';
 import { getAuthStatus } from '../../store/reducers/index.selectors';
+import { useAppDispatch } from '../../helpers/Hooks/useAppDispatch';
 import { movieFavoriteData } from '../../types/movies';
 import { MovieButtonsProps } from './MovieButtons.props';
 

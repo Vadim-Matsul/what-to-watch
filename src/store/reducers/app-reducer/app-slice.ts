@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, ActionCreatorWithOptionalPayload, ActionCreatorWithPayload } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { optionsMenu } from '../../../types/movies';
 import { appInitialState } from './app-state';
 
@@ -18,6 +18,5 @@ export const appSlice = createSlice({
     }
   }
 });
-
 
 export const { setActiveGenre, setActiveMovieItem, setActiveFavId } = appSlice.actions;

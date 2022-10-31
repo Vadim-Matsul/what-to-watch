@@ -1,7 +1,7 @@
 export interface User {
   id: number
   name: string
-}
+};
 
 export interface Review {
   id: number
@@ -9,12 +9,12 @@ export interface Review {
   rating: number
   comment: string
   date: string
-}
+};
 
-export type Reviews = Review[]
+export type Reviews = Review[];
 
 export interface ReviewFormData {
   id?: number 
   rating: string,
   comment: string
-} 
+};

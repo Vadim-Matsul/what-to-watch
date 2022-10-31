@@ -1,8 +1,8 @@
-import { testBundle } from '../../../../components/z_tests-helper/testBundle';
 import { getBasicStatus, getFavoritesMovies, getMovieCover, getMovies, getSortedFavoritesMovies, getSortedMovies } from '../../index.selectors';
+import { testBundle } from '../../../../components/z_tests-helper/testBundle';
+import { ALL_GENRES } from '../../../../helpers/const/const';
 import * as STORAGE from '../../../../services/storage';
 import { OrderData } from '../../../../types/movies';
-import { ALL_GENRES } from '../../../../helpers/const/const';
 
 const {
   faker,

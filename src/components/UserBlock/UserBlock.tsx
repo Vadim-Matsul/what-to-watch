@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Guest, Logout, User } from '..';
-import { getAuthStatus, getStatusProgress } from '../../store/reducers/index.selectors';
 
+import { getAuthStatus, getStatusProgress } from '../../store/reducers/index.selectors';
+import { Guest, Logout, User } from '..';
 
 export const UserBlock: React.FC = () => {
 

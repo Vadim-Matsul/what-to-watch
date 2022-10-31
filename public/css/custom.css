@@ -89,10 +89,10 @@ body {
 }
 
 .trash {
-  position: relative;
+  position: fixed;
   display: inline-block;
-  top: 100px;
-  left: 20px;
+  bottom: 10px;
+  left: 10px;
   cursor: crosshair;
 }
 

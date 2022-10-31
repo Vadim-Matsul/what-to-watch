@@ -1,5 +1,5 @@
-import { FooterProps } from './Footer.props';
 import { LogoLink } from './LogoLink/LogoLink';
+import { FooterProps } from './Footer.props';
 import { Trash } from './Trash/Trash';
 
 

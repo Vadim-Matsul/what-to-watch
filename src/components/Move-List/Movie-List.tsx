@@ -1,7 +1,8 @@
-import { MovieListProps } from './Movie-List.props';
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+
 import { bePagesPaths } from '../../helpers/const/const';
+import { MovieListProps } from './Movie-List.props';
 import { MovieCard } from '..';
 
 const MovieList: React.FC<MovieListProps> = ({ movies, isFavorite = false }) => {

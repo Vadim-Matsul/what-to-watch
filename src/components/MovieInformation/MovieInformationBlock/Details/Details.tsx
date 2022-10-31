@@ -1,7 +1,7 @@
 import React from 'react';
 import { adaptToDetails } from '../../../../helpers/adapter/adapter';
-import { DetailsProps } from './Details.props';
 import { DetailsItem } from './DetailsItem/DetailsItem';
+import { DetailsProps } from './Details.props';
 
 
 export const Details: React.FC<DetailsProps> = ({ info }) => {

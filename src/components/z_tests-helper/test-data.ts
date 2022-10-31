@@ -82,13 +82,13 @@ export const getFakeUser = (): UserData => ({
   avatarUrl: faker.image.image()
 });
 
-export const getFakeLoginData = (): LoginData => ({
+export const createFakeLoginData = (): LoginData => ({
   email: faker.internet.email(),
   password: faker.internet.password()
 });
 
 /** Another */
-export const generateRandomId = (toString: boolean = false) => {
+export const createRandomId = (toString: boolean = false) => {
   const id = faker.datatype.number({ min: 1, max: 1000 });
   return toString
     ? String(id)

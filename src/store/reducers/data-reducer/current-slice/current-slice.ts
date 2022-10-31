@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+import { isCurrentMovie_Fulfilled, isCurrentMovie_Rejected } from './current-types';
 import { isHydrateAction } from '../../../../helpers/utils/utils';
-import { Movie } from '../../../../types/movies';
 import { Reviews } from '../../../../types/reviews';
 import { currentSliceState } from './current-state';
-import { isCurrentMovie_Fulfilled, isCurrentMovie_Rejected } from './current-types';
+import { Movie } from '../../../../types/movies';
 
 
 export const currentSlice = createSlice({

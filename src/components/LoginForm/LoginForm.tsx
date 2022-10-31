@@ -1,13 +1,15 @@
-import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { bePagesPaths, ErrorConfig } from '../../helpers/const/const';
-import { useAppDispatch } from '../../helpers/Hooks/useAppDispatch';
+
 import { API_ACTIONS } from '../../store/labouring/api-actions/api-actions';
+import { bePagesPaths, ErrorConfig } from '../../helpers/const/const';
 import { getAuthStatus } from '../../store/reducers/index.selectors';
+import { useAppDispatch } from '../../helpers/Hooks/useAppDispatch';
 import { LoginData } from '../../types/user';
 import { Loader } from '../Loader/Loader';
+
 
 export const LoginForm: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -68,7 +70,6 @@ export const LoginForm: React.FC = () => {
       }
     })
   };
-
 
   return (
     <div className="sign-in user-page__content">

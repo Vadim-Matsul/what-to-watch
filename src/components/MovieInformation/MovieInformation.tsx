@@ -1,6 +1,7 @@
+import Image from 'next/image';
+
 import { CurrentMovieNavigation, MovieInformationBlock } from '..';
 import { MovieInformationProps } from './MovieInformation.props'
-import Image from 'next/image';
 
 
 export const MovieInformation: React.FC<MovieInformationProps> = (props) => {

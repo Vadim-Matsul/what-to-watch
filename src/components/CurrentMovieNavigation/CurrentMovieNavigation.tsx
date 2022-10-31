@@ -1,5 +1,5 @@
-import { CurrentMovieNav } from '../../helpers/const/const'
 import { CurrentMovieNavigationLi } from './CurrentMovieNavigationLi/CurrentMovieNavigationLi'
+import { CurrentMovieNav } from '../../helpers/const/const'
 
 
 export const CurrentMovieNavigation: React.FC = () => {

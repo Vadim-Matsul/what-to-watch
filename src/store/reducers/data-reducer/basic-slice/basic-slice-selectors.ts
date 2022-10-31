@@ -1,6 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { ALL_GENRES } from '../../../../helpers/const/const';
+
 import { getOrderFavorites } from '../../../../services/storage';
+import { ALL_GENRES } from '../../../../helpers/const/const';
 import { Movie, Movies } from '../../../../types/movies';
 import { Status } from '../../../../types/user';
 import { Selector } from '../../../store.types';
@@ -19,6 +20,7 @@ export const getSortedFavoritesMovies: Selector<Movies> = (state) => {
 
   const currentFavorites: Movies = JSON.parse(JSON.stringify(state.data.basic.favorites_movies));
   const favoriteOrdersId = getOrderFavorites();
+  console.log(favoriteOrdersId);
 
   favoriteOrdersId && currentFavorites.forEach((movie) => {
     favoriteOrdersId.forEach(obj => {

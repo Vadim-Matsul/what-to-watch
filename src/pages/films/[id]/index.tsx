@@ -1,22 +1,22 @@
-import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import { GetStaticPaths, NextPage } from 'next';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { bePagesPaths, HTTP, isServer, testApi } from '../../../helpers/const/const';
-import { useAppDispatch } from '../../../helpers/Hooks/useAppDispatch';
-import CurrentMovie from '../../../page-components/CurrentMovie/CurrentMovie';
-import { API_ACTIONS } from '../../../store/labouring/api-actions/api-actions';
+
 import { CurrentMovie_Fulfilled } from '../../../store/reducers/data-reducer/current-slice/current-types';
+import { API_ACTIONS } from '../../../store/labouring/api-actions/api-actions';
+import CurrentMovie from '../../../page-components/CurrentMovie/CurrentMovie';
 import { getAuthStatus } from '../../../store/reducers/index.selectors';
+import { useAppDispatch } from '../../../helpers/Hooks/useAppDispatch';
+import { bePagesPaths, HTTP } from '../../../helpers/const/const';
 import { api, wrapper_Server_Client } from '../../../store/store';
 import { isAsyncDispatch } from '../../../store/store.types';
 import { Movie, Movies } from '../../../types/movies';
 import { Reviews } from '../../../types/reviews';
 
-type MoviePageProps = { movie: Movie, reviews: Reviews };
 
+interface MoviePageProps { movie: Movie, reviews: Reviews };
 
 const MoviePage: NextPage<MoviePageProps> = ({ movie, reviews }) => {
-
   const [reviewsState, setReviewsState] = useState<Reviews>(reviews);
   const dispatch = useAppDispatch();
   const authStatus = useSelector(getAuthStatus);
@@ -31,15 +31,12 @@ const MoviePage: NextPage<MoviePageProps> = ({ movie, reviews }) => {
   }, [authStatus])
 
   return (
-    <>
-      <CurrentMovie
-        currentMovie={movie}
-        currentReviews={reviewsState}
-      />
-    </>
+    <CurrentMovie
+      currentMovie={movie}
+      currentReviews={reviewsState}
+    />
   );
 };
-
 
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -49,12 +46,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: potentially_paths,
     fallback: 'blocking'
-  }
-}
+  };
+};
 
-export const getStaticProps: GetStaticProps<MoviePageProps> = wrapper_Server_Client.getStaticProps(
+
+
+export const getStaticProps = wrapper_Server_Client.getStaticProps(
   ({ dispatch, getState }: isAsyncDispatch<CurrentMovie_Fulfilled>) => async (ctx) => {
-    const { payload } = await dispatch(API_ACTIONS.fetchCurrentMovie(ctx.params.id as string));
+    const { payload } = await dispatch(API_ACTIONS.fetchCurrentMovie(ctx.params!.id as string));
 
     if (getState().data.current.status === 'rejected') {
       return {

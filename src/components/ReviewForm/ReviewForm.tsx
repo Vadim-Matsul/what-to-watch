@@ -1,12 +1,12 @@
-import { useForm } from 'react-hook-form';
-import { ReviewFormProps } from './ReviewForm.props';
-import { ReviewFormRating } from './ReviewFormRating/ReviewFormRating';
-import { Controller } from 'react-hook-form';
-import { ErrorConfig } from '../../helpers/const/const'
-import { ReviewFormData } from '../../types/reviews';
-import { useAppDispatch } from '../../helpers/Hooks/useAppDispatch';
-import { API_ACTIONS } from '../../store/labouring/api-actions/api-actions';
 import { useRouter } from 'next/router';
+import { useForm, Controller } from 'react-hook-form';
+
+import { API_ACTIONS } from '../../store/labouring/api-actions/api-actions';
+import { ReviewFormRating } from './ReviewFormRating/ReviewFormRating';
+import { useAppDispatch } from '../../helpers/Hooks/useAppDispatch';
+import { ErrorConfig } from '../../helpers/const/const'
+import { ReviewFormProps } from './ReviewForm.props';
+import { ReviewFormData } from '../../types/reviews';
 
 export const ReviewForm: React.FC<ReviewFormProps> = ({ movieId }) => {
   const router = useRouter();

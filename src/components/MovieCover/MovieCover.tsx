@@ -19,15 +19,15 @@ const MovieCover: React.FC<MovieCoverProps> = (props) => {
 
   // самовызывающаяся функция вместо useEffect сделана для того,
   // чтобы до полной отрисовки у фильма праивильно определялось состояние isFavorite
-  (function () {
-    favoritesMovies.length
-      ? favoritesMovies.forEach(favoriteMovie => {
-        if (favoriteMovie.id === editableMovie.id) {
-          editableMovie.isFavorite = true
-        }
+  (function (favorites) {
+    favorites.length
+      ? favorites.forEach(favoriteMovie => {
+        favoriteMovie.id === editableMovie.id
+          ? editableMovie.isFavorite = true
+          : editableMovie.isFavorite = false;
       })
       : editableMovie.isFavorite = false;
-  })();
+  })(favoritesMovies);
 
   const { pathname } = useRouter();
 

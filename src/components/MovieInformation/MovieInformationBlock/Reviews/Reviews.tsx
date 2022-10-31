@@ -1,6 +1,6 @@
 import { devideToThree } from '../../../../helpers/utils/utils';
-import { Review } from './Review/Review';
 import { ReviewsProps } from './Reviews.props';
+import { Review } from './Review/Review';
 
 
 export const Reviews: React.FC<ReviewsProps> = ({ reviews }) => {

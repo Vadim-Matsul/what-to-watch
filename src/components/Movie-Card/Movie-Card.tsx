@@ -1,12 +1,12 @@
-import { MovieCardProps } from './Movie-Card.props'
-import React, { useRef } from 'react';
 import Link from 'next/link';
-import { bePagesPaths } from '../../helpers/const/const';
 import classNames from 'classnames';
-import { useDrag } from '../../helpers/Hooks/useDrag';
-import { VideoPlayer } from '..';
+import React, { useRef } from 'react';
 import { useRouter } from 'next/router';
-import * as u from '../../helpers/utils/utils'
+
+import { bePagesPaths } from '../../helpers/const/const';
+import { useDrag } from '../../helpers/Hooks/useDrag';
+import { MovieCardProps } from './Movie-Card.props'
+import { VideoPlayer } from '..';
 
 export const MovieCard: React.FC<MovieCardProps> = (props) => {
   const { pathname } = useRouter();

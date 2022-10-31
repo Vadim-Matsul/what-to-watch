@@ -1,7 +1,8 @@
 import { useSelector } from 'react-redux';
+
+import { getMovies } from '../../store/reducers/index.selectors';
 import { getMoviesGenres } from '../../helpers/utils/utils';
 import { GenreItem } from '..';
-import { getMovies } from '../../store/reducers/index.selectors';
 
 export const GenresCatalog: React.FC = () => {
   const movies = useSelector(getMovies);

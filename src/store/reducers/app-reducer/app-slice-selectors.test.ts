@@ -1,8 +1,8 @@
+import { getActiveFavId, getActiveGenre, getActiveMovieItem } from '../index.selectors';
 import { testBundle } from '../../../components/z_tests-helper/testBundle';
 import { ALL_GENRES } from '../../../helpers/const/const';
-import { getActiveFavId, getActiveGenre, getActiveMovieItem } from '../index.selectors';
 
-const { storeExamples: { makeRootState } } = testBundle
+const { storeExamples: { makeRootState } } = testBundle;
 
 describe('Selectors: app-slice', () => {
   const state = makeRootState();

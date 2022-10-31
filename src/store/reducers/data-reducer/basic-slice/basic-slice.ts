@@ -1,10 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { basicInitialState } from './basic-state';
-import { PayloadAction } from '@reduxjs/toolkit'
-import { Movie, Movies } from '../../../../types/movies';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import { isFetchFavoritesMovies_F, isFetchFavoritesMovies_P, isFetchFavoritesMovies_R } from './basic-types';
-import { toast } from 'react-toastify';
 import { isHydrateAction } from '../../../../helpers/utils/utils';
+import { Movie, Movies } from '../../../../types/movies';
+import { basicInitialState } from './basic-state';
+
 
 export const basicSlice = createSlice({
   name: 'basic',

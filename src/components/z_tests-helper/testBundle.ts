@@ -5,9 +5,10 @@ import UserEvent from '@testing-library/user-event';
 import { createMockRouter } from './mockRouter';
 import { HOC_withProviders } from './HOC_withProviders';
 import { faker } from '@faker-js/faker'
-import { createMovie, createMovies, createReview, createReviews, getFakeUser as createFakeUser } from './test-data';
+import { createFakeLoginData, createFakeReviewData, createMovie, createMovies, createRandomId, createReview, createReviews, getFakeUser as createFakeUser } from './test-data';
+import { RootState } from '../../store/store.types';
 
-export const makeFakeStore = configureMockStore();
+export const makeFakeStore = configureMockStore<RootState>();
 
 export const testBundle = {
   faker,
@@ -23,14 +24,17 @@ export const testBundle = {
     createMovies,
     createReview,
     createReviews,
+    createRandomId,
     createFakeUser,
+    createFakeLoginData,
+    createFakeReviewData,
   },
   storeExamples: {
-    makeRootState,
-    makeDataCurrentSlice,
-    makeDataBasicSlice,
     makeAppSlice,
+    makeRootState,
     makeUserSlice,
+    makeDataBasicSlice,
+    makeDataCurrentSlice,
   },
   createBubbleEvent,
 };
@@ -43,5 +47,5 @@ function createBubbleEvent(type: string, props: Record<string, unknown> = {}) {
 
 const event = new Event('scroll', {
   bubbles: true,
-  
+
 })

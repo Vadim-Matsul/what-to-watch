@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from 'react';
+import { ToastConfig } from '../../../helpers/const/const';
+import { toast } from 'react-toastify';
+
 import { getNormolizeVideoTime, guardEventListener } from '../../../helpers/utils/utils';
 import { PlayerTimeProps } from './PlayerTime.props';
 
 
 const PlayerTime: React.FC<PlayerTimeProps> = ({ videoRef }) => {
   const [currentTimeState, setCurrentTimeState] = useState<number>(0);
-  const [durationTime, setDurationTime] = useState<number>(0);
+  const [durationTime, setDurationTime] = useState<number>(.1);
   const [percent, setPercent] = useState<number>(0);
 
   const lastTime = getNormolizeVideoTime(currentTimeState, durationTime);
 
   useEffect(() => {
+    if (currentTimeState === durationTime) toast.success(ToastConfig.s_player, { autoClose: 5000 });
+  }, [currentTimeState])
+
+  useEffect(() => {
+
+
 
     const listenerChangeData = (evt: Event) => {
       const { currentTime } = evt.target as HTMLVideoElement; // у EventTarget необходимо сужать тип

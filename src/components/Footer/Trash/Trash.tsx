@@ -1,9 +1,10 @@
 import { useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { FavoritesStatus } from '../../../helpers/const/const';
-import { useAppDispatch } from '../../../helpers/Hooks/useAppDispatch';
+
 import { API_ACTIONS } from '../../../store/labouring/api-actions/api-actions';
 import { getActiveFavId } from '../../../store/reducers/index.selectors';
+import { useAppDispatch } from '../../../helpers/Hooks/useAppDispatch';
+import { FavoritesStatus } from '../../../helpers/const/const';
 import { movieFavoriteData } from '../../../types/movies';
 
 

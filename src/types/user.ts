@@ -6,9 +6,9 @@ export interface UserData {
   name: string
   avatarUrl: string,
   token?: string
-}
+};
 
 export interface LoginData {
   email: string,
   password: string
-}
+};

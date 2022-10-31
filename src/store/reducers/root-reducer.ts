@@ -8,5 +8,3 @@ export const rootReducer = combineReducers({
   app: appSlice.reducer,
   user: userSlice.reducer
 });
-
-export type ConfigState = ReturnType<typeof rootReducer>;
