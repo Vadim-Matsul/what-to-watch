@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker';
-import { Movie, MovieInformation, Movies } from '../../types/movies';
+
 import { Review, ReviewFormData, Reviews, User } from '../../types/reviews';
+import { Movie, MovieInformation, Movies } from '../../types/movies';
 import { LoginData, UserData } from '../../types/user';
 
 
@@ -31,7 +32,7 @@ export const createMovie = (
   previewVideoLink: 'https://www.youtube.com/watch?v=fKopy74weus',
 });
 
-export const createMovies = (isFavorite = false, count = 10): Movies => new Array(count).fill(null).map((movie, i) => createMovie(isFavorite, i + 1));
+export const createMovies = (isFavorite = false, count = 10): Movies => new Array(count).fill(null).map((movie, i) => (createMovie(isFavorite, i + 1)));
 
 
 export const makeMovieInformation = (): MovieInformation => ({
@@ -54,19 +55,19 @@ export const makeMovieInformation = (): MovieInformation => ({
  */
 
 export const createUser = (): User => ({
-  id: Number(faker.datatype.uuid()),
+  id: faker.datatype.number({ min: 1, max: 1589 }),
   name: faker.name.firstName(),
 });
 
 export const createReview = (): Review => ({
-  id: Number(faker.datatype.uuid()),
+  id: faker.datatype.number({ min: 1, max: 1743 }),
   rating: faker.datatype.number({ min: 1, max: 10 }),
   comment: faker.commerce.productDescription(),
   date: String(new Date()),
   user: createUser(),
 })
 
-export const createReviews = (count = 5): Reviews => new Array(count).fill(createReview());
+export const createReviews = (count = 5): Reviews => new Array(count).fill(() => createReview());
 
 export const createFakeReviewData = (): ReviewFormData => ({
   id: faker.datatype.number({ min: 1, max: 1000 }),
@@ -76,7 +77,7 @@ export const createFakeReviewData = (): ReviewFormData => ({
 
 /** User */
 export const getFakeUser = (): UserData => ({
-  id: Number(faker.datatype.uuid()),
+  id: faker.datatype.number({ min: 1, max: 9461 }),
   name: faker.name.firstName(),
   email: faker.internet.email(),
   avatarUrl: faker.image.image()
@@ -93,4 +94,4 @@ export const createRandomId = (toString: boolean = false) => {
   return toString
     ? String(id)
     : id;
-} 
+};

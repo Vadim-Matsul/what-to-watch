@@ -18,7 +18,7 @@ describe('Component: LoginForm', () => {
   let mockRouter: NextRouter
   beforeEach(() => {
     mockRouter = createMockRouter({});
-    jest.resetAllMocks();
+    jest.clearAllMocks();
   });
 
   it('Корректный рендер компонента', () => {

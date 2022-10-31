@@ -44,8 +44,3 @@ export const testBundle = {
 function createBubbleEvent(type: string, props: Record<string, unknown> = {}) {
   return Object.assign(new Event(type, { bubbles: true }), props);
 };
-
-const event = new Event('scroll', {
-  bubbles: true,
-
-})
