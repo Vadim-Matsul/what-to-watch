@@ -66,7 +66,7 @@ describe('Component: LoginForm', () => {
     expect(error_bundle[1]).toHaveTextContent(ErrorConfig.incorrectPassword);
 
     await UserEvent.type(email_input, faker.internet.email());
-    await UserEvent.type(password_input, faker.internet.password(10));
+    await UserEvent.type(password_input,'testFulfilled7380');
     error_bundle = screen.queryAllByTestId(/error/i);
 
     expect(error_bundle).toEqual([undefined, undefined]);

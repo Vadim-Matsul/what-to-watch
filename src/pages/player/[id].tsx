@@ -28,6 +28,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<MoviePlayerPageProps | {}> = wrapper_Server_Client.getStaticProps(
   ({ dispatch, getState }: isAsyncDispatch<CurrentMovie_Fulfilled>) => async ctx => {
     const [Movie] = (await dispatch(API_ACTIONS.fetchCurrentMovie(ctx.params!.id as string))).payload;
+    await dispatch(API_ACTIONS.fetchMovies());
 
     if (getState().data.current.status === 'rejected') {
       return {

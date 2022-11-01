@@ -22,9 +22,7 @@ const MovieCover: React.FC<MovieCoverProps> = (props) => {
   (function (favorites) {
     favorites.length
       ? favorites.forEach(favoriteMovie => {
-        favoriteMovie.id === editableMovie.id
-          ? editableMovie.isFavorite = true
-          : editableMovie.isFavorite = false;
+        if (favoriteMovie.id === editableMovie.id) editableMovie.isFavorite = true;
       })
       : editableMovie.isFavorite = false;
   })(favoritesMovies);

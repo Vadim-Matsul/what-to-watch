@@ -31,12 +31,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: paths,
     fallback: 'blocking'
-  }
-}
+  };
+};
 
 export const getStaticProps: GetStaticProps = wrapper_Server_Client.getStaticProps(
   ({ dispatch, getState }: isAsyncDispatch<CurrentMovie_Fulfilled>) => async ctx => {
     const { payload } = await dispatch(API_ACTIONS.fetchCurrentMovie(ctx.params!.id as string));
+    await dispatch(API_ACTIONS.fetchMovies());
 
     if (getState().data.current.status === 'rejected') {
       return {

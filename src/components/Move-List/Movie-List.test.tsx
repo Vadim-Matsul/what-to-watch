@@ -9,13 +9,15 @@ jest.mock('..', () => ({
 const {
   render,
   fireEvent,
-  creators: { createMovies }
+  makeFakeStore,
+  HOC_withProviders,
+  creators: { createMovies },
+  storeExamples: { makeDataBasicSlice },
 } = testBundle;
 
+
 describe('Coomponent: MovieList', () => {
-  const movies = createMovies(false, 20);
-  const fakeDisconnect = jest.fn();
-  const fakeObserve = jest.fn();
+  const MovieListWrapped = HOC_withProviders(MovieList, makeFakeStore({ data: makeDataBasicSlice({ status: 'fulfilled' }) }));
 
   it('IntersectionObserver успешно срабатывает при scroll', async () => {
     const movies = createMovies(false, 20);
@@ -52,7 +54,7 @@ describe('Coomponent: MovieList', () => {
 
     const {
       findAllByTestId,
-    } = render(<MovieList movies={movies} />, { container: document.body.appendChild(container) });
+    } = render(MovieListWrapped({ movies }), { container: document.body.appendChild(container) });
     let cards: HTMLElement[];
 
     cards = await findAllByTestId('MovieCard');
@@ -79,8 +81,10 @@ describe('Coomponent: MovieList', () => {
     expect(cards.length).toBeLessThanOrEqual(20);
   });
 
-
   it('Корректный рендер на всех страницах ', () => {
+    const movies = createMovies(false, 20);
+    const fakeDisconnect = jest.fn();
+    const fakeObserve = jest.fn();
 
     Object.defineProperty(window, 'IntersectionObserver', {
       writable: true,
@@ -98,7 +102,7 @@ describe('Coomponent: MovieList', () => {
       queryByRole,
       getByRole,
       rerender,
-    } = render(<MovieList movies={movies} />);
+    } = render(MovieListWrapped({ movies }));
     const Cards = getAllByTestId('MovieCard');
 
     expect(Cards.length).toBe(4);
@@ -106,7 +110,7 @@ describe('Coomponent: MovieList', () => {
     expect(getByTestId('showMore')).toBeInTheDocument();
 
     // Поведение на странице favorites
-    rerender(<MovieList movies={[]} isFavorite={true} />);
+    rerender(MovieListWrapped({ movies: [], isFavorite: true }));
     expect(getByRole('link')).toHaveAttribute('href', bePagesPaths.main);
   });
 

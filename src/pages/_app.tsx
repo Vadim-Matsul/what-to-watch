@@ -1,5 +1,5 @@
 import { Provider } from 'react-redux';
-import App, { AppProps } from 'next/app'
+import { AppProps } from 'next/app'
 import { ToastContainer, Flip } from 'react-toastify';
 
 import { API_ACTIONS } from '../store/labouring/api-actions/api-actions';
@@ -38,12 +38,3 @@ export default function MyApp({ Component, ...rest }: AppProps) {
     </Provider>
   );
 };
-
-MyApp.getInitialProps = wrapper_Server_Client.getInitialAppProps(({ dispatch }) => async ctx => {
-  await dispatch(API_ACTIONS.fetchMovies());
-  return {
-    pageProps: {
-      ...(await App.getInitialProps(ctx)),
-    }
-  }
-});

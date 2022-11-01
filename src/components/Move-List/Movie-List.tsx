@@ -1,18 +1,22 @@
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
-import { bePagesPaths } from '../../helpers/const/const';
+import { getBasicStatus } from '../../store/reducers/index.selectors';
+import { bePagesPaths, isServer } from '../../helpers/const/const';
 import { MovieListProps } from './Movie-List.props';
 import { MovieCard } from '..';
 
 const MovieList: React.FC<MovieListProps> = ({ movies, isFavorite = false }) => {
 
+  const fetchStatus = useSelector(getBasicStatus);
   const [ind, setInd] = useState<number>(4);
-  const shouldShowEmpty = isFavorite && !movies.length;
+  //                      страница favorites               до завершения обработки запроса не показывать
+  const shouldShowEmpty = isFavorite && !movies.length && (fetchStatus === 'fulfilled' || fetchStatus === 'rejected');
+  //                                    избранных фильмов нет
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-
+    if (!isServer) {
       const observer = new IntersectionObserver((entries, observer) => {
         if (entries[0] && entries[0].isIntersecting) {
           setInd(prev => prev += 4);

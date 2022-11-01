@@ -17,12 +17,16 @@ import { Reviews } from '../../../types/reviews';
 interface MoviePageProps { movie: Movie, reviews: Reviews };
 
 const MoviePage: NextPage<MoviePageProps> = ({ movie, reviews }) => {
+  const [movieState, setMovieState] = useState<Movie>(movie);
   const [reviewsState, setReviewsState] = useState<Reviews>(reviews);
+
   const dispatch = useAppDispatch();
   const authStatus = useSelector(getAuthStatus);
 
   async function fetchMovieWithAuthUser() {
     const { payload }: CurrentMovie_Fulfilled = await dispatch(API_ACTIONS.fetchCurrentMovie(String(movie.id)));
+
+    setMovieState(payload[0]);
     setReviewsState(payload[1]);
   }
 
@@ -32,7 +36,7 @@ const MoviePage: NextPage<MoviePageProps> = ({ movie, reviews }) => {
 
   return (
     <CurrentMovie
-      currentMovie={movie}
+      currentMovie={movieState}
       currentReviews={reviewsState}
     />
   );
@@ -54,6 +58,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps = wrapper_Server_Client.getStaticProps(
   ({ dispatch, getState }: isAsyncDispatch<CurrentMovie_Fulfilled>) => async (ctx) => {
     const { payload } = await dispatch(API_ACTIONS.fetchCurrentMovie(ctx.params!.id as string));
+    await dispatch(API_ACTIONS.fetchMovies());
 
     if (getState().data.current.status === 'rejected') {
       return {

@@ -44,6 +44,28 @@ describe('Component: ReviewForm', () => {
     expect(screen.getByRole('button')).toHaveTextContent(/Post/i);
   });
 
+
+  it('Правильная обработка ошибок формы', async () => {
+
+    render(<ReviewForm movieId={fakeID} />);
+
+    const button = screen.getByRole('button');
+    await UserEvent.click(button);
+
+    expect(await screen.findByTestId('error_comment')).toHaveTextContent(ErrorConfig.required);
+    expect(await screen.findByTestId('error')).toHaveTextContent(ErrorConfig.indicateRating);
+
+    const errorLongComment = faker.datatype.string(151);
+    const textArea = screen.getByPlaceholderText(/Review text/i);
+    textArea.focus();
+    await UserEvent.paste(errorLongComment);
+
+    waitFor(() =>
+      expect(screen.getByTestId('error_comment')).toHaveTextContent(ErrorConfig.longComment),
+      { timeout: 100 }
+    );
+  });
+
   it('Успешно отправлена форма', async () => {
 
     const router = createMockRouter({});
@@ -76,28 +98,6 @@ describe('Component: ReviewForm', () => {
   });
 
 
-  it('Правильная обработка ошибок формы', async () => {
-
-    render(<ReviewForm movieId={fakeID} />);
-
-    const button = screen.getByRole('button');
-    await UserEvent.click(button);
-
-    waitFor(() => {
-      expect(screen.getByTestId('error_comment')).toHaveTextContent(ErrorConfig.shortComment);
-      expect(screen.getByTestId('error')).toHaveTextContent(ErrorConfig.indicateRating);
-    }, { timeout: 100 });
-
-    const errorLongComment = faker.datatype.string(151);
-    const textArea = screen.getByPlaceholderText(/Review text/i);
-    textArea.focus();
-    await UserEvent.paste(errorLongComment);
-
-    waitFor(() =>
-      expect(screen.getByTestId('error_comment')).toHaveTextContent(ErrorConfig.longComment),
-      { timeout: 100 }
-    );
-  });
 
 
 });

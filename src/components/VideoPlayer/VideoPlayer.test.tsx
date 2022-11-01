@@ -54,7 +54,7 @@ describe('Component: VideoPlayer', () => {
     jest.resetAllMocks();
   });
 
-  it('Корректная работа тега на старнице favorites', async () => {
+  it('Корректная работа тега video на старнице favorites', async () => {
     const fakePlay = jest.fn();
     const fakePause = jest.fn();
 
@@ -72,6 +72,7 @@ describe('Component: VideoPlayer', () => {
     expect(fakePause).not.toBeCalled();
 
     await UserEvent.hover(video);
+    
     waitFor(() => {
       expect(fakePlay).not.toBeCalled();
       expect(fakePause).not.toBeCalled();

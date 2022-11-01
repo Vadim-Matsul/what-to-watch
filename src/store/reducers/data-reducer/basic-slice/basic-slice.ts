@@ -24,8 +24,8 @@ export const basicSlice = createSlice({
 
     builder.addMatcher(isHydrateAction, (state, action) => {
       return !state.movies.length
-        ? { ...action.payload.data.basic }  // HYDRATE ACTION из _app, заменяемый нулевое состояние
-        : { ...state }    // HYDRATE ACTION со страницы, который не должен заменять уже существующие состояние, полученное HYDRATE ACTION из _app
+        ? { ...action.payload.data.basic }  // HYDRATE ACTION со страницы, заменяющий нулевое состояние
+        : { ...state };    // HYDRATE ACTION со страницы, который не должен заменять уже существующие состояние
     });
 
     builder.addMatcher(isFetchFavoritesMovies_F, (state, action) => { state.status = action.meta.requestStatus; })

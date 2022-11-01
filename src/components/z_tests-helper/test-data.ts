@@ -67,7 +67,7 @@ export const createReview = (): Review => ({
   user: createUser(),
 })
 
-export const createReviews = (count = 5): Reviews => new Array(count).fill(() => createReview());
+export const createReviews = (count = 5): Reviews => new Array(count).fill(null).map(() => (createReview()));
 
 export const createFakeReviewData = (): ReviewFormData => ({
   id: faker.datatype.number({ min: 1, max: 1000 }),
